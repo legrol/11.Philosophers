@@ -13,13 +13,52 @@
 #include "../includes/get_next_line.h"
 
 /**
- * The get_next_line() function write a function that returns the line read 
- * from a file descriptor.
+ * The function "get_next_line" reads a line from a file descriptor.
+ * This implementation uses a static buffer to manage the state between calls.
  * 
- * @param int fd    file descriptor to read from.
+ * @param int fd				The file descriptor to read from.
  * 
- * returns  If all goes well: the line read
- *          On failure or if reading ends: NULL
+ * @return						If all goes well: the line read.
+ *								On failure or if reading ends: NULL.
+ * 
+ * The function "read_fill_line" reads from a file descriptor and appends the 
+ * data to a buffer until a newline character is found or the read operation 
+ * ends.
+ * 
+ * @param int fd				The file descriptor to read from.
+ * @param char *buffer_readed	A temporary buffer to store the read data.
+ * @param char *buffer_print	A buffer to accumulate the read data.
+ * 
+ * @return						If all goes well: a buffer containing the read 
+ * 								line.
+ *								On failure: NULL.
+ * 
+ * The function "manage_readed_line" processes the line stored in the buffer 
+ * and updates it for the next read operation, if applicable.
+ * 
+ * @param char *treat_line		The line to process.
+ * 
+ * @return						If there is remaining content: a new buffer 
+ * 								with the remaining content.
+ *								If there is no remaining content or an error 
+ *								occurs: NULL.
+ * 
+ * The function ft_free() function frees the memory allocated for two buffers.
+ * 
+ * @param char *buffer_readed    The first buffer to free.
+ * @param char *buffer_print     The second buffer to free.
+ * 
+ * @return						This function does not return a value.
+ * 
+ * The function "ft_strchr1" locates the first occurrence of a character in 
+ * the string pointed to by s.
+ * 
+ * @param const char *s			The string to search.
+ * @param int c					The character to locate.
+ * 
+ * @return						If the character is found: a pointer to the 
+ * 								first occurrence.
+ *								If the character is not found: NULL.
  * 
 */
 

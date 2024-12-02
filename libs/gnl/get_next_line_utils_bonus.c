@@ -12,6 +12,43 @@
 
 #include "../includes/get_next_line_bonus.h"
 
+/**
+ * The function "ft_strjoin2" concatenates two strings into a newly allocated 
+ * buffer and null-terminates the result.
+ * 
+ * @param char const *s1				The first string.
+ * @param char const *s2				The second string.
+ * 
+ * @return								If all goes well: a pointer to the 
+ * 										newly allocated string.
+ *										On failure: NULL.
+ * 
+ * The function "ft_strlcpy2" copies up to size - 1 characters from the source 
+ * string to the destination string, null-terminating the result if size is not 0.
+ * 
+ * @param char *dest					The destination buffer.
+ * @param const char *src				The source string.
+ * @param size_t size					The size of the destination buffer.
+ * 
+ * @return								The total length of the source string.
+ * 
+ * The function "ft_strdup2" allocates memory and duplicates the given string.
+ * 
+ * @param const char *s					The string to duplicate.
+ * 
+ * @return								If all goes well: a pointer to the 
+ * 										newly allocated string.
+ *										On failure: NULL.
+ *  
+ * The function "ft_strlen2" calculates the length of a string.
+ * 
+ * @param const char *s					The string whose length is to be 
+ * 										calculated.
+ * 
+ * @return								The length of the string. 
+ * 
+ */
+
 size_t	ft_strlen2(const char *s)
 {
 	size_t	i;

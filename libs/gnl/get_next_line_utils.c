@@ -12,6 +12,53 @@
 
 #include "../includes/get_next_line.h"
 
+/**
+ * The function "ft_substr1" creates a substring from the given string,
+ * starting at the specified index and up to a given length.
+ * 
+ * @param char const *s				The original string.
+ * @param unsigned int start		The starting index of the substring.
+ * @param size_t len				The maximum length of the substring.
+ * 
+ * @return							If all goes well: a pointer to the newly 
+ * 									allocated substring.
+ *									On failure: NULL.
+ * 
+ * The function "ft_strjoin1" concatenates two strings into a newly allocated 
+ * buffer and null-terminates the result.
+ * 
+ * @param char const *s1			The first string.
+ * @param char const *s2			The second string.
+ * 
+ * @return							If all goes well: a pointer to the newly 
+ * 									allocated string.
+ *									On failure: NULL.
+ * 
+ * The function "ft_strlcpy1" copies up to size - 1 characters from the source 
+ * string to the destination string, null-terminating the result if size is not 0.
+ * 
+ * @param char *dest				The destination buffer.
+ * @param const char *src			The source string.
+ * @param size_t size				The size of the destination buffer.
+ * 
+ * @return							The total length of the source string.
+ * 
+ * The function "ft_strdup1" allocates memory and duplicates the given string.
+ * 
+ * @param const char *s				The string to duplicate.
+ * 
+ * @return							If all goes well: a pointer to the newly 
+ * 									allocated string.
+ *									On failure: NULL.
+ * 
+ * The function "ft_strlen1" calculates the length of a string.
+ * 
+ * @param const char *s				The string whose length is to be calculated.
+ * 
+ * @return							The length of the string. 
+ * 
+ */
+
 size_t	ft_strlen1(const char *s)
 {
 	size_t	i;

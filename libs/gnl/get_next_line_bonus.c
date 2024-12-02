@@ -13,13 +13,42 @@
 #include "../includes/get_next_line_bonus.h"
 
 /**
- * The get_next_line() function write a function that returns the line read 
- * from a file descriptor.
+ * The function "get_next_line" function reads a line from a file descriptor.
+ * This implementation uses a static buffer to manage multiple descriptors.
  * 
- * @param int fd    file descriptor to read from.
+ * @param int fd    				The file descriptor to read from.
  * 
- * returns  If all goes well: the line read
- *          On failure or if reading ends: NULL
+ * @return 							If all goes well: the line read.
+ *									On failure or if reading ends: NULL.
+ * 
+ * The function "read_fill_line" function reads from the given file descriptor
+ * and concatenates the data into a buffer until a newline is found or the read
+ * operation ends.
+ * 
+ * @param int fd					The file descriptor to read from.
+ * @param char *buffer_readed		A temporary buffer to store the read data.
+ * @param char *buffer_print		A buffer to accumulate the read data.
+ * 
+ * @return If all goes well: the buffer containing the read line.
+ *         On failure: NULL.
+ * 
+ * The function "manage_readed_line" function processes the current line stored
+ * in the buffer and updates it to prepare for the next read operation.
+ * 
+ * @param char *treat_line			The line to process.
+ * 
+ * @return If the operation succeeds: a new buffer with remaining content.
+ *         If there is no remaining content or an error occurs: NULL.
+ * 
+ * The function "ft_strchr2" locates the first occurrence of a character in the
+ * string pointed to by s.
+ * 
+ * @param const char *s				The string to search.
+ * @param int c						The character to locate.
+ * 
+ * @return							If the character is found: a pointer to the
+ * 									first occurrence.
+ *									If the character is not found: NULL.
  * 
 */
 
