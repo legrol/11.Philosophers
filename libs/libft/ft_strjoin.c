@@ -12,6 +12,20 @@
 
 #include "../../includes/libft.h"
 
+/**
+ * The function "ft_strjoin" concatenates two strings into a newly allocated 
+ * string. The resulting string contains the content of the first string 
+ * followed by the content of the second string.
+ * 
+ * @param s1 				The first input string.
+ * @param s2 				The second input string.
+ * 
+ * @return 					A pointer to the newly allocated string containing 
+ * 							the concatenated result. Returns NULL if memory 
+ * 							allocation fails.
+ * 
+ */
+
 char	*ft_strjoin(char const *s1, char const *s2)
 {
 	char	*str3;

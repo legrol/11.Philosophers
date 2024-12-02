@@ -12,6 +12,17 @@
 
 #include "../../includes/libft.h"
 
+/**
+ * The function "ft_strlen" calculates the length of a string, excluding the 
+ * null-terminator.
+ * 
+ * @param s 				The input string whose length is to be calculated.
+ * 
+ * @return 					The number of characters in the string, excluding 
+ * 							the null-terminator.
+ * 
+ */
+
 size_t	ft_strlen(const char *s)
 {
 	size_t	i;

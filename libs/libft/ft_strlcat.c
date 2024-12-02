@@ -12,6 +12,24 @@
 
 #include "../../includes/libft.h"
 
+/**
+ * The function "ft_strlcat" appends the string "src" to the end of "dest", 
+ * ensuring that the resulting string in "dest" is null-terminated and does not
+ * exceed the given buffer size. The function is designed to prevent buffer 
+ * overflows.
+ * 
+ * @param dest 				The destination string to which "src" will be 
+ * 							appended.
+ * @param src 				The source string to append to "dest".
+ * @param size 				The total size of the buffer, including the space 
+ * 							for the null-terminator.
+ * 
+ * @return 					The total length of the string it tried to create, 
+ * 							which is the initial length of "dest" plus the 
+ * 							length of "src".
+ * 
+ */
+
 size_t	ft_strlcat(char *dest, char *src, size_t size)
 {
 	size_t	i;

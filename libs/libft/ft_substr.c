@@ -12,6 +12,24 @@
 
 #include "../../includes/libft.h"
 
+/**
+ * The function "ft_substr" creates a new substring from a given string, 
+ * starting at a specified position and having a maximum length of "len".
+ * If the start position is greater than the length of the string, the function
+ * returns an empty string.
+ * 
+ * @param s 					The input string from which the substring will 
+ * 								be created.
+ * @param start 				The starting index of the substring in the 
+ * 								string.
+ * @param len 					The maximum length of the substring.
+ * 
+ * @return 						A pointer to the newly allocated substring. 
+ * 								Returns NULL if memory allocation fails or if 
+ * 								the input string is NULL.
+ * 
+ */
+
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
 	char	*str;

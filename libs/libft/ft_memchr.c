@@ -12,6 +12,22 @@
 
 #include "../../includes/libft.h"
 
+/**
+ * The function "ft_memchr" searches for the first occurrence of a specified 
+ * byte (converted from an integer) in the first n bytes  of a memory area.
+ * 
+ * @param s 				A pointer to the memory area to be searched.
+ * @param c 				The byte value to search for, interpreted as an 
+ * 							unsigned char.
+ * @param n 				The number of bytes to search in the memory area.
+ * 
+ * @return 					A pointer to the first occurrence of the byte in 
+ * 							the memory area. 
+ *							Returns NULL if the byte is not found within the 
+ *							first n bytes.
+ * 
+ */
+
 void	*ft_memchr(const void *s, int c, size_t n)
 {
 	char	*str;

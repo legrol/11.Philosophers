@@ -12,6 +12,22 @@
 
 #include "../../includes/libft.h"
 
+/**
+ * The function "ft_strncmp" compares up to n characters of two strings. The 
+ * comparison is based on the ASCII values of the characters and stops when a 
+ * difference is found, n characters are compared, or a null-terminator is 
+ * encountered.
+ * 
+ * @param s1 				The first string to be compared.
+ * @param s2 				The second string to be compared.
+ * @param n 				The maximum number of characters to compare.
+ * 
+ * @return 					An integer greater than, equal to, or less than 0,
+ * 							depending on whether the first string is greater 
+ * 							than, equal to, or less than the second string.
+ * 
+ */
+
 int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
 	size_t	i;

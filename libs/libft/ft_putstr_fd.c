@@ -12,6 +12,22 @@
 
 #include "../../includes/libft.h"
 
+/**
+ * The function "ft_putstr_fd" writes a string to the specified file 
+ * descriptor.
+ * 
+ * @param s 				The string to be written. If the string is NULL,
+ * 							the function does nothing.
+ * @param fd 				The file descriptor to which the string will be 
+ * 							written. 
+ *							Common values are 0 for standard input, 1 for 
+ *							standard output, and 2 for standard error.
+ * 
+ * @return None. 			The function performs the operation directly and 
+ * 							does not return a value.
+ * 
+ */
+
 void	ft_putstr_fd(char *s, int fd)
 {
 	if (s)

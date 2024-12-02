@@ -12,6 +12,26 @@
 
 #include "../../includes/libft.h"
 
+/**
+ * The function "ft_lstmap" iterates through a linked list and applies a given 
+ * function to the content of each element, creating a new linked list with 
+ * the results. If the allocation of a new element fails, the delete function 
+ * is used to free the allocated memory, and the function returns NULL.
+ * 
+ * @param lst 			A pointer to the first element of the linked list to be
+ * 						iterated.
+ * @param f 			A function pointer to a function that is applied to the 
+ * 						content of each element in the list.
+ * @param del 			A function pointer to a delete function that is used to
+ * 						free the content of elements in case of failure.
+ * 
+ * @return 				A pointer to the first element of the newly created 
+ * 						linked list. 
+ *         				Returns NULL if an allocation fails or if the input 
+ * 						list is NULL.
+ * 
+ */
+
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 {
 	t_list	*new_list;

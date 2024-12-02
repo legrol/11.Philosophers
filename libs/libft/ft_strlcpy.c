@@ -12,6 +12,22 @@
 
 #include "../../includes/libft.h"
 
+/**
+ * The function "ft_strlcpy" copies up to size - 1 characters from the string 
+ * "src" to "dest", null-terminating the result if size is not 0. It is 
+ * designed to prevent buffer overflows.
+ * 
+ * @param dest 				The destination buffer where the string will be 
+ * 							copied.
+ * @param src 				The source string to be copied.
+ * @param size 				The size of the destination buffer, including space
+ * 							for the null-terminator.
+ * 
+ * @return 					The total length of the string in "src", regardless
+ * 							of how many characters were actually copied.
+ * 
+ */
+
 size_t	ft_strlcpy(char *dest, const char *src, size_t size)
 {
 	size_t			i;

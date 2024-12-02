@@ -12,6 +12,23 @@
 
 #include "../../includes/libft.h"
 
+/**
+ * The function "ft_strmapi" applies a given function to each character of a 
+ * string to create a new dynamically allocated string with the transformed 
+ * characters.
+ * 
+ * @param s 				The input string to be transformed.
+ * @param f 				A function pointer that takes the index of the 
+ * 							character and the character itself as arguments, 
+ * 							returning the transformed character.
+ * 
+ * @return 					A pointer to the newly allocated string containing 
+ * 							the transformed characters. Returns NULL if the 
+ * 							memory allocation fails or if the input string is 
+ * 							NULL.
+ *
+ */
+
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
 	char			*str;

@@ -12,6 +12,56 @@
 
 #include "../../includes/libft.h"
 
+/**
+ * The function "ft_split" splits a string into an array of words based on a 
+ * specified delimiter character. Each word is dynamically allocated.
+ * 
+ * @param s 				The input string to be split.
+ * @param c 				The delimiter character used to separate words.
+ * 
+ * @return 					A pointer to an array of strings containing the 
+ * 							split words. 
+ *							Returns NULL if memory allocation fails or if the 
+ *							input string is NULL.
+ * 
+ * The function "create_word" populates an array of strings with words 
+ * extracted from the input string, splitting at each occurrence of the
+ * delimiter character.
+ * 
+ * @param s 				The input string to be split.
+ * @param c 				The delimiter character used to separate words.
+ * @param str 				The array of strings to be populated.
+ * @param words_count 		The total number of words in the string.
+ * 
+ * @return 					A pointer to the populated array of strings. 
+ *							Returns NULL if memory allocation fails.
+ * 
+ * The function "free_str" frees all previously allocated strings in an array
+ * of strings up to a specified index.
+ * 
+ * @param i 				The number of allocated strings to free.
+ * @param str 				The array of strings to be freed.
+ * 
+ * @return None. 			The memory is released directly.
+ * 
+ * The function "count_word_len" calculates the length of the next word in a 
+ * string starting at a specific position, stopping at the delimiter.
+ * 
+ * @param s 				A pointer to the start of the word in the string.
+ * @param c 				The delimiter character that separates words.
+ * 
+ * @return 					The length of the word.
+ * 
+ * The function "count_words" counts the number of words in a string separated
+ * by a specified delimiter character.
+ * 
+ * @param s 				The input string to be analyzed.
+ * @param c 				The delimiter character used to separate words.
+ * 
+ * @return 					The total number of words in the string.
+ * 
+ */
+
 static int	count_words(char const *s, char c)
 {
 	int	i;

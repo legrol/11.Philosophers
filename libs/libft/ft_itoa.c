@@ -12,6 +12,27 @@
 
 #include "../../includes/libft.h"
 
+/**
+ * The function "ft_itoa" converts an integer to its string representation.
+ * It handles positive and negative integers and returns the string 
+ * representation of the integer, allocating memory dynamically.
+ * 
+ * @param n 			The integer to be converted into a string.
+ * 
+ * @return 				A dynamically allocated string representing the 
+ * 						integer. Returns NULL if the memory allocation fails.
+ * 
+ * The function "count_chr" calculates the number of characters needed to 
+ * represent an integer in string form, including the sign if the number is 
+ * negative.
+ * 
+ * @param n 			The integer whose character count is to be determined.
+ * 
+ * @return 				The number of characters required to represent the 
+ * 						integer as a string, including the null-terminator.
+ * 
+ */
+
 static unsigned int	count_chr(int n)
 {
 	unsigned int	count;

@@ -12,6 +12,23 @@
 
 #include "../../includes/libft.h"
 
+/**
+ * The function "ft_putnbr_fd" writes an integer to the specified file 
+ * descriptor.
+ * It handles negative numbers, the minimum integer value, and recursion for 
+ * multi-digit numbers.
+ * 
+ * @param n 				The integer to be written.
+ * @param fd 				The file descriptor to which the integer will be 
+ * 							written. 
+ *           				Common values are 0 for standard input, 1 for 
+ * 							standard output, and 2 for standard error.
+ * 
+ * @return None. 			The function performs the operation directly and 
+ * 							does not return a value.
+ * 
+ */
+
 void	ft_putnbr_fd(int n, int fd)
 {
 	int	digit;

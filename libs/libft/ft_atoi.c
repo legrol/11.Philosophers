@@ -12,6 +12,22 @@
 
 #include "../../includes/libft.h"
 
+/**
+ * The function "ft_atoi" converts a string to an integer.
+ * It handles leading whitespaces, optional '+' or '-' signs, and numerical 
+ * digits. If the string starts with a valid number representation, the 
+ * function returns its integer equivalent.
+ * 
+ * @param str 		The input string to be converted into an integer.
+ *            		It can include leading whitespaces and an optional '+' or 
+ * 					'-' sign before the numerical digits.
+ * 
+ * @return 			The converted integer value of the input string, taking 
+ * 					into account the sign. Returns 0 if no valid number is 
+ * 					found.
+ * 
+ */
+
 int	ft_atoi(const char *str)
 {
 	int	n;
