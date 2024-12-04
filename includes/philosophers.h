@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 20:44:36 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/11/24 20:46:26 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/12/04 19:49:06 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,18 @@
 // ============================================================================
 # include <unistd.h>			// for write...
 # include <stdlib.h>			// for typedef, malloc...
-# include <math.h>				// for PI, etc.
-# include <fcntl.h>				// for open, O_RDONLY, etc.
+// # include <math.h>			// for PI, etc.
+// # include <fcntl.h>			// for open, O_RDONLY, etc.
 # include <stdio.h>				// for printf...
-# include <stdbool.h>			// for booleans...
-# include <signal.h>			// for SIGINT, SIGQUIT...
-# include <readline/readline.h> // for readline...
-# include <readline/history.h>	// for clear_history...
-# include <sys/wait.h> 			// for wait, waitpid, WIFSIGNALED(status)...
-# include <string.h>			// for strchr, strcpy, etc.
-# include <termios.h>			// for terminal I/O interfaces.
+// # include <stdbool.h>		// for booleans...
+// # include <signal.h>			// for SIGINT, SIGQUIT...
+// # include <readline/readline.h>  // for readline...
+// # include <readline/history.h>	// for clear_history...
+// # include <sys/wait.h> 			// for wait, waitpid, WIFSIGNALED(status)...
+// # include <string.h>			// for strchr, strcpy, etc.
+// # include <termios.h>		// for terminal I/O interfaces.
+# include <sys/time.h>			// for time functions...
+# include <pthread.h>			// for thread management functions...
 
 // ============================================================================
 // Access to my libraries
@@ -43,50 +45,28 @@
 // ============================================================================
 // Structures
 // ============================================================================
-// typedef enum e_tok_typ_enum
-// {
-// 	TOKEN_EMPTY,
-// 	TOKEN_REDIR_STDIN,
-// 	TOKEN_REDIR_STDOUT,
-// 	TOKEN_REDIR_APPEND,
-// 	TOKEN_REDIR_HEREDOC,
-// 	TOKEN_COMMAND,
-// 	TOKEN_OPTION,
-// 	TOKEN_ARG,
-// 	TOKEN_PIPE,
-// }					t_tok_typ_enum;
+typedef struct s_env
+{
+	int				time_to_die;
+	int				time_to_eat;
+	int				time_to_sleep;
+	t_philo			*philos;
+}					t_env;
 
-// typedef struct s_minishell
-// {
-// 	char			**envp;
-// 	t_envp			*list_envp;
-// 	int				stdin;
-// 	int				stdout;
-// 	char			*line;
-// 	t_token			*tokens;
-// 	int				exit;
-// 	char			*dirprompt;
-// }					t_minishell;
+typedef struct s_philo
+{
+	int				pos;
+	struct s_env	*env;
+}					t_philo;
 
 // ============================================================================
 // Management errors
 // ============================================================================
 void		ft_manage_err(const char *err);
 
-// ============================================================================
-// Release funtions
-// ============================================================================
-
-
-// ============================================================================
-// Initialization functions
-// ============================================================================
-
-
-// ============================================================================
+/// ============================================================================
 // Utils functions
 // ============================================================================
-
 
 
 #endif
