@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 20:43:02 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/12/04 20:08:49 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/12/04 20:12:13 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ int	main(int argc, char *argv[])
 
 
 	if (argc < 5 || argv > 6)
-		return (ft_manage_err(USAGE_ERR));
+		ft_manage_err(USAGE_ERR);
 	if (!ft_check_params(&env, argc, argv))
-		return (ft_manage_err(NUM_ARGV_ERR));
+		ft_manage_err(NUM_ARGV_ERR);
 
 
 
