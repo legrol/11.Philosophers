@@ -1,25 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_macros.h                                        :+:      :+:    :+:   */
+/*   ft_manage_err.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/02 12:08:07 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/12/04 20:07:19 by rdel-olm         ###   ########.fr       */
+/*   Created: 2024/08/24 22:13:04 by rdel-olm          #+#    #+#             */
+/*   Updated: 2024/12/04 19:54:46 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_MACROS_H
-# define FT_MACROS_H
+#include "../includes/philosophers.h"
 
-# define USAGE_ERR			"❗Arguments: Usage: ./philo <# philosophers> \
-									<time to die> <time to eat> <time to \
-									sleep> [# times each philosopher must \
-									eat]\n"
-# define NUM_ARGV_ERR		"❗1️⃣ Incorrect number of arguments, expected \
-                                    one."
+/**
+ * The function "ft_manage_err" After detecting an error, prints the error on 
+ * the screen (passed as an argument), extracted from macros.h.
+ * 
+ * @param const char *err 			error passed as macro.
+ * 
+ */
 
-
-
-#endif
+void	ft_manage_err(const char *err)
+{
+	ft_printf("Error: %s\n", err);
+	exit (EXIT_FAILURE);
+}
