@@ -6,11 +6,24 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 06:23:39 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/08/24 12:51:50 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/12/04 13:43:38 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/ft_printf.h"
+
+/**
+ * The function "ft_puthex" converts an unsigned long long number to 
+ * hexadecimal representation and writes it to the standard output.
+ * 
+ * @param unsigned long long nb    		The number to convert and print.
+ * @param char checker             		Determines the case of the hexadecimal 
+ *										output ('x' for lowercase, 'X' for 
+ *										uppercase).
+ * 
+ * @return                          	The number of characters written.
+ * 
+ */
 
 int	ft_puthex(unsigned long long nb, char checker)
 {

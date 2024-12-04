@@ -6,11 +6,33 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 07:42:38 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/08/24 12:51:38 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/12/04 13:42:21 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/ft_printf.h"
+
+/**
+ * The function "ft_printf" is a formatted output conversion function.
+ * It processes a format string and prints the corresponding arguments.
+ * 	
+ * @param char const *str    	The format string containing text and 
+ * 								specifiers.
+ * @param ...                	The variadic arguments to format and print.
+ * 
+ * @return 						The total number of characters printed.
+ * 
+ * The function "ft_checker" processes a format specifier and calls the 
+ * appropriate function to handle the corresponding argument.
+ * 
+ * @param va_list args      	The list of arguments passed to the function.
+ * @param char checker      	The format specifier to check and process.
+ * 
+ * @return 						If all goes well: the number of characters 
+ * 								printed.
+ *								On failure or if the specifier is invalid: -1.
+ * 
+ */
 
 static int	ft_checker(va_list args, char checker)
 {

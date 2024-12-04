@@ -6,11 +6,21 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 06:22:58 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/08/24 12:51:58 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/12/04 13:45:03 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/ft_printf.h"
+
+/**
+ * The function "ft_putnbr" writes an integer to the standard output, 
+ * handling both positive and negative numbers.
+ * 
+ * @param int nb    			The integer to write.
+ * 
+ * @return          			The number of characters written. 
+ * 
+ */
 
 int	ft_putnbr(int nb)
 {
