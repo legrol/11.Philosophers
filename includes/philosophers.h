@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 20:44:36 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/12/05 18:21:43 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/12/05 22:36:26 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,19 +52,31 @@ typedef struct s_envp
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				eat_count_max;
+	int				eat_max;
+	int				stopping_rule;
 	t_philo			*philos;
+	pthread_mutex_t	*forks;
+	pthread_mutex_t	mealtime;
+	pthread_mutex_t	writing;
 }					t_envp;
 
 typedef struct s_philo
 {
 	int				pos;
-	t_envp			*envp;
+	int				times_eaten;
+	unsigned long	last_meal;
+	char			*pos_char;
+	// t_envp			*envp;
+	struct s_envp	*env;
 }					t_philo;
 
 // ============================================================================
 // Initialization
 // ============================================================================
 void		ft_init_struct(t_envp *envp, int argc, char *argv[]);
+int			ft_init_sim(t_envp *envp);
+int			ft_init_mutex(t_envp *envp);
+int			ft_init_philo(t_envp *envp);
 
 // ============================================================================
 // Management errors

@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 12:08:07 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/12/05 18:51:24 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/12/05 21:41:14 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # define INVALID			" is not valid."
 # define NEGATIVE			" negative value."
 # define VALUES_INVALID		"Values of some parameter are invalid."
+# define INIT_ERR			"Initialization error."
 
 # define INT_MAX			2147483647
 # define INT_MIN			-2147483648

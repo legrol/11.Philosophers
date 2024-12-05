@@ -87,7 +87,8 @@ GNL					= ${LIBRARIES}/${GNL_DIR}/get_next_line.c \
 
 ERR					= ${ERRORS_DIR}/ft_manage_err.c
 
-INT					= ${INIT_DIR}/ft_init_struct.c
+INT					= ${INIT_DIR}/ft_init_struct.c \
+						${INIT_DIR}/ft_init.c
 
 UTL					= ${UTILS_DIR}/ft_utils.c
 
