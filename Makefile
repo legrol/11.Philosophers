@@ -87,11 +87,7 @@ GNL					= ${LIBRARIES}/${GNL_DIR}/get_next_line.c \
 
 ERR					= ${ERRORS_DIR}/ft_manage_err.c
 
-# INT					= ${INIT_DIR}/ft_enable_print.c \
-# 						${INIT_DIR}/ft_init_env.c \
-# 						${INIT_DIR}/ft_init_envp.c \
-# 						${INIT_DIR}/ft_init_minishell.c \
-# 						${INIT_DIR}/ft_init_signals.c
+INT					= ${INIT_DIR}/ft_init_struct.c
 
 UTL					= ${UTILS_DIR}/ft_utils.c
 
@@ -112,7 +108,7 @@ OBJ_SRC				= $(patsubst ${SRC_DIR}/%.c, ${OBJ_DIR}/%.o, ${SRC})
 OBJ_GNL				= $(patsubst ${LIBRARIES}/${GNL_DIR}/%.c, ${OBJ_DIR}/%.o, \
 						${GNL})
 OBJ_ERR				= $(patsubst ${ERRORS_DIR}/%.c, ${OBJ_DIR}/%.o, ${ERR})
-# OBJ_INT				= $(patsubst ${INIT_DIR}/%.c, ${OBJ_DIR}/%.o, ${INT})
+OBJ_INT				= $(patsubst ${INIT_DIR}/%.c, ${OBJ_DIR}/%.o, ${INT})
 OBJ_UTL				= $(patsubst ${UTILS_DIR}/%.c, ${OBJ_DIR}/%.o, ${UTL})
 # OBJ_FRE				= $(patsubst ${FREE_DIR}/%.c, ${OBJ_DIR}/%.o, ${FRE})
 # OBJ_EXE				= $(patsubst ${EXEC_DIR}/%.c, ${OBJ_DIR}/%.o, ${EXE})
@@ -143,9 +139,9 @@ ${OBJ_DIR}/%.o: ${LIBRARIES}/${GNL_DIR}/%.c
 # 	@${MKD} $(dir $@)
 # 	@$(CC) ${CFLAGS} ${IFLAGS} -c $< -o $@
 
-# ${OBJ_DIR}/%.o: ${INIT_DIR}/%.c
-# 	@${MKD} $(dir $@)
-# 	@$(CC) ${CFLAGS} ${IFLAGS} -c $< -o $@
+${OBJ_DIR}/%.o: ${INIT_DIR}/%.c
+	@${MKD} $(dir $@)
+	@$(CC) ${CFLAGS} ${IFLAGS} -c $< -o $@
 
 ${OBJ_DIR}/%.o: ${UTILS_DIR}/%.c
 	@${MKD} $(dir $@)

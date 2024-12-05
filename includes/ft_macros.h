@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 12:08:07 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/12/04 20:07:19 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/12/05 18:51:24 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,12 @@
 # define NUM_ARGV_ERR		"❗1️⃣ Incorrect number of arguments, expected \
 								one."
 # define NO_INT_ARGV_ERR	"❗Argument is not integer value"
-# define INT_NEG_ARGV_ERR	"❗Argument with negativ integer value. Forbidden"
+# define INT_NEG_ARGV_ERR	"❗Argument with negativ integer value. Forbidden."
 # define PARAMS_ERR			"❗Incorrect parameteres."
-
+# define ARG				"Argument "
+# define INVALID			" is not valid."
+# define NEGATIVE			" negative value."
+# define VALUES_INVALID		"Values of some parameter are invalid."
 
 # define INT_MAX			2147483647
 # define INT_MIN			-2147483648

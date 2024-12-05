@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_init_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rdel-olm <rdel-olm@student.42malaga.com>   #+#  +:+       +#+        */
+/*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024-12-05 12:15:42 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024-12-05 12:15:42 by rdel-olm         ###   ########.fr       */
+/*   Created: 2024/12/05 12:15:42 by rdel-olm          #+#    #+#             */
+/*   Updated: 2024/12/05 18:21:54 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,13 @@
  * 
  */
 
-void	ft_init_envp(t_envp *envp, int argc, char *argv[])
+void	ft_init_struct(t_envp *envp, int argc, char *argv[])
 {
 	envp->total_philo = 0;
 	envp->time_to_die = 0;
 	envp->time_to_eat = 0;
 	envp->time_to_sleep = 0;
-	envp->eat_count_max = 0;	
+	envp->eat_count_max = 0;
 	envp->total_philo = ft_atoi(argv[1]);
 	envp->time_to_die = ft_atoi(argv[2]);
 	envp->time_to_eat = ft_atoi(argv[3]);
