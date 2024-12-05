@@ -45,19 +45,26 @@
 // ============================================================================
 // Structures
 // ============================================================================
-typedef struct s_env
+typedef struct s_envp
 {
+	int				total_philo;
 	int				time_to_die;
 	int				time_to_eat;
 	int				time_to_sleep;
+	int				eat_count_max;
 	t_philo			*philos;
-}					t_env;
+}					t_envp;
 
 typedef struct s_philo
 {
 	int				pos;
-	struct s_env	*env;
+	t_envp			*envp;
 }					t_philo;
+
+// ============================================================================
+// Initialization
+// ============================================================================
+void		ft_init_envp(t_envp *envp, int argc, char *argv[]);
 
 // ============================================================================
 // Management errors
@@ -67,5 +74,6 @@ void		ft_manage_err(const char *err);
 /// ============================================================================
 // Utils functions
 // ============================================================================
+int			ft_isint(char *nbr);
 
 #endif

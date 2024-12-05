@@ -43,8 +43,8 @@ MK_					= && make
 
 SRC_DIR				= ./src
 ERRORS_DIR			= ./errors
-FREE_DIR			= ./free
-INIT_DIR			= ./init
+# FREE_DIR			= ./free
+# INIT_DIR			= ./init
 UTILS_DIR			= ./utils
 LIBRARIES			= ./libs
 OBJ_DIR				= ./obj
@@ -68,7 +68,7 @@ CFLAGS 				= -Wall -Werror -Wextra
 IFLAGS				= -I${INCLUDES_DIR}
 LFLAGS				= -L${LIBRARIES}/${LIBFT_DIR} -lft \
 						-L${LIBRARIES}/${PRINTFT_DIR} -lftprintf \
-						-L${LIBRARIES}/${EXAMFT_DIR} -lexamft -lreadline				
+						-L${LIBRARIES}/${EXAMFT_DIR} -lexamft -lreadline -lpthread				
 
 # ══ Flags Bonus══════════════════════════════════════════════════════════════ #
 #    -----------                                                               #
@@ -93,14 +93,12 @@ ERR					= ${ERRORS_DIR}/ft_manage_err.c
 # 						${INIT_DIR}/ft_init_minishell.c \
 # 						${INIT_DIR}/ft_init_signals.c
 
-UTL					= ${UTILS_DIR}/ft_print_init.c
+UTL					= ${UTILS_DIR}/ft_utils.c
 
 # FRE					= ${FREE_DIR}/ft_free_envp_list.c \
 # 						${FREE_DIR}/ft_free_split.c \
 # 						${FREE_DIR}/ft_free_tokens.c \
 # 						${FREE_DIR}/ft_free_ast.c
-
-# PAR					= ${PARSER_DIR}/ft_xxx.c
 
 # EXE					= ${EXEC_DIR}/ft_cmdexe.c \
 # 						${EXEC_DIR}/ft_path.c \
@@ -117,7 +115,6 @@ OBJ_ERR				= $(patsubst ${ERRORS_DIR}/%.c, ${OBJ_DIR}/%.o, ${ERR})
 # OBJ_INT				= $(patsubst ${INIT_DIR}/%.c, ${OBJ_DIR}/%.o, ${INT})
 OBJ_UTL				= $(patsubst ${UTILS_DIR}/%.c, ${OBJ_DIR}/%.o, ${UTL})
 # OBJ_FRE				= $(patsubst ${FREE_DIR}/%.c, ${OBJ_DIR}/%.o, ${FRE})
-# OBJ_PAR				= $(patsubst ${PARSER_DIR}/%.c, ${OBJ_DIR}/%.o, ${PAR})
 # OBJ_EXE				= $(patsubst ${EXEC_DIR}/%.c, ${OBJ_DIR}/%.o, ${EXE})
 
 # ═══ Rules ══════════════════════════════════════════════════════════════════ #
@@ -127,13 +124,11 @@ all: ${NAME}
 
 ${NAME}: ftlibft ftprintf ftexamft  ${OBJ_SRC} ${OBJ_GNL} \
 									${OBJ_ERR} ${OBJ_INT} ${OBJ_UTL} \
-									${OBJ_FRE} ${OBJ_PAR} ${OBJ_EXE} \
-									${OBJ_BUI} ${OBJ_TOK}
+									${OBJ_FRE} ${OBJ_EXE} ${OBJ_BUI}
 	@echo "$(YELLOW)Compiling root ...$(DEF_COLOR)"
 	@${CC} ${CFLAGS} ${IFLAGS} -o ${NAME} ${OBJ_SRC} ${OBJ_GNL} ${OBJ_ERR} \
 									${OBJ_INT} ${OBJ_UTL} ${OBJ_FRE} \
-									${OBJ_PAR} ${OBJ_EXE} ${OBJ_BUI} \
-									${OBJ_TOK} ${LFLAGS}
+									${OBJ_EXE} ${OBJ_BUI} ${LFLAGS}
 	@echo "$(GREEN) $(NAME) all created ✓$(DEF_COLOR)"
 
 ${OBJ_DIR}/%.o: ${SRC_DIR}/%.c
@@ -144,23 +139,19 @@ ${OBJ_DIR}/%.o: ${LIBRARIES}/${GNL_DIR}/%.c
 	@${MKD} $(dir $@)
 	@$(CC) ${CFLAGS} ${IFLAGS} -c $< -o $@
 
-${OBJ_DIR}/%.o: ${ERRORS_DIR}/%.c
-	@${MKD} $(dir $@)
-	@$(CC) ${CFLAGS} ${IFLAGS} -c $< -o $@
-
-${OBJ_DIR}/%.o: ${INIT_DIR}/%.c
-	@${MKD} $(dir $@)
-	@$(CC) ${CFLAGS} ${IFLAGS} -c $< -o $@
-
-# ${OBJ_DIR}/%.o: ${UTILS_DIR}/%.c
+# ${OBJ_DIR}/%.o: ${ERRORS_DIR}/%.c
 # 	@${MKD} $(dir $@)
 # 	@$(CC) ${CFLAGS} ${IFLAGS} -c $< -o $@
+
+# ${OBJ_DIR}/%.o: ${INIT_DIR}/%.c
+# 	@${MKD} $(dir $@)
+# 	@$(CC) ${CFLAGS} ${IFLAGS} -c $< -o $@
+
+${OBJ_DIR}/%.o: ${UTILS_DIR}/%.c
+	@${MKD} $(dir $@)
+	@$(CC) ${CFLAGS} ${IFLAGS} -c $< -o $@
 
 # ${OBJ_DIR}/%.o: ${FREE_DIR}/%.c
-# 	@${MKD} $(dir $@)
-# 	@$(CC) ${CFLAGS} ${IFLAGS} -c $< -o $@
-
-# ${OBJ_DIR}/%.o: ${PARSER_DIR}/%.c
 # 	@${MKD} $(dir $@)
 # 	@$(CC) ${CFLAGS} ${IFLAGS} -c $< -o $@
 

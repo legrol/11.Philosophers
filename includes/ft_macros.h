@@ -18,8 +18,13 @@
 									sleep> [# times each philosopher must \
 									eat]\n"
 # define NUM_ARGV_ERR		"❗1️⃣ Incorrect number of arguments, expected \
-                                    one."
+								one."
+# define NO_INT_ARGV_ERR	"❗Argument is not integer value"
+# define INT_NEG_ARGV_ERR	"❗Argument with negativ integer value. Forbidden"
+# define PARAMS_ERR			"❗Incorrect parameteres."
 
 
+# define INT_MAX			2147483647
+# define INT_MIN			-2147483648
 
 #endif
