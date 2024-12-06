@@ -29,22 +29,22 @@ static void	ft_check_params(t_envp *envp, int argc, char *argv[])
 	{
 		if (!ft_isinteger(argv[i]))
 		{
-			ft_printf(RED ARG "%i" INVALID "\n" RESET, i);
+			printf(RED ARG "%i" INVALID "\n" RESET, i);
 			ft_manage_err(GREEN NO_INT_ARGV_ERR RESET);
 		}
-		if (ft_atoi(argv[i]) < 0)
+		if (ft_philo_atoi(argv[i]) < 0)
 		{
-			ft_printf(RED ARG "%i" NEGATIVE "\n" RESET, i);
+			printf(RED ARG "%i" NEGATIVE "\n" RESET, i);
 			ft_manage_err(GREEN INT_NEG_ARGV_ERR RESET);
 		}
 		i++;
 	}
 	ft_init_struct(envp, argc, argv);
-	if (envp->eat_count_max < 1 || envp->time_to_die < 1 || \
+	if (envp->philo_eat_limit < 1 || envp->time_to_die < 1 || \
 		envp->time_to_eat < 1 || envp->time_to_sleep < 1 || \
-		envp->total_philo < 1)
+		envp->nbr_philos < 1)
 	{
-		ft_printf(RED VALUES_INVALID "\n" RESET);
+		printf(RED VALUES_INVALID "\n" RESET);
 		ft_manage_err(GREEN PARAMS_ERR RESET);
 	}
 }

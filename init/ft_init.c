@@ -25,7 +25,7 @@ int	ft_init_mutex(t_envp *envp)
 	int	i;
 
 	i = 0;
-	while (i < envp->total_philo)
+	while (i < envp->nbr_philos)
 	{
 		if (pthread_mutex_init(&(envp->forks[i]), NULL))
 			return (1);
@@ -44,11 +44,11 @@ int	ft_init_philo(t_envp *envp)
 	int	i;
 
 	i = 0;
-	while (i < envp->total_philo)
+	while (i < envp->nbr_philos)
 	{
 		envp->philos[i].pos = i + 1;
 		envp->philos[i].times_eaten = 0;
-		envp->philos[i].pos_char = ft_itoa(i + 1);
+		envp->philos[i].pos_char = ft_philo_itoa(i + 1);
 		if (!envp->philos[i].pos_char)
 			break ;
 		//
@@ -65,10 +65,10 @@ int	ft_init_philo(t_envp *envp)
 
 int	ft_init_sim(t_envp *envp)
 {
-	envp->philos = malloc(sizeof(t_philo) * envp->total_philo);
+	envp->philos = malloc(sizeof(t_philo) * envp->nbr_philos);
 	if (!envp->philos)
 		return (0);
-	envp->forks = malloc(sizeof(pthread_mutex_t) * envp->total_philo);
+	envp->forks = malloc(sizeof(pthread_mutex_t) * envp->nbr_philos);
 	if (!envp->forks)
 	{
 		free(envp->philos);

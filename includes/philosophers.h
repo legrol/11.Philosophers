@@ -47,11 +47,11 @@
 // ============================================================================
 typedef struct s_envp
 {
-	int				total_philo;
+	int				nbr_philos;
 	int				time_to_die;
 	int				time_to_eat;
 	int				time_to_sleep;
-	int				eat_count_max;
+	int				philo_eat_limit;
 	int				eat_max;
 	int				stopping_rule;
 	t_philo			*philos;
@@ -87,5 +87,7 @@ void		ft_manage_err(const char *err);
 // Utils functions
 // ============================================================================
 int			ft_isint(char *nbr);
+int			ft_philo_atoi(const char *str);
+char		*ft_philo_itoa(int n);
 
 #endif

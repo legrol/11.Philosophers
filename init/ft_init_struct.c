@@ -26,15 +26,15 @@
 
 void	ft_init_struct(t_envp *envp, int argc, char *argv[])
 {
-	envp->total_philo = 0;
+	envp->nbr_philos = 0;
 	envp->time_to_die = 0;
 	envp->time_to_eat = 0;
 	envp->time_to_sleep = 0;
-	envp->eat_count_max = 0;
-	envp->total_philo = ft_atoi(argv[1]);
-	envp->time_to_die = ft_atoi(argv[2]);
-	envp->time_to_eat = ft_atoi(argv[3]);
-	envp->time_to_sleep = ft_atoi(argv[4]);
+	envp->philo_eat_limit = 0;
+	envp->nbr_philos = ft_philo_atoi(argv[1]);
+	envp->time_to_die = ft_philo_atoi(argv[2]);
+	envp->time_to_eat = ft_philo_atoi(argv[3]);
+	envp->time_to_sleep = ft_philo_atoi(argv[4]);
 	if (argc == 6)
-		envp->eat_count_max = ft_atoi(argv[5]);
+		envp->philo_eat_limit = ft_philo_atoi(argv[5]);
 }

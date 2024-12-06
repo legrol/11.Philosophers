@@ -22,6 +22,6 @@
 
 void	ft_manage_err(const char *err)
 {
-	ft_printf("Error: %s\n", err);
+	printf("Error: %s\n", err);
 	exit (EXIT_FAILURE);
 }
