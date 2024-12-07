@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 20:44:36 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/12/05 22:36:26 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/12/07 17:04:53 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ int			ft_init_philo(t_envp *envp);
 // Management errors
 // ============================================================================
 void		ft_manage_err(const char *err);
+int			ft_manage_err_simple(const char *err);
 
 /// ============================================================================
 // Utils functions

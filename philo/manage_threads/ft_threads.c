@@ -1,32 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_manage_err.c                                    :+:      :+:    :+:   */
+/*   ft_threads.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/24 22:13:04 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/12/07 17:12:43 by rdel-olm         ###   ########.fr       */
+/*   Created: 2024/12/07 17:38:24 by rdel-olm          #+#    #+#             */
+/*   Updated: 2024/12/07 17:43:26 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philosophers.h"
 
 /**
- * The function "ft_manage_err" After detecting an error, prints the error on 
- * the screen (passed as an argument), extracted from macros.h.
+ * The function "" xxx
  * 
- * @param const char *err 			error passed as macro.
+ * @param 			xxx
  * 
  */
 
-void	ft_manage_err(const char *err)
+void	ft_create_threads(t_envp	*envp)
 {
-	printf(RED "Error: " RESET GREEN "%s\n" RESET, err);
-	exit (EXIT_FAILURE);
-}
 
-int	ft_manage_err_simple(const char *err)
-{
-	printf(RED "Error: " RESET GREEN "%s\n" RESET, err);
+
 }
