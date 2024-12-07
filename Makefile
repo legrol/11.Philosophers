@@ -120,7 +120,8 @@ ERR					= ${ERRORS_DIR}/ft_manage_err.c
 INT					= ${INIT_DIR}/ft_init_struct.c \
 						${INIT_DIR}/ft_init.c
 
-UTL					= ${UTILS_DIR}/ft_utils.c
+UTL					= ${UTILS_DIR}/ft_utils.c \
+						${UTILS_DIR}/ft_utils_2.c
 
 # FRE				= ${FREE_DIR}/ft_free_envp_list.c \
 # 						${FREE_DIR}/ft_free_split.c \
