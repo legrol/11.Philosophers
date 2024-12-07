@@ -6,19 +6,77 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 18:58:55 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/12/05 22:47:40 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/12/07 19:40:39 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philosophers.h"
 
 /**
- * The function "ft_init" xxx
+ * The function "ft_init_sim" allocates memory for the philosophers and their 
+ * forks, and initializes all the necessary mutexes and philosopher data 
+ * structures. If any initialization step fails, it cleans up the allocated 
+ * resources and exits.
  * 
- * @param t_envp *envp				xxx
+ * @param t_envp *envp				A pointer to the environment structure 
+ * 									that stores simulation parameters, 
+ * 									mutexes, and philosopher data.
+ * @return int						Returns EXIT_SUCCESS if the simulation 
+ * 									is successfully initialized; otherwise, 
+ * 									returns EXIT_FAILURE.
  * 
+ * The function "ft_init_mutex" initializes the mutexes for the philosophers' 
+ * forks, as well as additional mutexes for managing shared resources such as 
+ * mealtime and writing operations.
+ * 
+ * @param t_envp *envp				A pointer to the environment structure 
+ * 									that stores the mutexes and simulation 
+ * 									parameters.
+ * @return int						Returns EXIT_SUCCESS if all mutexes are 
+ * 									successfully initialized; otherwise, 
+ * 									returns EXIT_FAILURE.
+ * 
+ * The function "ft_init_philo" initializes the philosophers' data in the 
+ * environment structure. It assigns positions, fork associations, and other 
+ * relevant details to each philosopher. If an error occurs during the 
+ * initialization (e.g., memory allocation fails), it cleans up and exits.
+ * 
+ * @param t_envp *envp				A pointer to the environment structure 
+ * 									that stores simulation parameters and 
+ * 									philosopher data.
+ * @return int						Returns EXIT_SUCCESS if the philosophers 
+ * 									are successfully initialized; otherwise, 
+ * 									returns EXIT_FAILURE.
  * 
  */
+
+int	ft_init_philo(t_envp *envp)
+{
+	int	i;
+
+	i = 0;
+	while (i++ < envp->nbr_philos)
+	{
+		envp->philos[i].pos = i + 1;
+		envp->philos[i].times_eaten = 0;
+		envp->philos[i].pos_char = ft_philo_itoa(i + 1);
+		if (!envp->philos[i].pos_char)
+			break ;
+		if (i == 0)
+			envp->philos[i].right_fork = envp->nbr_philos;
+		else
+			envp->philos[i].right_fork = i;
+		envp->philos[i].left_fork = (i + 1);
+		envp->philos[i].envp = envp;
+	}
+	if (i != envp->nbr_philos)
+	{
+		while (i-- >= 0)
+			free(envp->philos[i].pos_char);
+		return (EXIT_FAILURE);
+	}
+	return (EXIT_SUCCESS);
+}
 
 int	ft_init_mutex(t_envp *envp)
 {
@@ -28,63 +86,31 @@ int	ft_init_mutex(t_envp *envp)
 	while (i < envp->nbr_philos)
 	{
 		if (pthread_mutex_init(&(envp->forks[i]), NULL))
-			return (1);
+			return (EXIT_FAILURE);
 		i++;
 	}
 	if (pthread_mutex_init(&(envp->mealtime), NULL) || \
 	pthread_mutex_init(&(envp->writing), NULL))
-		return (1);
-	// if (pthread_mutex_init(&(envp->writing), NULL))
-	// 	return (1);
-	return (0);
-}
-
-int	ft_init_philo(t_envp *envp)
-{
-	int	i;
-
-	i = 0;
-	while (i < envp->nbr_philos)
-	{
-		envp->philos[i].pos = i + 1;
-		envp->philos[i].times_eaten = 0;
-		envp->philos[i].pos_char = ft_philo_itoa(i + 1);
-		if (!envp->philos[i].pos_char)
-			break ;
-		//
-		//
-		//
-		i++;
-	}
-
-
-
-
-	return (0);
+		return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
 }
 
 int	ft_init_sim(t_envp *envp)
 {
 	envp->philos = malloc(sizeof(t_philo) * envp->nbr_philos);
 	if (!envp->philos)
-		return (0);
+		return (EXIT_FAILURE);
 	envp->forks = malloc(sizeof(pthread_mutex_t) * envp->nbr_philos);
 	if (!envp->forks)
 	{
 		free(envp->philos);
-		return (0);
+		return (EXIT_FAILURE);
 	}
 	if (ft_init_mutex(envp) || ft_init_philo(envp))
 	{
 		free(envp->philos);
 		free(envp->forks);
-		return (0);
+		return (EXIT_FAILURE);
 	}
-	// if (ft_init_philo(envp))
-	// {
-	// 	free(envp->philos);
-	// 	free(envp->forks);
-	// 	return (0);
-	// }
-	return (1);
+	return (EXIT_SUCCESS);
 }

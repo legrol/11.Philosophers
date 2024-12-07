@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 11:32:35 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/09/09 15:11:50 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/12/07 17:49:49 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@
  *										On failure: NULL.
  * 
  * The function "ft_strlcpy2" copies up to size - 1 characters from the source 
- * string to the destination string, null-terminating the result if size is not 0.
+ * string to the destination string, null-terminating the result if size is 
+ * not 0.
  * 
  * @param char *dest					The destination buffer.
  * @param const char *src				The source string.

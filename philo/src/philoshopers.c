@@ -6,27 +6,39 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 20:43:02 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/12/07 17:47:04 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/12/07 19:35:06 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philosophers.h"
 
 /**
- * The function "main" xxx
+ * The function "main" serves as the entry point of the program. It validates 
+ * the command-line arguments, initializes the environment structure, and 
+ * starts the simulation if all parameters are valid.
  * 
- * @param int argc					xxx
- * @param char *argv[]				xxx
+ * @param int argc					The number of command-line arguments 
+ * 									passed to the program.
+ * @param char *argv[]				An array of strings containing the 
+ * 									command-line arguments.
+ * @return int						Returns EXIT_SUCCESS if the program 
+ * 									executes successfully; otherwise, 
+ * 									returns EXIT_FAILURE.
  * 
- * @return							xxx
+ * The function "ft_check_params" validates the command-line arguments to 
+ * ensure they meet the requirements for the simulation. It checks if the 
+ * arguments are integers, non-negative, and within valid ranges. If valid, 
+ * it initializes the environment structure with these parameters.
  * 
- * The function "ft_check_params" xxx
- * 
- * @param t_envp *envp				xxx
- * @param int argc					xxx
- * @param char *argv[]				xxx
- * 
- * @return 							xxx
+ * @param t_envp *envp				A pointer to the environment structure 
+ * 									that stores simulation parameters and 
+ * 									state variables.
+ * @param int argc					The number of command-line arguments 
+ * 									provided to the program.
+ * @param char *argv[]				An array of strings containing the 
+ * 									command-line arguments.
+ * @return int						Returns EXIT_SUCCESS if all parameters 
+ * 									are valid; otherwise, returns EXIT_FAILURE.
  * 
  */
 
@@ -69,7 +81,7 @@ int	main(int argc, char *argv[])
 		return (ft_manage_err_simple(USAGE_ERR), EXIT_FAILURE);
 	if (ft_check_params(&envp, argc, argv))
 		return ("Bye, my friend.", EXIT_FAILURE);
-	if (!ft_init_sim(&envp)) // desarrollar
+	if (ft_init_sim(&envp))
 		return (ft_manage_err_simple(INIT_ERR), EXIT_FAILURE);
 	if (!ft_create_threads(&envp)) // desarrollar
 		return (ft_manage_err_simple(THREADS_ERR), EXIT_FAILURE);

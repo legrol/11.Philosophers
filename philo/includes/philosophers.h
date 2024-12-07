@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 20:44:36 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/12/07 17:04:53 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/12/07 19:39:11 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,9 @@ typedef struct s_philo
 	int				times_eaten;
 	unsigned long	last_meal;
 	char			*pos_char;
-	// t_envp			*envp;
-	struct s_envp	*env;
+	int				right_fork;
+	int				left_fork;
+	t_envp			*envp;
 }					t_philo;
 
 // ============================================================================
@@ -82,7 +83,7 @@ int			ft_init_philo(t_envp *envp);
 // Management errors
 // ============================================================================
 void		ft_manage_err(const char *err);
-int			ft_manage_err_simple(const char *err);
+void		ft_manage_err_simple(const char *err);
 
 /// ============================================================================
 // Utils functions
