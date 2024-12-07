@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 20:43:02 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/12/07 20:12:15 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/12/07 20:44:27 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int	main(int argc, char *argv[])
 		return ("Bye, my friend.", EXIT_FAILURE);
 	if (ft_init_sim(&envp))
 		return (ft_manage_err_simple(INIT_ERR), EXIT_FAILURE);
-	if (!ft_create_threads(&envp))
+	if (ft_create_threads(&envp))
 		return (ft_manage_err_simple(THREADS_ERR), EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }

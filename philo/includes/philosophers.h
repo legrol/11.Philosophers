@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 20:44:36 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/12/07 20:12:03 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/12/08 00:13:09 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,17 +49,18 @@ typedef struct s_envp
 	t_philo			*philos;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	mealtime;
-	pthread_mutex_t	writing;
+	pthread_mutex_t	thinking;
 }					t_envp;
 
 typedef struct s_philo
 {
 	int				pos;
 	int				times_eaten;
-	unsigned long	last_meal;
-	char			*pos_char;
 	int				right_fork;
 	int				left_fork;
+	unsigned long	last_meal;
+	char			*pos_char;
+	pthread_t		thread_id;
 	t_envp			*envp;
 }					t_philo;
 
@@ -81,6 +82,13 @@ void			ft_manage_err_simple(const char *err);
 // Management threads
 // ============================================================================
 int				ft_create_threads(t_envp	*envp);
+
+// ============================================================================
+// Management philos
+// ============================================================================
+void			ft_check_dead(t_envp *envp, t_philo *philo);
+void			ft_check_eat(t_philo *philo);
+void			ft_check_think(char *msg, t_philo *philo, int unlock);
 
 /// ============================================================================
 // Utils functions

@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 18:58:55 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/12/07 19:40:39 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/12/08 00:08:18 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int	ft_init_mutex(t_envp *envp)
 		i++;
 	}
 	if (pthread_mutex_init(&(envp->mealtime), NULL) || \
-	pthread_mutex_init(&(envp->writing), NULL))
+	pthread_mutex_init(&(envp->thinking), NULL))
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
