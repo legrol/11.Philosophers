@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 10:41:10 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/12/07 19:46:13 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/12/08 21:49:33 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,10 @@
  * 
  */
 
-int	ft_isint(char *nbr)
+int	ft_isinteger(char *nbr)
 {
-	int		i;
 	long	result;
 
-	i = 0;
 	result = 0;
 	result = ft_atoi(nbr);
 	if (result <= INT_MAX || result >= INT_MIN)

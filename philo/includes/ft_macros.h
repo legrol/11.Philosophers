@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 12:08:07 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/12/07 17:31:55 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/12/08 21:32:09 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,11 @@
 # define VALUES_INVALID		"Values of some parameter are invalid."
 # define INIT_ERR			"Initialization error."
 # define THREADS_ERR		"Threads error."
+# define BYE				"Bye, my friend."
 
 # define INT_MAX			2147483647
 # define INT_MIN			-2147483648
+# define UNLOCK				1
+# define LOCK				0
 
 #endif

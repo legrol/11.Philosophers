@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 20:44:36 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/12/08 00:13:09 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/12/08 21:38:04 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,24 +34,13 @@
 # include "ft_macros.h"
 
 // ============================================================================
+// Forward declarations
+// ============================================================================
+struct	s_envp;
+
+// ============================================================================
 // Structures
 // ============================================================================
-typedef struct s_envp
-{
-	int				nbr_philos;
-	int				time_to_die;
-	int				time_to_eat;
-	int				time_to_sleep;
-	int				philo_eat_limit;
-	int				eat_max;
-	int				stopping_rule;
-	unsigned long	create_time;
-	t_philo			*philos;
-	pthread_mutex_t	*forks;
-	pthread_mutex_t	mealtime;
-	pthread_mutex_t	thinking;
-}					t_envp;
-
 typedef struct s_philo
 {
 	int				pos;
@@ -61,8 +50,24 @@ typedef struct s_philo
 	unsigned long	last_meal;
 	char			*pos_char;
 	pthread_t		thread_id;
-	t_envp			*envp;
+	struct s_envp	*envp;
 }					t_philo;
+
+typedef struct s_envp
+{
+	int				nbr_philos;
+	int				time_to_die;
+	int				time_to_eat;
+	int				time_to_sleep;
+	int				philo_eat_limit;
+	int				eat_max;
+	int				stopping_rule;
+	unsigned long	init_time;
+	t_philo			*philos;
+	pthread_mutex_t	*forks;
+	pthread_mutex_t	mealtime;
+	pthread_mutex_t	writing;
+}					t_envp;
 
 // ============================================================================
 // Initialization
@@ -88,14 +93,15 @@ int				ft_create_threads(t_envp	*envp);
 // ============================================================================
 void			ft_check_dead(t_envp *envp, t_philo *philo);
 void			ft_check_eat(t_philo *philo);
-void			ft_check_think(char *msg, t_philo *philo, int unlock);
+void			ft_check_stamp(char *msg, t_philo *philo, int unlock);
 
 /// ============================================================================
 // Utils functions
 // ============================================================================
-int				ft_isint(char *nbr);
+int				ft_isinteger(char *nbr);
 int				ft_philo_atoi(const char *str);
 char			*ft_philo_itoa(int n);
 unsigned long	ft_get_time(void);
+void			ft_sleep(unsigned long total_time, t_envp *envp);
 
 #endif

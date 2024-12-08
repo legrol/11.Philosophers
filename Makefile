@@ -44,153 +44,107 @@ MK_					= && make
 
 SRC_DIR				= ./philo/src
 ERRORS_DIR			= ./philo/errors
-# FREE_DIR			= ./philo/free
 INIT_DIR			= ./philo/init
 UTILS_DIR			= ./philo/utils
-LIBRARIES			= ./philo/libs
 OBJ_DIR				= ./philo/obj
 INCLUDES_DIR		= ./philo/includes
+MGE_PHILOS			= ./philo/manage_philos
+MGE_THREADS			= ./philo/manage_threads
 LIBFT_DIR			= libft
 PRINTFT_DIR			= printf
 EXAMFT_DIR			= examft
 GNL_DIR				= gnl
 
-# ══ Directories Bonus ═══════════════════════════════════════════════════════ #
-#    -----------------                                                         #
+# # ══ Directories Bonus ═══════════════════════════════════════════════════════ #
+# #    -----------------                                                         #
 
-SRC_DIR_BONUS		= ./philo_bonus/src
-ERRORS_DIR_BONUS	= ./philo_bonus/errors
-# FREE_DIR_BONUS	= ./philo_bonus/free
-INIT_DIR_BONUS		= ./philo_bonus/init
-UTILS_DIR_BONUS		= ./philo_bonus/utils
-LIBRARIES_BONUS		= ./philo_bonus/libs
-OBJ_DIR_BONUS		= ./phphilo_bonusilo/obj
-INCLUDES_DIR_BONUS	= ./philo_bonus/includes
-LIBFT_DIR_BONUS		= libft
-PRINTFT_DIR_BONUS	= printf
-EXAMFT_DIR_BONUS	= examft
-GNL_DIR_BONUS		= gnl
-
-# ══ Library Archives ════════════════════════════════════════════════════════ #
-#    ----------------                                                          #
-
-LIBFT_A				= ${LIBRARIES}/${LIBFT_DIR}/libft.a
-PRINTFT_A			= ${LIBRARIES}/${PRINTFT_DIR}/libftprintf.a
-EXAMFT_A			= ${LIBRARIES}/${EXAMFT_DIR}/libexamft.a
-
-# ══ Library Archives Bonus ══════════════════════════════════════════════════ #
-#    ----------------------                                                    #
-
-LIBFT_A_BONUS		= ${LIBRARIES_BONUS}/${LIBFT_DIR_BONUS}/libft.a
-PRINTFT_A_BONUS		= ${LIBRARIES_BONUS}/${PRINTFT_DIR_BONUS}/libftprintf.a
-EXAMFT_A_BONUS		= ${LIBRARIES_BONUS}/${EXAMFT_DIR_BONUS}/libexamft.a
+# SRC_DIR_BONUS		= ./philo_bonus/src
+# ERRORS_DIR_BONUS	= ./philo_bonus/errors
+# INIT_DIR_BONUS		= ./philo_bonus/init
+# UTILS_DIR_BONUS		= ./philo_bonus/utils
+# OBJ_DIR_BONUS		= ./phphilo_bonusilo/obj
+# INCLUDES_DIR_BONUS	= ./philo_bonus/includes
+# LIBFT_DIR_BONUS		= libft
+# PRINTFT_DIR_BONUS	= printf
+# EXAMFT_DIR_BONUS	= examft
+# GNL_DIR_BONUS		= gnlç
 
 # ══ Flags ═══════════════════════════════════════════════════════════════════ #
 #    -----                                                                     #
 
 CFLAGS 				= -Wall -Werror -Wextra
 IFLAGS				= -I${INCLUDES_DIR}
-LFLAGS				= -L${LIBRARIES}/${LIBFT_DIR} -lft \
-						-L${LIBRARIES}/${PRINTFT_DIR} -lftprintf \
-						-L${LIBRARIES}/${EXAMFT_DIR} -lexamft -lreadline \
-						-lpthread				
+LFLAGS				= -lpthread				
 
-# ══ Flags Bonus══════════════════════════════════════════════════════════════ #
-#    -----------                                                               #
+# # ══ Flags Bonus══════════════════════════════════════════════════════════════ #
+# #    -----------                                                               #
 
-CFLAGS_BONUS 		= -Wall -Werror -Wextra
-IFLAGS_BONUS		= -I${INCLUDES_DIR_BONUS}
-LFLAGS_BONUS		= -L${LIBRARIES_BONUS}/${LIBFT_DIR_BONUS} -lft \
-						-L${LIBRARIES_BONUS}/${PRINTFT_DIR_BONUS} -lftprintf \
-						-L${LIBRARIES_BONUS}/${EXAMFT_DIR_BONUS} -lexamft \
-						-lreadline -lpthread		
+# CFLAGS_BONUS 		= -Wall -Werror -Wextra
+# IFLAGS_BONUS		= -I${INCLUDES_DIR_BONUS}
+# LFLAGS_BONUS		= -lpthread
 
 # ══ Sources ═════════════════════════════════════════════════════════════════ #
 #    -------                                                                   #
 
 SRC 				= ${SRC_DIR}/philosophers.c
 
-GNL					= ${LIBRARIES}/${GNL_DIR}/get_next_line.c \
-						${LIBRARIES}/${GNL_DIR}/get_next_line_utils.c \
-						${LIBRARIES}/${GNL_DIR}/get_next_line_bonus.c \
-						${LIBRARIES}/${GNL_DIR}/get_next_line_utils_bonus.c
-
 ERR					= ${ERRORS_DIR}/ft_manage_err.c
 
 INT					= ${INIT_DIR}/ft_init_struct.c \
 						${INIT_DIR}/ft_init.c
 
+MPH					= ${MGE_PHILOS}/ft_philos.c
+
+MTH					= ${MGE_THREADS}/ft_threads.c
+
 UTL					= ${UTILS_DIR}/ft_utils.c \
 						${UTILS_DIR}/ft_utils_2.c
 
-# FRE				= ${FREE_DIR}/ft_free_envp_list.c \
-# 						${FREE_DIR}/ft_free_split.c \
-# 						${FREE_DIR}/ft_free_tokens.c \
-# 						${FREE_DIR}/ft_free_ast.c
-
 OBJ_SRC				= $(patsubst ${SRC_DIR}/%.c, ${OBJ_DIR}/%.o, ${SRC})
-OBJ_GNL				= $(patsubst ${LIBRARIES}/${GNL_DIR}/%.c, ${OBJ_DIR}/%.o, \
-						${GNL})
 OBJ_ERR				= $(patsubst ${ERRORS_DIR}/%.c, ${OBJ_DIR}/%.o, ${ERR})
 OBJ_INT				= $(patsubst ${INIT_DIR}/%.c, ${OBJ_DIR}/%.o, ${INT})
+OBJ_MPH				= $(patsubst ${MGE_PHILOS}/%.c, ${OBJ_DIR}/%.o, ${MPH})
+OBJ_MTH				= $(patsubst ${MGE_THREADS}/%.c, ${OBJ_DIR}/%.o, ${MTH})
 OBJ_UTL				= $(patsubst ${UTILS_DIR}/%.c, ${OBJ_DIR}/%.o, ${UTL})
-# OBJ_FRE				= $(patsubst ${FREE_DIR}/%.c, ${OBJ_DIR}/%.o, ${FRE})
 
-# ══ Sources Bonus ═══════════════════════════════════════════════════════════ #
-#    -------------                                                             #
+OBJS				= ${OBJ_SRC} ${OBJ_ERR} ${OBJ_INT} \
+					  ${OBJ_MPH} ${OBJ_MTH} ${OBJ_UTL}
 
-SRC_BONUS 			= ${SRC_DIR_BONUS}/philosophers.c
+# # ══ Sources Bonus ═══════════════════════════════════════════════════════════ #
+# #    -------------                                                             #
 
-GNL_BONUS		= ${LIBRARIES_BONUS}/${GNL_DIR_BONUS}/get_next_line.c \
-					${LIBRARIES_BONUS}/${GNL_DIR_BONUS}/get_next_line_utils.c \
-					${LIBRARIES_BONUS}/${GNL_DIR_BONUS}/get_next_line_bonus.c \
-					${LIBRARIES_BONUS}/${GNL_DIR_BONUS}/\
-						get_next_line_utils_bonus.c
+# SRC_BONUS 	= ${SRC_DIR_BONUS}/philosophers.c
 
-ERR_BONUS		= ${ERRORS_DIR_BONUS}/ft_manage_err.c
+# ERR_BONUS		= ${ERRORS_DIR_BONUS}/ft_manage_err.c
 
-INT_BONUS		= ${INIT_DIR_BONUS}/ft_init_struct.c \
-					${INIT_DIR_BONUS}/ft_init.c
+# INT_BONUS		= ${INIT_DIR_BONUS}/ft_init_struct.c \
+# 					${INIT_DIR_BONUS}/ft_init.c
 
-UTL_BONUS		= ${UTILS_DIR_BONUS}/ft_utils.c
+# UTL_BONUS		= ${UTILS_DIR_BONUS}/ft_utils.c
 
-# FRE_BONUS		= ${FREE_DIR_BONUS}/ft_free_envp_list.c \
-# 					${FREE_DIR_BONUS}/ft_free_split.c \
-# 					${FREE_DIR_BONUS}/ft_free_tokens.c \
-# 					${FREE_DIR_BONUS}/ft_free_ast.c
-
-OBJ_SRC_BONUS	= $(patsubst ${SRC_DIR_BONUS}/%.c, ${OBJ_DIR_BONUS}/%.o, \
-					${SRC_BONUS})
-OBJ_GNL_BONUS	= $(patsubst ${LIBRARIES_BONUS}/${GNL_DIR_BONUS}/%.c, \
-					${OBJ_DIR_BONUS}/%.o, ${GNL_BONUS})
-OBJ_ERR_BONUS	= $(patsubst ${ERRORS_DIR_BONUS}/%.c, ${OBJ_DIR_BONUS}/%.o, \
-					${ERR_BONUS})
-OBJ_INT_BONUS	= $(patsubst ${INIT_DIR_BONUS}/%.c, ${OBJ_DIR_BONUS}/%.o, \
-					${INT_BONUS})
-OBJ_UTL_BONUS	= $(patsubst ${UTILS_DIR_BONUS}/%.c, ${OBJ_DIR_BONUS}/%.o, \
-					${UTL_BONUS})
-# OBJ_FRE_BONUS	= $(patsubst ${FREE_DIR_BONUS}/%.c, ${OBJ_DIR_BONUS}/%.o, \
-					${FRE_BONUS})
+# OBJ_SRC_BONUS	= $(patsubst ${SRC_DIR_BONUS}/%.c, ${OBJ_DIR_BONUS}/%.o, \
+# 					${SRC_BONUS})
+# OBJ_ERR_BONUS	= $(patsubst ${ERRORS_DIR_BONUS}/%.c, ${OBJ_DIR_BONUS}/%.o, \
+# 					${ERR_BONUS})
+# OBJ_INT_BONUS	= $(patsubst ${INIT_DIR_BONUS}/%.c, ${OBJ_DIR_BONUS}/%.o, \
+# 					${INT_BONUS})
+# OBJ_UTL_BONUS	= $(patsubst ${UTILS_DIR_BONUS}/%.c, ${OBJ_DIR_BONUS}/%.o, \
+# 					${UTL_BONUS})
 
 # ═══ Rules ══════════════════════════════════════════════════════════════════ #
 #     -----                                                                    #
 
 all: ${NAME}
 
-${NAME}: ftlibft ftprintf ftexamft  ${OBJ_SRC} ${OBJ_GNL} \
-									${OBJ_ERR} ${OBJ_INT} ${OBJ_UTL} \
-									${OBJ_FRE} ${OBJ_BUI}
+# ${NAME}: 							${OBJ_SRC} ${OBJ_GNL} ${OBJ_ERR} \
+# 									${OBJ_INT} ${OBJ_MPH} ${OBJ_MTH} \
+# 									${OBJ_UTL}
+${NAME}: ${OBJS}
 	@echo "$(YELLOW)Compiling root ...$(DEF_COLOR)"
-	@${CC} ${CFLAGS} ${IFLAGS} -o ${NAME} ${OBJ_SRC} ${OBJ_GNL} ${OBJ_ERR} \
-									${OBJ_INT} ${OBJ_UTL} ${OBJ_FRE} \
-									${OBJ_BUI} ${LFLAGS}
+	@${CC} ${CFLAGS} ${IFLAGS} -o ${NAME} ${OBJS} ${LFLAGS}
 	@echo "$(GREEN) $(NAME) all created ✓$(DEF_COLOR)"
 
 ${OBJ_DIR}/%.o: ${SRC_DIR}/%.c
-	@${MKD} $(dir $@)
-	@$(CC) ${CFLAGS} ${IFLAGS} -c $< -o $@
-
-${OBJ_DIR}/%.o: ${LIBRARIES}/${GNL_DIR}/%.c
 	@${MKD} $(dir $@)
 	@$(CC) ${CFLAGS} ${IFLAGS} -c $< -o $@
 
@@ -202,29 +156,21 @@ ${OBJ_DIR}/%.o: ${INIT_DIR}/%.c
 	@${MKD} $(dir $@)
 	@$(CC) ${CFLAGS} ${IFLAGS} -c $< -o $@
 
+${OBJ_DIR}/%.o: ${MGE_PHILOS}/%.c
+	@${MKD} $(dir $@)
+	@$(CC) ${CFLAGS} ${IFLAGS} -c $< -o $@	
+
+${OBJ_DIR}/%.o: ${MGE_THREADS}/%.c
+	@${MKD} $(dir $@)
+	@$(CC) ${CFLAGS} ${IFLAGS} -c $< -o $@
+
 ${OBJ_DIR}/%.o: ${UTILS_DIR}/%.c
 	@${MKD} $(dir $@)
 	@$(CC) ${CFLAGS} ${IFLAGS} -c $< -o $@
 
-# ${OBJ_DIR}/%.o: ${FREE_DIR}/%.c
-# 	@${MKD} $(dir $@)
-# 	@$(CC) ${CFLAGS} ${IFLAGS} -c $< -o $@
-
-ftlibft:
-	@cd ${LIBRARIES}/${LIBFT_DIR} ${MK_} all
-
-ftprintf:
-	@cd ${LIBRARIES}/${PRINTFT_DIR} ${MK_} all
-
-ftexamft:
-	@cd ${LIBRARIES}/${EXAMFT_DIR} ${MK_} all
-
 clean:
 	@echo "$(YELLOW)Removing object files ...$(DEF_COLOR)"
 
-	@cd ${LIBRARIES}/${LIBFT_DIR} ${MK_} clean
-	@cd ${LIBRARIES}/${PRINTFT_DIR} ${MK_} clean
-	@cd ${LIBRARIES}/${EXAMFT_DIR} ${MK_} clean
 	@$(RM) ${OBJ_DIR}/*.o
 
 	@echo "$(RED)Object files removed $(DEF_COLOR)"
@@ -232,23 +178,20 @@ clean:
 fclean:	clean
 	@echo "$(YELLOW)Removing binaries ...$(DEF_COLOR)"
 
-	@cd ${LIBRARIES}/${LIBFT_DIR} ${MK_} fclean
-	@cd ${LIBRARIES}/${PRINTFT_DIR} ${MK_} fclean
-	@cd ${LIBRARIES}/${EXAMFT_DIR} ${MK_} fclean
-	@${RM} ${NAME} ${NAME_BONUS}
+	@${RM} ${NAME}
 
 	@echo "$(RED)Binaries removed $(DEF_COLOR)"
 
 re:	fclean all
 
-.PHONY : all ftlibft ftprintf ftexamft clean fclean bonus re
+.PHONY : all clean fclean bonus re
 
 # # ═══ Rules Bonus ════════════════════════════════════════════════════════════ #
 # #     -----------                                                              #
 
 # all: ${NAME_BONUS}
 
-# ${NAME}: ftlibft_bonus ftprintf_bonus ftexamft_bonus  ${OBJ_SRC_BONUS} \
+# ${NAME}: 							${OBJ_SRC_BONUS} \
 									${OBJ_GNL_BONUS} \
 # 									${OBJ_ERR_BONUS} ${OBJ_INT_BONUS} ${OBJ_UTL_BONUS} \
 # 									${OBJ_FRE_BONUS} ${OBJ_BUI_BONUS}
@@ -259,10 +202,6 @@ re:	fclean all
 # 	@echo "$(GREEN) $(NAME) all bonus created ✓$(DEF_COLOR)"
 
 # ${OBJ_DIR}/%.o: ${SRC_DIR_BONUS}/%.c
-# 	@${MKD} $(dir $@)
-# 	@$(CC) ${CFLAGS_BONUS} ${IFLAGS_BONUS} -c $< -o $@
-
-# ${OBJ_DIR}/%.o: ${LIBRARIES_BONUS}/${GNL_DIR_BONUS}/%.c
 # 	@${MKD} $(dir $@)
 # 	@$(CC) ${CFLAGS_BONUS} ${IFLAGS_BONUS} -c $< -o $@
 
@@ -282,21 +221,9 @@ re:	fclean all
 # # 	@${MKD} $(dir $@)
 # # 	@$(CC) ${CFLAGS_BONUS} ${IFLAGS_BONUS} -c $< -o $@
 
-# ftlibft_bonus:
-# 	@cd ${LIBRARIES_BONUS}/${LIBFT_DIR_BONUS} ${MK_} all
-
-# ftprintf_bonus:
-# 	@cd ${LIBRARIES_BONUS}/${PRINTFT_DIR_BONUS} ${MK_} all
-
-# ftexamft_bonus:
-# 	@cd ${LIBRARIES_BONUS}/${EXAMFT_DIR_BONUS} ${MK_} all
-
 # clean:
 # 	@echo "$(YELLOW)Removing object files bonus...$(DEF_COLOR)"
 
-# 	@cd ${LIBRARIES_BONUS}/${LIBFT_DIR_BONUS} ${MK_} clean
-# 	@cd ${LIBRARIES_BONUS}/${PRINTFT_DIR_BONUS} ${MK_} clean
-# 	@cd ${LIBRARIES_BONUS}/${EXAMFT_DIR_BONUS} ${MK_} clean
 # 	@$(RM) ${OBJ_DIR_BONUS}/*.o
 
 # 	@echo "$(RED)Object files bonus removed $(DEF_COLOR)"
@@ -304,13 +231,10 @@ re:	fclean all
 # fclean:	clean
 # 	@echo "$(YELLOW)Removing binaries ...$(DEF_COLOR)"
 
-# 	@cd ${LIBRARIES_BONUS}/${LIBFT_DIR_BONUS} ${MK_} fclean
-# 	@cd ${LIBRARIES_BONUS}/${PRINTFT_DIR_BONUS} ${MK_} fclean
-# 	@cd ${LIBRARIES_BONUS}/${EXAMFT_DIR_BONUS} ${MK_} fclean
 # 	@${RM} ${NAME} ${NAME_BONUS}
 
 # 	@echo "$(RED)Binaries removed $(DEF_COLOR)"
 
 # re:	fclean all
 
-# .PHONY : all ftlibft_bonus ftprintf_bonus ftexamft_bonus clean fclean bonus re
+# .PHONY : all clean fclean bonus re
