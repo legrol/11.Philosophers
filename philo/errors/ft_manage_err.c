@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 22:13:04 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/12/07 19:39:43 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/12/09 21:13:05 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,5 @@ void	ft_manage_err(const char *err)
 
 void	ft_manage_err_simple(const char *err)
 {
-	printf(RED "Error: " RESET GREEN "%s\n" RESET, err);
+	printf(RED "Error: " RESET YELLOW "%s\n" RESET, err);
 }

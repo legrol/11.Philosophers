@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 20:43:02 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/12/08 21:32:30 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/12/09 21:33:32 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,10 @@ int	main(int argc, char *argv[])
 	envp.eat_max = 0;
 	envp.stopping_rule = 0;
 	if (argc < 5 || argc > 6)
+	{
+		ft_manage_err_simple(NUM_ARGV_ERR);
 		return (ft_manage_err_simple(USAGE_ERR), EXIT_FAILURE);
+	}
 	if (ft_check_params(&envp, argc, argv))
 		return (ft_manage_err_simple(BYE), EXIT_FAILURE);
 	if (ft_init_sim(&envp))
