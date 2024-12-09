@@ -3,7 +3,7 @@
 
 NAME 				= philo
 NAME_BONUS			= philo_bonus
-EXEC_PATH			= ./philo/$(NAME)
+EXEC_DIR			=./bin/
 
 # ══ Colors ══════════════════════════════════════════════════════════════════ #
 #    ------                                                                    #
@@ -51,6 +51,10 @@ OBJ_DIR				= ./philo/obj
 INCLUDES_DIR		= ./philo/includes
 MGE_PHILOS			= ./philo/manage_philos
 MGE_THREADS			= ./philo/manage_threads
+LIBFT_DIR			= libft
+PRINTFT_DIR			= printf
+EXAMFT_DIR			= examft
+GNL_DIR				= gnl
 
 # # ══ Directories Bonus ═══════════════════════════════════════════════════════ #
 # #    -----------------                                                         #
@@ -137,19 +141,27 @@ OBJS				= ${OBJ_SRC} ${OBJ_ERR} ${OBJ_INT} \
 # 									${OBJ_INT} ${OBJ_MPH} ${OBJ_MTH} \
 # 									${OBJ_UTL}
 
-# all: ${NAME}
+# ${EXEC_DIR}:
+# 	@${MKD} ${EXEC_DIR}
 
-all: ${EXEC_PATH}
+all: rename_philo ${NAME} restore_philo
 
-# ${NAME}: ${OBJS}
-# 	@echo "$(YELLOW)Compiling root ...$(DEF_COLOR)"
-# 	@${CC} ${CFLAGS} ${IFLAGS} -o ${NAME} ${OBJS} ${LFLAGS}
-# 	@echo "$(GREEN) $(NAME) all created ✓$(DEF_COLOR)"
+rename_philo:
+	@if [ -d "./philo" ]; then \
+		echo "$(YELLOW)Renaming existing directory 'philo' to 'philo_dir'...$(DEF_COLOR)"; \
+		${MV} ./philo ./philo_dir; \
+	fi
 
-${EXEC_PATH}: ${OBJS}
+restore_philo:
+	@if [ -d "./philo_dir" ]; then \
+		echo "$(YELLOW)Restoring original directory 'philo'...$(DEF_COLOR)"; \
+		${MV} ./philo_dir ./philo; \
+	fi
+
+${NAME}: ${OBJS}
 	@echo "$(YELLOW)Compiling root ...$(DEF_COLOR)"
-	@${CC} ${CFLAGS} ${IFLAGS} -o ${EXEC_PATH} ${OBJS} ${LFLAGS}
-	@echo "$(GREEN)Executable created: ${EXEC_PATH} ✓$(DEF_COLOR)"
+	@${CC} ${CFLAGS} ${IFLAGS} -o ${NAME} ${OBJS} ${LFLAGS}
+	@echo "$(GREEN) $(NAME) all created ✓$(DEF_COLOR)"
 
 ${OBJ_DIR}/%.o: ${SRC_DIR}/%.c
 	@${MKD} $(dir $@)
@@ -180,19 +192,18 @@ clean:
 	@$(RM) ${OBJ_DIR}/*.o
 	@echo "$(RED)Object files removed $(DEF_COLOR)"
 
-# fclean:	clean
-# 	@echo "$(YELLOW)Removing binaries ...$(DEF_COLOR)"
-# 	@${RM} ${NAME}
-# 	@echo "$(GREEN)Binary removed!$(DEF_COLOR)"
-
-fclean: clean
-	@echo "$(YELLOW)Removing executables ...$(DEF_COLOR)"
-	@${RM} ${EXEC_PATH} # Cambiado: Elimina el ejecutable dentro de philo/
-	@echo "$(RED)Executable removed $(DEF_COLOR)"
+fclean:	clean
+	@echo "$(YELLOW)Removing binaries ...$(DEF_COLOR)"
+	@${RM} ${NAME}
+	@echo "$(GREEN)Binary removed!$(DEF_COLOR)"
+	@if [ -d "./philo_dir" ]; then \
+		echo "$(YELLOW)Restoring original directory 'philo'...$(DEF_COLOR)"; \
+		${MV} ./philo_dir ./philo; \
+	fi
 
 re:	fclean all
 
-.PHONY : all clean fclean bonus re
+.PHONY : all clean fclean bonus re rename_philo restore_philo
 
 # # ═══ Rules Bonus ════════════════════════════════════════════════════════════ #
 # #     -----------                                                              #

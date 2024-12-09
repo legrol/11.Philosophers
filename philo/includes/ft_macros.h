@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 12:08:07 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/12/08 21:32:09 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/12/09 12:51:34 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,8 @@
 # define FT_MACROS_H
 
 # define USAGE_ERR			"❗Arguments: Usage: ./philo <Nbr philosophers> \
-									<time to die> <time to eat> <time to \
-									sleep> [Nbr times each philosopher must \
-									eat]\n"
+<time to die> <time to eat> <time to sleep> [Nbr times each philosopher must \
+eat]"
 # define NUM_ARGV_ERR		"❗1️⃣ Incorrect number of arguments, expected \
 								one."
 # define NO_INT_ARGV_ERR	"❗Argument is not integer value"

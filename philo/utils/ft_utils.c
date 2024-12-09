@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 10:41:10 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/12/08 21:49:33 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/12/08 22:37:31 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	ft_isinteger(char *nbr)
 	long	result;
 
 	result = 0;
-	result = ft_atoi(nbr);
+	result = ft_philo_atoi(nbr);
 	if (result <= INT_MAX || result >= INT_MIN)
 		return (1);
 	else
