@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 20:44:36 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/12/08 21:38:04 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/12/10 22:55:43 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,10 +93,11 @@ void			ft_check_stamp(char *msg, t_philo *philo, int unlock);
 /// ============================================================================
 // Utils functions
 // ============================================================================
+void			ft_print_banner(void);
 int				ft_isinteger(char *nbr);
+unsigned long	ft_get_time(void);
 int				ft_philo_atoi(const char *str);
 char			*ft_philo_itoa(int n);
-unsigned long	ft_get_time(void);
 void			ft_sleep(unsigned long total_time, t_envp *envp);
 
 #endif
