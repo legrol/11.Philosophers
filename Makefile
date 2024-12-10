@@ -94,7 +94,7 @@ MPH					= ${MGE_PHILOS}/ft_philos.c
 
 MTH					= ${MGE_THREADS}/ft_threads.c
 
-UTL					= ${UTILS_DIR}/ft_print_banner.c \
+UTL					= ${UTILS_DIR}/ft_banner.c \
 						${UTILS_DIR}/ft_utils.c \
 						${UTILS_DIR}/ft_utils_2.c
 

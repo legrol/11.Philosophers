@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 18:58:55 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/12/08 20:48:29 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/12/10 23:14:16 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	ft_init_philo(t_envp *envp)
 		envp->philos[i].pos = i + 1;
 		//printf("pos: %i, i: %i\n", envp->philos[i].pos, i);
 		envp->philos[i].times_eaten = 0;
-		printf("times_eaten: %i, i: %i\n", envp->philos[i].times_eaten, i);
+		//printf("times_eaten: %i, i: %i\n", envp->philos[i].times_eaten, i);
 		envp->philos[i].pos_char = ft_philo_itoa(i + 1);
 		//printf("pos_char: %s, i: %i\n", envp->philos[i].pos_char, i);
 		if (!envp->philos[i].pos_char)
