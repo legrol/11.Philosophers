@@ -47,7 +47,7 @@ static int	ft_check_params(t_envp *envp, int argc, char *argv[])
 	int	i;
 
 	i = 0;
-	while (i++ < argc)
+	while (++i < argc)
 	{
 		if (!ft_isinteger(argv[i]))
 		{
@@ -84,7 +84,7 @@ int	main(int argc, char *argv[])
 	}
 	if (ft_check_params(&envp, argc, argv))
 		return (ft_manage_err_simple(BYE), EXIT_FAILURE);
-	if (ft_init_sim(&envp))
+	if (ft_init_sim(&envp)) //aqui problems
 		return (ft_manage_err_simple(INIT_ERR), EXIT_FAILURE);
 	if (ft_create_threads(&envp))
 		return (ft_manage_err_simple(THREADS_ERR), EXIT_FAILURE);

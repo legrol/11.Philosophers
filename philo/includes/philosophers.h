@@ -26,11 +26,6 @@
 // Access to my libraries
 // ============================================================================
 # include "colors.h"
-# include "examft.h"
-# include "ft_printf.h"
-# include "get_next_line_bonus.h"
-# include "get_next_line.h"
-# include "libft.h"
 # include "ft_macros.h"
 
 // ============================================================================

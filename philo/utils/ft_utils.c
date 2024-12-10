@@ -74,14 +74,14 @@ int	ft_philo_atoi(const char *str)
 
 	n = 0;
 	sign = 1;
-	printf("Controlando atoi\n"); //BORRAR
+	//printf("Control de philo_atoi\n"); //BORRAR
 	while ((*str >= 9 && *str <= 13) || *str == ' ')
 		str++;
 	if (*str == '-' || *str == '+')
 		sign = (44 - (*str++));
 	while (*str >= '0' && *str <= '9')
 		n = n * 10 + (*str++ - '0');
-	printf("Valor: %i Sign: %i\n\n", n, sign); //BORRAR
+	//printf("Valor: %i Sign: %i\n\n", n, sign); //BORRAR
 	return (n * sign);
 }
 
@@ -102,31 +102,87 @@ static unsigned int	philo_count_chr(int n)
 	return (count);
 }
 
+// char	*ft_philo_itoa(int n)
+// {
+// 	char			*str;
+// 	unsigned int	totalchr;
+// 	unsigned int	number;
+
+// 	totalchr = philo_count_chr(n);
+// 	str = (char *) malloc((totalchr + 1) * sizeof(char));
+// 	if (!str)
+// 		return (NULL);
+// 	if (n < 0)
+// 	{
+// 		str[0] = '-';
+// 		number = -n;
+// 	}
+// 	else
+// 		number = n;
+// 	if (number == 0)
+// 		str[0] = '0';
+// 	str[totalchr] = '\0';
+// 	while (number != 0)
+// 	{
+// 		str[totalchr -1] = (number % 10) + '0';
+// 		number = number / 10;
+// 		totalchr--;
+// 	}
+// 	return (str);
+// }
+
+static int	ft_strlen(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+		i++;
+	return (i);
+}
+
+static void	ft_rev_str(char *str)
+{
+	int		start;
+	int		end;
+	char	temp;
+
+	start = 0;
+	end = ft_strlen(str) - 1;
+	while (start < end)
+	{
+		temp = str[start];
+		str[start] = str[end];
+		str[end] = temp;
+		start++;
+		end--;
+	}
+}
+
 char	*ft_philo_itoa(int n)
 {
 	char			*str;
-	unsigned int	totalchr;
+	int				i;
 	unsigned int	number;
 
-	totalchr = philo_count_chr(n);
-	str = (char *) malloc((totalchr + 1) * sizeof(char));
+	i = 0;
+	str = malloc((philo_count_chr(n) + 1) * sizeof(*str));
 	if (!str)
 		return (NULL);
 	if (n < 0)
-	{
-		str[0] = '-';
-		number = -n;
-	}
+		number = -1 * n;
 	else
 		number = n;
-	if (number == 0)
-		str[0] = '0';
-	str[totalchr] = '\0';
 	while (number != 0)
 	{
-		str[totalchr -1] = (number % 10) + '0';
-		number = number / 10;
-		totalchr--;
+		str[i++] = (number % 10) + '0';
+		number /= 10;
 	}
+	if (n == 0)
+		str[i++] = '0';
+	if (n < 0)
+		str[i++] = '-';
+	str[i] = '\0';
+	ft_rev_str(str);
 	return (str);
 }

@@ -187,7 +187,7 @@ clean:
 
 fclean: clean
 	@echo "$(YELLOW)Removing executables ...$(DEF_COLOR)"
-	@${RM} ${EXEC_PATH} # Cambiado: Elimina el ejecutable dentro de philo/
+	@${RM} ${EXEC_PATH}
 	@echo "$(RED)Executable removed $(DEF_COLOR)"
 
 re:	fclean all
