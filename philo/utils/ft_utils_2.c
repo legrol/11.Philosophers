@@ -30,7 +30,27 @@
  * 
  * @return unsigned long			Returns the current time in milliseconds.
  * 
+ * The function "ft_isinteger" checks whether a given string represents a valid 
+ * integer within the range of `INT_MIN` and `INT_MAX`.
+ * 
+ * @param char *nbr    The string to check.
+ * 
+ * @return             1 if the string represents a valid integer.
+ *                     0 otherwise.
+ * 
  */
+
+int	ft_isinteger(char *nbr)
+{
+	long	result;
+
+	result = 0;
+	result = ft_philo_atoi(nbr);
+	if (result <= INT_MAX || result >= INT_MIN)
+		return (1);
+	else
+		return (0);
+}
 
 unsigned long	ft_get_time(void)
 {
