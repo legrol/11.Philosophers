@@ -120,7 +120,6 @@ int	ft_init_sim(t_envp *envp)
 	}
 	if (ft_init_mutex(envp) || ft_init_philo(envp))
 	{
-		//FALLA EN FT_INIT_PHILO en philo_itoa
 		free(envp->philos);
 		free(envp->forks);
 		return (EXIT_FAILURE);
