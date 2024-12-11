@@ -71,14 +71,12 @@ int	ft_philo_atoi(const char *str)
 
 	n = 0;
 	sign = 1;
-	//printf("Control de philo_atoi\n"); //BORRAR
 	while ((*str >= 9 && *str <= 13) || *str == ' ')
 		str++;
 	if (*str == '-' || *str == '+')
 		sign = (44 - (*str++));
 	while (*str >= '0' && *str <= '9')
 		n = n * 10 + (*str++ - '0');
-	//printf("Valor: %i Sign: %i\n\n", n, sign); //BORRAR
 	return (n * sign);
 }
 

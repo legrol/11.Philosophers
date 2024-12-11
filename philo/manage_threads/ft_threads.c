@@ -92,15 +92,14 @@ int	ft_create_threads(t_envp	*envp)
 {
 	int	i;
 
-	i = 0;
+	i = -1;
 	envp->init_time = ft_get_time();
-	while (i < envp->nbr_philos)
+	while (++i < envp->nbr_philos)
 	{
 		envp->philos[i].last_meal = ft_get_time();
 		if (pthread_create(&envp->philos[i].thread_id, NULL, \
 		myroutine, &(envp->philos[i])))
 			return (EXIT_FAILURE);
-		i++;
 	}
 	ft_check_dead(envp, envp->philos);
 	pthread_mutex_unlock(&envp->writing);
