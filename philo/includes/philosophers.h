@@ -67,9 +67,9 @@ typedef struct s_envp
 // ============================================================================
 // Initialization
 // ============================================================================
-void			ft_init_struct(t_envp *envp, int argc, char *argv[]);
-int				ft_init_sim(t_envp *envp);
 int				ft_init_mutex(t_envp *envp);
+int				ft_init_sim(t_envp *envp);
+void			ft_init_struct(t_envp *envp, int argc, char *argv[]);
 int				ft_init_philo(t_envp *envp);
 
 // ============================================================================
@@ -93,11 +93,11 @@ void			ft_check_stamp(char *msg, t_philo *philo, int unlock);
 /// ============================================================================
 // Utils functions
 // ============================================================================
-void			ft_print_banner(void);
 int				ft_isinteger(char *nbr);
 unsigned long	ft_get_time(void);
 int				ft_philo_atoi(const char *str);
 char			*ft_philo_itoa(int n);
+void			ft_print_banner(void);
 void			ft_sleep(unsigned long total_time, t_envp *envp);
 
 #endif
