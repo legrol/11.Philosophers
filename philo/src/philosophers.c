@@ -46,8 +46,8 @@ static int	ft_check_params(t_envp *envp, int argc, char *argv[])
 {
 	int	i;
 
-	i = 0;
-	while (++i < argc)
+	i = 1;
+	while (i < argc)
 	{
 		if (!ft_isinteger(argv[i]))
 		{
@@ -59,6 +59,7 @@ static int	ft_check_params(t_envp *envp, int argc, char *argv[])
 			printf(RED ARG "%i" NEGATIVE "\n" RESET, i);
 			return (ft_manage_err_simple(INT_NEG_ARGV_ERR), EXIT_FAILURE);
 		}
+		i++;
 	}
 	ft_init_struct(envp, argc, argv);
 	if (envp->philo_eat_limit < 1 || envp->time_to_die < 1 || \

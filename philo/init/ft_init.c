@@ -55,29 +55,20 @@ int	ft_init_philo(t_envp *envp)
 	int	i;
 
 	i = 0;
-	//printf("\ntot_philo: %i\n\n", envp->nbr_philos);
 	while (i < envp->nbr_philos)
 	{
 		envp->philos[i].pos = i + 1;
-		//printf("pos: %i, i: %i\n", envp->philos[i].pos, i);
 		envp->philos[i].times_eaten = 0;
-		//printf("times_eaten: %i, i: %i\n", envp->philos[i].times_eaten, i);
 		envp->philos[i].pos_char = ft_philo_itoa(i + 1);
-		//printf("pos_char: %s, i: %i\n", envp->philos[i].pos_char, i);
 		if (!envp->philos[i].pos_char)
 			break ;
-		if (i == 0)
-		{
-			envp->philos[i].right_fork = envp->nbr_philos;
-			//printf("right_fork: %i, i: %i\n", envp->philos[i].right_fork, i);
-		}
-		else
-		{
-			envp->philos[i].right_fork = i;
-			//printf("right_fork: %i, i: %i\n", envp->philos[i].right_fork, i);
-		}
-		envp->philos[i].left_fork = (i + 1);
-		//printf("left_fork: %i, i: %i\n\n", envp->philos[i].left_fork, i);
+		// if (i == 0)
+		// 	envp->philos[i].right_fork = envp->nbr_philos;
+		// else
+		// 	envp->philos[i].right_fork = i;
+		// envp->philos[i].left_fork = (i + 1);
+		envp->philos[i].right_fork = i;
+		envp->philos[i].left_fork = (i + 1) % envp->nbr_philos;
 		envp->philos[i].envp = envp;
 		i++;
 	}
