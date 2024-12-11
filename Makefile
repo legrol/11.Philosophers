@@ -94,7 +94,8 @@ MPH					= ${MGE_PHILOS}/ft_philos.c
 
 MTH					= ${MGE_THREADS}/ft_threads.c
 
-UTL					= ${UTILS_DIR}/ft_utils.c \
+UTL					= ${UTILS_DIR}/ft_banner.c \
+						${UTILS_DIR}/ft_utils.c \
 						${UTILS_DIR}/ft_utils_2.c
 
 OBJ_SRC				= $(patsubst ${SRC_DIR}/%.c, ${OBJ_DIR}/%.o, ${SRC})

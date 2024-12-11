@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 20:43:02 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/12/09 21:33:32 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/12/10 22:00:38 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ int	main(int argc, char *argv[])
 {
 	t_envp	envp;
 
+	ft_print_banner();
 	envp.eat_max = 0;
 	envp.stopping_rule = 0;
 	if (argc < 5 || argc > 6)
