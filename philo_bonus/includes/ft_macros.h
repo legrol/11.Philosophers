@@ -13,6 +13,12 @@
 #ifndef FT_MACROS_H
 # define FT_MACROS_H
 
+# define TAKEN_FORK			"has taken a fork"
+# define THINK				"is thinking"
+# define SLEEP				"is sleeping"
+# define EAT				"is eating"
+# define DIED				"died"
+
 # define USAGE_ERR			"❗Arguments: Usage: ./philo <# philosophers> \
 									<time to die> <time to eat> <time to \
 									sleep> [# times each philosopher must \
