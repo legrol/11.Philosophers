@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/philosophers.h"
+#include "../includes/philo.h"
 
 /**
  * The function "ft_check_stamp" prints a timestamped message for a 
@@ -68,7 +68,7 @@ void	ft_check_dead(t_envp *envp, t_philo *philo)
 			pthread_mutex_lock(&envp->mealtime);
 			if ((int)(ft_get_time() - philo[i].last_meal) >= envp->time_to_die)
 			{
-				ft_check_stamp("died", &philo[i], LOCK);
+				ft_check_stamp(RED DIED RESET, &philo[i], LOCK);
 				envp->stopping_rule = 1;
 			}
 			pthread_mutex_unlock(&envp->mealtime);
@@ -86,11 +86,11 @@ void	ft_check_dead(t_envp *envp, t_philo *philo)
 void	ft_check_eat(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->envp->forks[philo->right_fork]);
-	ft_check_stamp("has taken a fork", philo, UNLOCK);
+	ft_check_stamp(BLUE TAKEN_FORK RESET, philo, UNLOCK);
 	pthread_mutex_lock(&philo->envp->forks[philo->left_fork]);
-	ft_check_stamp("has taken a fork", philo, UNLOCK);
+	ft_check_stamp(BLUE TAKEN_FORK RESET, philo, UNLOCK);
 	pthread_mutex_lock(&philo->envp->mealtime);
-	ft_check_stamp("is eating", philo, UNLOCK);
+	ft_check_stamp(GREEN EAT RESET, philo, UNLOCK);
 	philo->last_meal = ft_get_time();
 	pthread_mutex_unlock(&philo->envp->mealtime);
 	ft_sleep(philo->envp->time_to_eat, philo->envp);

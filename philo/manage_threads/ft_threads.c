@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/philosophers.h"
+#include "../includes/philo.h"
 
 /**
  * The function "ft_create_threads_and_monitor" initializes threads for each 
@@ -115,9 +115,9 @@ static void	*ft_philosopher_routine(void *args)
 	while (!envp->stopping_rule && !envp->eat_max)
 	{
 		ft_check_eat(philo);
-		ft_check_stamp("is sleeping", philo, UNLOCK);
+		ft_check_stamp(ORANGE SLEEP RESET, philo, UNLOCK);
 		ft_sleep(envp->time_to_sleep, envp);
-		ft_check_stamp("is thinking", philo, UNLOCK);
+		ft_check_stamp(YELLOW THINK RESET, philo, UNLOCK);
 	}
 	return (NULL);
 }

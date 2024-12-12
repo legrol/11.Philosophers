@@ -10,8 +10,13 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILOSOPHERS_H
-# define PHILOSOPHERS_H
+#ifndef PHILO_BONUS_H
+# define PHILO_BONUS_H
+# define TAKEN_FORK				"has taken a fork"
+# define THINK					"is thinking"
+# define SLEEP					"is sleeping"
+# define EAT					"is eating"
+# define DIED					"died"
 
 // ============================================================================
 // Libraries

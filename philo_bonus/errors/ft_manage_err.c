@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/philosophers.h"
+#include "../includes/philo_bonus.h"
 
 /**
  * The function "ft_manage_err" displays an error message in a formatted 
