@@ -62,8 +62,8 @@ static int	ft_check_params(t_envp *envp, int argc, char *argv[])
 		i++;
 	}
 	ft_init_struct(envp, argc, argv);
-	if (envp->philo_eat_limit < 1 || envp->time_to_die < 1 || \
-		envp->time_to_eat < 1 || envp->time_to_sleep < 1 || \
+	if (envp->philo_eat_limit < 0 || envp->time_to_die < 0 || \
+		envp->time_to_eat < 0 || envp->time_to_sleep < 0 || \
 		envp->nbr_philos < 1)
 	{
 		printf(RED VALUES_INVALID "\n" RESET);
