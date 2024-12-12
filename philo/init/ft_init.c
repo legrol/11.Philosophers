@@ -62,11 +62,6 @@ int	ft_init_philo(t_envp *envp)
 		envp->philos[i].pos_char = ft_philo_itoa(i + 1);
 		if (!envp->philos[i].pos_char)
 			break ;
-		// if (i == 0)
-		// 	envp->philos[i].right_fork = envp->nbr_philos;
-		// else
-		// 	envp->philos[i].right_fork = i;
-		// envp->philos[i].left_fork = (i + 1);
 		envp->philos[i].right_fork = i;
 		envp->philos[i].left_fork = (i + 1) % envp->nbr_philos;
 		envp->philos[i].envp = envp;

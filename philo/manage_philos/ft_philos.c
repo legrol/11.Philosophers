@@ -70,7 +70,7 @@ void	ft_check_dead(t_envp *envp, t_philo *philo)
 		if (envp->stopping_rule)
 			break ;
 		i = 0;
-		while (envp->eat_max && i < envp->nbr_philos
+		while (envp->philo_eat_limit && i < envp->nbr_philos
 			&& philo[i].times_eaten >= envp->philo_eat_limit)
 			i++;
 		envp->eat_max = (i == envp->nbr_philos);
