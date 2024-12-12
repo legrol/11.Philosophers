@@ -1,12 +1,12 @@
-# ══ Names ═══════════════════════════════════════════════════════════════════ #
-#    -----                                                                     #
+# ══ Names ══════════════════════════════════════════════════════════════════ #
+#    -----                                                                    #
 
 NAME 				= philo
 NAME_BONUS			= philo_bonus
 EXEC_PATH			= ./philo/$(NAME)
 
-# ══ Colors ══════════════════════════════════════════════════════════════════ #
-#    ------                                                                    #
+# ══ Colors ═════════════════════════════════════════════════════════════════ #
+#    ------                                                                   #
 
 DEL_LINE 			= \033[2K
 ITALIC 				= \033[3m
@@ -28,8 +28,8 @@ MID_GRAY 			= \033[38;5;245m
 DARK_GREEN 			= \033[38;2;75;179;82m
 DARK_YELLOW 		= \033[38;5;143m
 
-# ══ Compilation══════════════════════════════════════════════════════════════ #
-#    -----------                                                               #
+# ══ Compilation═════════════════════════════════════════════════════════════ #
+#    -----------                                                              #
 
 CC 					= clang
 AR 					= ar rcs
@@ -40,8 +40,8 @@ MCL 				= make clean -C
 MFCL 				= make fclean -C
 MK_					= && make
 
-# ══ Directories ═════════════════════════════════════════════════════════════ #
-#    -----------                                                               #
+# ══ Directories ════════════════════════════════════════════════════════════ #
+#    -----------                                                              #
 
 SRC_DIR				= ./philo/src
 ERRORS_DIR			= ./philo/errors
@@ -52,8 +52,8 @@ INCLUDES_DIR		= ./philo/includes
 MGE_PHILOS			= ./philo/manage_philos
 MGE_THREADS			= ./philo/manage_threads
 
-# # ══ Directories Bonus ═══════════════════════════════════════════════════════ #
-# #    -----------------                                                         #
+# # ══ Directories Bonus ════════════════════════════════════════════════════ #
+# #    -----------------                                                      #
 
 # SRC_DIR_BONUS		= ./philo_bonus/src
 # ERRORS_DIR_BONUS	= ./philo_bonus/errors
@@ -66,22 +66,22 @@ MGE_THREADS			= ./philo/manage_threads
 # EXAMFT_DIR_BONUS	= examft
 # GNL_DIR_BONUS		= gnlç
 
-# ══ Flags ═══════════════════════════════════════════════════════════════════ #
-#    -----                                                                     #
+# ══ Flags ══════════════════════════════════════════════════════════════════ #
+#    -----                                                                    #
 
 CFLAGS 				= -Wall -Werror -Wextra
 IFLAGS				= -I${INCLUDES_DIR}
 LFLAGS				= -lpthread				
 
-# # ══ Flags Bonus══════════════════════════════════════════════════════════════ #
-# #    -----------                                                               #
+# # ══ Flags Bonus ══════════════════════════════════════════════════════════ #
+# #    -------                                                                #
 
 # CFLAGS_BONUS 		= -Wall -Werror -Wextra
 # IFLAGS_BONUS		= -I${INCLUDES_DIR_BONUS}
 # LFLAGS_BONUS		= -lpthread
 
-# ══ Sources ═════════════════════════════════════════════════════════════════ #
-#    -------                                                                   #
+# ══ Sources ════════════════════════════════════════════════════════════════ #
+#    -------                                                                  #
 
 SRC 				= ${SRC_DIR}/philosophers.c
 
@@ -108,8 +108,8 @@ OBJ_UTL				= $(patsubst ${UTILS_DIR}/%.c, ${OBJ_DIR}/%.o, ${UTL})
 OBJS				= ${OBJ_SRC} ${OBJ_ERR} ${OBJ_INT} \
 					  ${OBJ_MPH} ${OBJ_MTH} ${OBJ_UTL}
 
-# # ══ Sources Bonus ═══════════════════════════════════════════════════════════ #
-# #    -------------                                                             #
+# # ══ Sources Bonus ════════════════════════════════════════════════════════ #
+# #    -------------                                                          #
 
 # SRC_BONUS 	= ${SRC_DIR_BONUS}/philosophers.c
 
@@ -129,8 +129,8 @@ OBJS				= ${OBJ_SRC} ${OBJ_ERR} ${OBJ_INT} \
 # OBJ_UTL_BONUS	= $(patsubst ${UTILS_DIR_BONUS}/%.c, ${OBJ_DIR_BONUS}/%.o, \
 # 					${UTL_BONUS})
 
-# ═══ Rules ══════════════════════════════════════════════════════════════════ #
-#     -----                                                                    #
+# ═══ Rules ═════════════════════════════════════════════════════════════════ #
+#     -----                                                                   #
 
 # all: ${EXEC_DIR} ${EXEC_DIR}${NAME}
 
@@ -195,8 +195,8 @@ re:	fclean all
 
 .PHONY : all clean fclean bonus re
 
-# # ═══ Rules Bonus ════════════════════════════════════════════════════════════ #
-# #     -----------                                                              #
+# # ═══ Rules Bonus ═════════════════════════════════════════════════════════ #
+# #     -----------                                                           #
 
 # all: ${NAME_BONUS}
 
