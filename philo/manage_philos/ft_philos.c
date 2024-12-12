@@ -36,16 +36,20 @@
  * 									eating.
  * @return void
  * 
- * The function "ft_check_dead" monitors the philosophers to determine if any 
- * of them have exceeded the `time_to_die` without eating. If a philosopher 
- * dies, it updates the `stopping_rule` in the environment and prints a death 
- * message. Additionally, it checks if all philosophers have eaten at least 
- * the `eat_max` times (if specified) and updates the `eat_max` flag.
+ * The function "ft_check_dead" monitors the philosophers' status to determine 
+ * if any philosopher has exceeded their `time_to_die` without eating or if 
+ * all philosophers have reached the specified eating limit 
+ * (`philo_eat_limit`). 
+ * If a philosopher dies, it sets the `stopping_rule` and prints a death 
+ * message. 
+ * If all philosophers are full, it updates the `eat_max` flag.
  * 
  * @param t_envp *envp				A pointer to the environment structure 
- * 									that manages the simulation state.
- * @param t_philo *philo			A pointer to the array of philosopher 
- * 									structures to monitor their states.
+ * 									that stores the simulation parameters and 
+ * 									state variables.
+ * @param t_philo *philo			A pointer to the array of philosophers' 
+ * 									structures that hold individual states.
+ * 
  * @return void
  * 
  */
@@ -53,11 +57,13 @@
 void	ft_check_dead(t_envp *envp, t_philo *philo)
 {
 	int	i;
+	int	all_philos_full;
 
 	while (!envp->eat_max)
 	{
-		i = -1;
-		while (++i < envp->nbr_philos && !envp->stopping_rule)
+		i = 0;
+		all_philos_full = 1;
+		while (i < envp->nbr_philos && !envp->stopping_rule)
 		{
 			pthread_mutex_lock(&envp->mealtime);
 			if ((int)(ft_get_time() - philo[i].last_meal) >= envp->time_to_die)
@@ -66,14 +72,14 @@ void	ft_check_dead(t_envp *envp, t_philo *philo)
 				envp->stopping_rule = 1;
 			}
 			pthread_mutex_unlock(&envp->mealtime);
+			if (envp->philo_eat_limit && philo[i].times_eaten \
+			< envp->philo_eat_limit)
+				all_philos_full = 0;
+			i++;
 		}
 		if (envp->stopping_rule)
 			break ;
-		i = 0;
-		while (envp->philo_eat_limit && i < envp->nbr_philos
-			&& philo[i].times_eaten >= envp->philo_eat_limit)
-			i++;
-		envp->eat_max = (i == envp->nbr_philos);
+		envp->eat_max = all_philos_full;
 	}
 }
 
@@ -98,6 +104,8 @@ void	ft_check_stamp(char *msg, t_philo *philo, int unlock)
 	char	*timestamp;
 
 	timestamp = ft_philo_itoa(ft_get_time() - philo->envp->init_time);
+	if (!timestamp)
+		return ;
 	pthread_mutex_lock(&philo->envp->writing);
 	if (!philo->envp->stopping_rule && !philo->envp->eat_max)
 		printf("%s %s %s\n", timestamp, philo->pos_char, msg);

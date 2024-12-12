@@ -81,7 +81,7 @@ void			ft_manage_err_simple(const char *err);
 // ============================================================================
 // Management threads
 // ============================================================================
-int				ft_create_threads(t_envp	*envp);
+int				ft_create_threads_and_monitor(t_envp *envp);
 
 // ============================================================================
 // Management philos

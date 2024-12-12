@@ -13,44 +13,60 @@
 #include "../includes/philosophers.h"
 
 /**
- * The function "ft_init_sim" allocates memory for the philosophers and their 
- * forks, and initializes all the necessary mutexes and philosopher data 
- * structures. If any initialization step fails, it cleans up the allocated 
- * resources and exits.
+ * The function "ft_init_data_philosophers" initializes the data for each 
+ * philosopher, including their position, fork associations, and a dynamically 
+ * allocated string representation of their position. If memory allocation for
+ * `pos_char` fails, it returns the index of the philosopher where the 
+ * failure occurred.
  * 
  * @param t_envp *envp				A pointer to the environment structure 
- * 									that stores simulation parameters, 
- * 									mutexes, and philosopher data.
- * @return int						Returns EXIT_SUCCESS if the simulation 
- * 									is successfully initialized; otherwise, 
- * 									returns EXIT_FAILURE.
- * 
- * The function "ft_init_mutex" initializes the mutexes for the philosophers' 
- * forks, as well as additional mutexes for managing shared resources such as 
- * mealtime and writing operations.
- * 
- * @param t_envp *envp				A pointer to the environment structure 
- * 									that stores the mutexes and simulation 
+ * 									containing philosopher data and simulation 
  * 									parameters.
- * @return int						Returns EXIT_SUCCESS if all mutexes are 
- * 									successfully initialized; otherwise, 
- * 									returns EXIT_FAILURE.
  * 
- * The function "ft_init_philo" initializes the philosophers' data in the 
- * environment structure. It assigns positions, fork associations, and other 
- * relevant details to each philosopher. If an error occurs during the 
- * initialization (e.g., memory allocation fails), it cleans up and exits.
+ * @return int						Returns -1 if initialization is successful. 
+ * 									Otherwise, returns the index of the 
+ * 									philosopher 
+ * 									that failed to initialize.
+ * 
+ * The function "ft_init_philo" initializes all philosophers by calling 
+ * "ft_init_data_philosophers". If initialization fails, it frees the 
+ * allocated memory for the philosophers' `pos_char` strings and returns 
+ * EXIT_FAILURE.
  * 
  * @param t_envp *envp				A pointer to the environment structure 
- * 									that stores simulation parameters and 
- * 									philosopher data.
- * @return int						Returns EXIT_SUCCESS if the philosophers 
- * 									are successfully initialized; otherwise, 
+ * 									containing philosopher data.
+ * 
+ * @return int						Returns EXIT_SUCCESS if initialization is 
+ * 									successful. Otherwise, returns 
+ * 									EXIT_FAILURE.
+ * 
+ * The function "ft_init_mutex" initializes mutexes for each fork, as well 
+ * as additional mutexes for managing shared resources such as mealtime and 
+ * writing. If any mutex initialization fails, it returns EXIT_FAILURE.
+ * 
+ * @param t_envp *envp				A pointer to the environment structure 
+ * 									that contains the mutexes and other 
+ * 									simulation parameters.
+ * 
+ * @return int						Returns EXIT_SUCCESS if all mutexes are 
+ * 									successfully initialized. Otherwise, 
  * 									returns EXIT_FAILURE.
+ * 
+ * The function "ft_init_sim" initializes the simulation environment. It 
+ * allocates memory for the philosophers and forks, initializes mutexes, 
+ * and sets up philosopher-specific data. If any initialization step fails, 
+ * it cleans up all allocated resources and returns EXIT_FAILURE.
+ * 
+ * @param t_envp *envp				A pointer to the environment structure 
+ * 									that manages simulation data and resources.
+ * 
+ * @return int						Returns EXIT_SUCCESS if the simulation 
+ * 									is successfully initialized. Otherwise, 
+ * 									returns EXIT_FAILURE. 
  * 
  */
 
-int	ft_init_philo(t_envp *envp)
+static int	ft_init_data_philosophers(t_envp *envp)
 {
 	int	i;
 
@@ -61,16 +77,24 @@ int	ft_init_philo(t_envp *envp)
 		envp->philos[i].times_eaten = 0;
 		envp->philos[i].pos_char = ft_philo_itoa(i + 1);
 		if (!envp->philos[i].pos_char)
-			break ;
+			return (i);
 		envp->philos[i].right_fork = i;
 		envp->philos[i].left_fork = (i + 1) % envp->nbr_philos;
 		envp->philos[i].envp = envp;
 		i++;
 	}
-	if (i != envp->nbr_philos)
+	return (-1);
+}
+
+int	ft_init_philo(t_envp *envp)
+{
+	int	failed_index;
+
+	failed_index = ft_init_data_philosophers(envp);
+	if (failed_index != -1)
 	{
-		while (i-- >= 0)
-			free(envp->philos[i].pos_char);
+		while (--failed_index >= 0)
+			free(envp->philos[failed_index].pos_char);
 		return (EXIT_FAILURE);
 	}
 	return (EXIT_SUCCESS);
