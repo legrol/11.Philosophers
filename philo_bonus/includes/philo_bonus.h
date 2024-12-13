@@ -26,8 +26,8 @@
 // ============================================================================
 // Access to my libraries
 // ============================================================================
-# include "colors.h"
-# include "ft_macros.h"
+# include "colors_bonus.h"
+# include "ft_macros_bonus.h"
 
 // ============================================================================
 // Forward declarations
@@ -41,11 +41,10 @@ typedef struct s_philo
 {
 	int				pos;
 	int				times_eaten;
-	int				right_fork;
-	int				left_fork;
+	// int				right_fork;
+	// int				left_fork;
 	unsigned long	last_meal;
 	char			*pos_char;
-	pthread_t		thread_id;
 	struct s_envp	*envp;
 }					t_philo;
 
@@ -60,9 +59,9 @@ typedef struct s_envp
 	int				stopping_rule;
 	unsigned long	init_time;
 	t_philo			*philos;
-	pthread_mutex_t	*forks;
-	pthread_mutex_t	mealtime;
-	pthread_mutex_t	writing;
+	sem_t			*forks;
+	sem_t			*mealtime;
+	sem_t			writing;
 }					t_envp;
 
 // ============================================================================

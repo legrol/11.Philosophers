@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_MACROS_H
-# define FT_MACROS_H
+#ifndef FT_MACROS_BONUS_H
+# define FT_MACROS_BONUS_H
 
 # define TAKEN_FORK			"has taken a fork"
 # define THINK				"is thinking"

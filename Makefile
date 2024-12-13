@@ -4,6 +4,7 @@
 NAME 				= philo
 NAME_BONUS			= philo_bonus
 EXEC_PATH			= ./philo/$(NAME)
+EXEC_PATH_BONUS		= ./philo_bonus/$(NAME)
 
 # ══ Colors ═════════════════════════════════════════════════════════════════ #
 #    ------                                                                   #
@@ -55,16 +56,13 @@ MGE_THREADS			= ./philo/manage_threads
 # # ══ Directories Bonus ════════════════════════════════════════════════════ #
 # #    -----------------                                                      #
 
-# SRC_DIR_BONUS		= ./philo_bonus/src
-# ERRORS_DIR_BONUS	= ./philo_bonus/errors
-# INIT_DIR_BONUS		= ./philo_bonus/init
-# UTILS_DIR_BONUS		= ./philo_bonus/utils
-# OBJ_DIR_BONUS		= ./phphilo_bonusilo/obj
-# INCLUDES_DIR_BONUS	= ./philo_bonus/includes
-# LIBFT_DIR_BONUS		= libft
-# PRINTFT_DIR_BONUS	= printf
-# EXAMFT_DIR_BONUS	= examft
-# GNL_DIR_BONUS		= gnlç
+SRC_DIR_BONUS		= ./philo_bonus/src
+ERRORS_DIR_BONUS	= ./philo_bonus/errors
+INIT_DIR_BONUS		= ./philo_bonus/init
+UTILS_DIR_BONUS		= ./philo_bonus/utils
+OBJ_DIR_BONUS		= ./philo_bonus/obj
+INCLUDES_DIR_BONUS	= ./philo_bonus/includes
+MGE_PHILOS_BONUS	= ./philo/manage_philos
 
 # ══ Flags ══════════════════════════════════════════════════════════════════ #
 #    -----                                                                    #
@@ -76,9 +74,8 @@ LFLAGS				= -lpthread
 # # ══ Flags Bonus ══════════════════════════════════════════════════════════ #
 # #    -------                                                                #
 
-# CFLAGS_BONUS 		= -Wall -Werror -Wextra
-# IFLAGS_BONUS		= -I${INCLUDES_DIR_BONUS}
-# LFLAGS_BONUS		= -lpthread
+CFLAGS_BONUS 		= -Wall -Werror -Wextra
+IFLAGS_BONUS		= -I${INCLUDES_DIR_BONUS}
 
 # ══ Sources ════════════════════════════════════════════════════════════════ #
 #    -------                                                                  #
@@ -106,28 +103,37 @@ OBJ_MTH				= $(patsubst ${MGE_THREADS}/%.c, ${OBJ_DIR}/%.o, ${MTH})
 OBJ_UTL				= $(patsubst ${UTILS_DIR}/%.c, ${OBJ_DIR}/%.o, ${UTL})
 
 OBJS				= ${OBJ_SRC} ${OBJ_ERR} ${OBJ_INT} \
-					  ${OBJ_MPH} ${OBJ_MTH} ${OBJ_UTL}
+					  	${OBJ_MPH} ${OBJ_MTH} ${OBJ_UTL}
 
 # # ══ Sources Bonus ════════════════════════════════════════════════════════ #
 # #    -------------                                                          #
 
-# SRC_BONUS 	= ${SRC_DIR_BONUS}/philosophers.c
+SRC_BONUS 			= ${SRC_DIR_BONUS}/philosophers_bonus.c
 
-# ERR_BONUS		= ${ERRORS_DIR_BONUS}/ft_manage_err.c
+ERR_BONUS			= ${ERRORS_DIR_BONUS}/ft_manage_err_bonus.c
 
-# INT_BONUS		= ${INIT_DIR_BONUS}/ft_init_struct.c \
-# 					${INIT_DIR_BONUS}/ft_init.c
+INT_BONUS			= ${INIT_DIR_BONUS}/ft_init_struct_bonus.c \
+						${INIT_DIR_BONUS}/ft_init_bonus.c
 
-# UTL_BONUS		= ${UTILS_DIR_BONUS}/ft_utils.c
+MPH_BONUS			= ${MGE_PHILOS_BONUS}/ft_philos_bonus.c
 
-# OBJ_SRC_BONUS	= $(patsubst ${SRC_DIR_BONUS}/%.c, ${OBJ_DIR_BONUS}/%.o, \
-# 					${SRC_BONUS})
-# OBJ_ERR_BONUS	= $(patsubst ${ERRORS_DIR_BONUS}/%.c, ${OBJ_DIR_BONUS}/%.o, \
-# 					${ERR_BONUS})
-# OBJ_INT_BONUS	= $(patsubst ${INIT_DIR_BONUS}/%.c, ${OBJ_DIR_BONUS}/%.o, \
-# 					${INT_BONUS})
-# OBJ_UTL_BONUS	= $(patsubst ${UTILS_DIR_BONUS}/%.c, ${OBJ_DIR_BONUS}/%.o, \
-# 					${UTL_BONUS})
+UTL_BONUS			= ${UTILS_DIR_BONUS}/ft_banner_bonus.c \
+						${UTILS_DIR_BONUS}/ft_utils_bonus.c \
+						${UTILS_DIR_BONUS}/ft_utils_2_bonus.c
+
+OBJ_SRC_BONUS		= $(patsubst ${SRC_DIR_BONUS}/%.c, \
+						${OBJ_DIR_BONUS}/%.o, ${SRC_BONUS})
+OBJ_ERR_BONUS		= $(patsubst ${ERRORS_DIR_BONUS}/%.c, \
+						${OBJ_DIR_BONUS}/%.o, ${ERR_BONUS})
+OBJ_INT_BONUS		= $(patsubst ${INIT_DIR_BONUS}/%.c, \
+						${OBJ_DIR_BONUS}/%.o, ${INT_BONUS})
+OBJ_MPH_BONUS		= $(patsubst ${MGE_PHILOS_BONUS}/%.c, \
+						${OBJ_DIR_BONUS}/%.o, ${MPH_BONUS})
+OBJ_UTL_BONUS		= $(patsubst ${UTILS_DIR_BONUS}/%.c, \
+						${OBJ_DIR_BONUS}/%.o, ${UTL_BONUS})
+
+OBJS_BONUS			= ${OBJ_SRC_BONUS} ${OBJ_ERR_BONUS} ${OBJ_INT_BONUS} \
+					  	${OBJ_MPH_BONUS} ${OBJ_UTL_BONUS}
 
 # ═══ Rules ═════════════════════════════════════════════════════════════════ #
 #     -----                                                                   #
@@ -198,52 +204,61 @@ re:	fclean all
 # # ═══ Rules Bonus ═════════════════════════════════════════════════════════ #
 # #     -----------                                                           #
 
-# all: ${NAME_BONUS}
+# all: ${EXEC_DIR} ${EXEC_DIR}${NAME}
 
-# ${NAME}: 							${OBJ_SRC_BONUS} \
-									${OBJ_GNL_BONUS} \
-# 									${OBJ_ERR_BONUS} ${OBJ_INT_BONUS} ${OBJ_UTL_BONUS} \
-# 									${OBJ_FRE_BONUS} ${OBJ_BUI_BONUS}
-# 	@echo "$(YELLOW)Compiling bonus ...$(DEF_COLOR)"
-# 	@${CC} ${CFLAGS_BONUS} ${IFLAGS_BONUS} -o ${NAME_BONUS} ${OBJ_SRC_BONUS} ${OBJ_GNL_BONUS} ${OBJ_ERR_BONUS} \
-# 									${OBJ_INT_BONUS} ${OBJ_UTL_BONUS} ${OBJ_FRE_BONUS} \
-# 									${OBJ_BUI_BONUS} ${LFLAGS_BONUS}
-# 	@echo "$(GREEN) $(NAME) all bonus created ✓$(DEF_COLOR)"
+# ${NAME}: 							${OBJ_SRC} ${OBJ_GNL} ${OBJ_ERR} \
+# 									${OBJ_INT} ${OBJ_MPH} ${OBJ_MTH} \
+# 									${OBJ_UTL}
 
-# ${OBJ_DIR}/%.o: ${SRC_DIR_BONUS}/%.c
-# 	@${MKD} $(dir $@)
-# 	@$(CC) ${CFLAGS_BONUS} ${IFLAGS_BONUS} -c $< -o $@
+# all: ${NAME}
 
-# ${OBJ_DIR}/%.o: ${ERRORS_DIR_BONUS}/%.c
-# 	@${MKD} $(dir $@)
-# 	@$(CC) ${CFLAGS_BONUS} ${IFLAGS_BONUS} -c $< -o $@
+all: ${EXEC_PATH_BONUS}
 
-# ${OBJ_DIR}/%.o: ${INIT_DIR_BONUS}/%.c
-# 	@${MKD} $(dir $@)
-# 	@$(CC) ${CFLAGS_BONUS} ${IFLAGS_BONUS} -c $< -o $@
+# ${NAME}: ${OBJS}
+# 	@echo "$(YELLOW)Compiling root ...$(DEF_COLOR)"
+# 	@${CC} ${CFLAGS} ${IFLAGS} -o ${NAME} ${OBJS} ${LFLAGS}
+# 	@echo "$(GREEN) $(NAME) all created ✓$(DEF_COLOR)"
 
-# ${OBJ_DIR}/%.o: ${UTILS_DIR_BONUS}/%.c
-# 	@${MKD} $(dir $@)
-# 	@$(CC) ${CFLAGS_BONUS} ${IFLAGS_BONUS} -c $< -o $@
+${EXEC_PATH_BONUS}: ${OBJS_BONUS}
+	@echo "$(YELLOW)Compiling bonus root ...$(DEF_COLOR)"
+	@${CC} ${CFLAGS_BONUS} ${IFLAGS_BONUS} -o ${EXEC_PATH_BONUS} ${OBJS_BONUS}
+	@echo "$(GREEN)Executable created: ${EXEC_PATH_BONUS} ✓$(DEF_COLOR)"
 
-# # ${OBJ_DIR}/%.o: ${FREE_DIR_BONUS}/%.c
-# # 	@${MKD} $(dir $@)
-# # 	@$(CC) ${CFLAGS_BONUS} ${IFLAGS_BONUS} -c $< -o $@
+${OBJ_DIR_BONUS}/%.o: ${SRC_DIR_BONUS}/%.c
+	@${MKD} $(dir $@)
+	@$(CC) ${CFLAGS_BONUS} ${IFLAGS_BONUS} -c $< -o $@
 
-# clean:
-# 	@echo "$(YELLOW)Removing object files bonus...$(DEF_COLOR)"
+${OBJ_DIR_BONUS}/%.o: ${ERRORS_DIR_BONUS}/%.c
+	@${MKD} $(dir $@)
+	@$(CC) ${CFLAGS_BONUS} ${IFLAGS_BONUS} -c $< -o $@
 
-# 	@$(RM) ${OBJ_DIR_BONUS}/*.o
+${OBJ_DIR_BONUS}/%.o: ${INIT_DIR_BONUS}/%.c
+	@${MKD} $(dir $@)
+	@$(CC) ${CFLAGS_BONUS} ${IFLAGS_BONUS} -c $< -o $@
 
-# 	@echo "$(RED)Object files bonus removed $(DEF_COLOR)"
+${OBJ_DIR_BONUS}/%.o: ${MGE_PHILOS_BONUS}/%.c
+	@${MKD} $(dir $@)
+	@$(CC) ${CFLAGS_BONUS} ${IFLAGS_BONUS} -c $< -o $@	
+
+${OBJ_DIR_BONUS}/%.o: ${UTILS_DIR_BONUS}/%.c
+	@${MKD} $(dir $@)
+	@$(CC) ${CFLAGS_BONUS} ${IFLAGS_BONUS} -c $< -o $@
+
+clean:
+	@echo "$(YELLOW)Removing object files ...$(DEF_COLOR)"
+	@$(RM) ${OBJ_DIR_BONUS}/*.o
+	@echo "$(RED)Object files removed $(DEF_COLOR)"
 
 # fclean:	clean
 # 	@echo "$(YELLOW)Removing binaries ...$(DEF_COLOR)"
+# 	@${RM} ${NAME}
+# 	@echo "$(GREEN)Binary removed!$(DEF_COLOR)"
 
-# 	@${RM} ${NAME} ${NAME_BONUS}
+fclean: clean
+	@echo "$(YELLOW)Removing executables ...$(DEF_COLOR)"
+	@${RM} ${EXEC_PATH_BONUS}
+	@echo "$(RED)Executable removed $(DEF_COLOR)"
 
-# 	@echo "$(RED)Binaries removed $(DEF_COLOR)"
+re:	fclean all
 
-# re:	fclean all
-
-# .PHONY : all clean fclean bonus re
+.PHONY : all clean fclean bonus re
