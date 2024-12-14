@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_banner_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rdel-olm <rdel-olm@student.42malaga.com>   #+#  +:+       +#+        */
+/*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024-12-13 09:12:43 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024-12-13 09:12:43 by rdel-olm         ###   ########.fr       */
+/*   Created: 2024/12/13 09:12:43 by rdel-olm          #+#    #+#             */
+/*   Updated: 2024/12/14 17:58:03 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,6 @@ void	ft_print_banner(void)
 	 \n"RESET);
 	printf(RED"                                /_/                            \
 	 \n"RESET);
-	printf(BLUE_ITALIC" BONUS                                                 \
+	printf(BLUE_ITALIC"                                                  BONUS\
 	 \n"RESET);
 }

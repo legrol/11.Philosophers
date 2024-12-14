@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 09:10:31 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/12/14 15:26:42 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/12/14 20:11:44 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,30 +137,64 @@
 // 	return (EXIT_SUCCESS);
 // }
 
+// int	ft_init_semaphores(t_envp *envp)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	envp->forks = malloc(sizeof(sem_t) * envp->nbr_philos);
+// 	if (!envp->forks)
+// 		return (EXIT_FAILURE);
+// 	while (i < envp->nbr_philos)
+// 	{
+// 		sem_init(&envp->forks[i], 0, 1);
+// 		i++;
+// 	}
+// 	sem_init(envp->mealtime, 0, 1);
+// 	sem_init(&envp->writing, 0, 1);
+// 	return (EXIT_SUCCESS);
+// }
+
 int	ft_init_semaphores(t_envp *envp)
 {
 	int	i;
 
-	i = 0;
 	envp->forks = malloc(sizeof(sem_t) * envp->nbr_philos);
 	if (!envp->forks)
 		return (EXIT_FAILURE);
+	i = 0;
 	while (i < envp->nbr_philos)
 	{
-		sem_init(&envp->forks[i], 0, 1);
+		if (sem_init(&envp->forks[i], 0, 1) != 0)
+		{
+			free(envp->forks);
+			return (EXIT_FAILURE);
+		}
 		i++;
 	}
-	sem_init(envp->mealtime, 0, 1);
-	sem_init(&envp->writing, 0, 1);
+	envp->mealtime = malloc(sizeof(sem_t));
+	if (!envp->mealtime)
+	{
+		free(envp->forks);
+		return (EXIT_FAILURE);
+	}
+	if (sem_init(envp->mealtime, 0, 1) != 0 || \
+	sem_init(&envp->writing, 0, 1) != 0)
+	{
+		free(envp->forks);
+		free(envp->mealtime);
+		return (EXIT_FAILURE);
+	}
 	return (EXIT_SUCCESS);
 }
 
-int	ft_init_philo_helper(t_envp *envp, int index)
+static int	ft_init_philo_helper(t_envp *envp, int index)
 {
 	if (index >= envp->nbr_philos)
 		return (EXIT_SUCCESS);
 	envp->philos[index].pos = index + 1;
 	envp->philos[index].times_eaten = 0;
+	envp->philos[index].last_meal = envp->init_time;
 	envp->philos[index].pos_char = ft_philo_itoa(index + 1);
 	if (!envp->philos[index].pos_char)
 		return (EXIT_FAILURE);
@@ -173,14 +207,30 @@ int	ft_init_philo(t_envp *envp)
 	return (ft_init_philo_helper(envp, 0));
 }
 
+// int	ft_init_sim(t_envp *envp)
+// {
+// 	envp->philos = malloc(sizeof(t_philo) * envp->nbr_philos);
+// 	if (!envp->philos)
+// 		return (EXIT_FAILURE);
+// 	if (ft_init_semaphores(envp) || ft_init_philo(envp))
+// 	{
+// 		free(envp->philos);
+// 		return (EXIT_FAILURE);
+// 	}
+// 	return (EXIT_SUCCESS);
+// }
+
 int	ft_init_sim(t_envp *envp)
 {
 	envp->philos = malloc(sizeof(t_philo) * envp->nbr_philos);
 	if (!envp->philos)
 		return (EXIT_FAILURE);
-	if (ft_init_semaphores(envp) || ft_init_philo(envp))
+	envp->init_time = ft_get_time();
+	if (ft_init_semaphores(envp) != EXIT_SUCCESS || \
+	ft_init_philo(envp) != EXIT_SUCCESS)
 	{
 		free(envp->philos);
+		free(envp->forks);
 		return (EXIT_FAILURE);
 	}
 	return (EXIT_SUCCESS);

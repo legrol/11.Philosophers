@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 09:11:33 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/12/14 15:32:36 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/12/14 20:51:17 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,21 +114,40 @@
 // 	free(timestamp);
 // }
 
+// void	ft_check_eat(t_philo *philo)
+// {
+// 	t_envp	*envp;
+
+// 	envp = philo->envp;
+// 	sem_wait(&envp->forks[philo->pos - 1]);
+// 	ft_check_stamp(BLUE TAKEN_FORK RESET, philo, 0);
+// 	sem_wait(&envp->forks[philo->pos % envp->nbr_philos]);
+// 	ft_check_stamp(BLUE TAKEN_FORK RESET, philo, 0);
+// 	sem_wait(envp->mealtime);
+// 	ft_check_stamp(GREEN EAT RESET, philo, 0);
+// 	philo->last_meal = ft_get_time();
+// 	sem_post(envp->mealtime);
+// 	ft_sleep(envp->time_to_eat, envp);	
+// 	philo->times_eaten++;
+// 	sem_post(&envp->forks[philo->pos - 1]);
+// 	sem_post(&envp->forks[philo->pos % envp->nbr_philos]);
+// }
+
 void	ft_check_eat(t_philo *philo)
 {
 	t_envp	*envp;
 
 	envp = philo->envp;
 	sem_wait(&envp->forks[philo->pos - 1]);
-	ft_check_stamp(BLUE "TAKEN_FORK" RESET, philo, 0);
+	ft_check_stamp(BLUE TAKEN_FORK RESET, philo, UNLOCK);
 	sem_wait(&envp->forks[philo->pos % envp->nbr_philos]);
-	ft_check_stamp(BLUE "TAKEN_FORK" RESET, philo, 0);
+	ft_check_stamp(BLUE TAKEN_FORK RESET, philo, UNLOCK);
 	sem_wait(envp->mealtime);
-	ft_check_stamp(GREEN "EAT" RESET, philo, 0);
+	ft_check_stamp(GREEN EAT RESET, philo, UNLOCK);
 	philo->last_meal = ft_get_time();
+	philo->times_eaten++;
 	sem_post(envp->mealtime);
 	ft_sleep(envp->time_to_eat, envp);
-	philo->times_eaten++;
 	sem_post(&envp->forks[philo->pos - 1]);
 	sem_post(&envp->forks[philo->pos % envp->nbr_philos]);
 }
@@ -151,19 +170,23 @@ void	ft_check_stamp(char *msg, t_philo *philo, int unlock)
 static int	ft_check_dead_recursive(t_envp *envp, t_philo *philos, int index, \
 int all_philos_full)
 {
+	unsigned long	time_since_last_meal;
+
 	if (index >= envp->nbr_philos)
 	{
 		envp->eat_max = all_philos_full;
 		return (!envp->stopping_rule);
 	}
 	sem_wait(envp->mealtime);
-	if ((int)(ft_get_time() - philos[index].last_meal) >= envp->time_to_die)
+	time_since_last_meal = ft_get_time() - philos[index].last_meal;
+	if ((int)time_since_last_meal >= envp->time_to_die)
 	{
-		ft_check_stamp(RED "DIED" RESET, &philos[index], 1);
 		envp->stopping_rule = 1;
+		sem_post(envp->mealtime);
+		return (EXIT_SUCCESS);
 	}
 	sem_post(envp->mealtime);
-	if (envp->philo_eat_limit && philos[index].times_eaten \
+	if (envp->philo_eat_limit > 0 && philos[index].times_eaten \
 	< envp->philo_eat_limit)
 		all_philos_full = 0;
 	return (ft_check_dead_recursive(envp, philos, index + 1, all_philos_full));
@@ -172,7 +195,12 @@ int all_philos_full)
 void	ft_check_dead(t_envp *envp, t_philo *philo)
 {
 	while (!envp->eat_max && !envp->stopping_rule)
-		ft_check_dead_recursive(envp, philo, 0, 1);
+	{
+		// usleep(5000);
+		if (!ft_check_dead_recursive(envp, philo, 0, 1))
+			break ;
+	}
+	sem_post(&envp->writing);
 }
 
 void	ft_destroy_semaphores_and_free(t_envp *envp)

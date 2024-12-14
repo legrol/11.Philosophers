@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 20:44:36 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/12/13 16:27:23 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/12/14 20:39:11 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 # include <sys/time.h>			// for time functions...
 # include <pthread.h>			// for thread management functions...
 # include <semaphore.h>			// for semaphore management functions...
+# include <signal.h>			// for SIGKILL, pid...
+# include <sys/wait.h>			// fot wait...
 
 // ============================================================================
 // Access to my libraries
@@ -41,10 +43,9 @@ typedef struct s_philo
 {
 	int				pos;
 	int				times_eaten;
-	// int				right_fork;
-	// int				left_fork;
 	unsigned long	last_meal;
 	char			*pos_char;
+	pid_t			pid;
 	struct s_envp	*envp;
 }					t_philo;
 
@@ -82,14 +83,15 @@ void			ft_manage_err_simple(const char *err);
 // Management 
 // ============================================================================
 
-
 // ============================================================================
 // Management philos bonus
 // ============================================================================
 void			ft_check_dead(t_envp *envp, t_philo *philo);
 void			ft_check_eat(t_philo *philo);
 void			ft_check_stamp(char *msg, t_philo *philo, int unlock);
+int				ft_create_philos(t_envp *envp);
 void			ft_destroy_semaphores_and_free(t_envp *envp);
+void			ft_terminate_philos(t_envp *envp);
 
 /// ============================================================================
 // Utils functions

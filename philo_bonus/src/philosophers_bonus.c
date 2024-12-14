@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 13:19:17 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/12/14 15:09:23 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/12/14 20:16:11 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,17 @@ int	main(int argc, char *argv[])
 		return (ft_manage_err_simple(BYE), EXIT_FAILURE);
 	if (ft_init_sim(&envp))
 		return (ft_manage_err_simple(INIT_ERR), EXIT_FAILURE);
+
+	if (ft_create_philos(&envp))
+	{
+		ft_destroy_semaphores_and_free(&envp);
+		return (ft_manage_err_simple(FORK_ERR), EXIT_FAILURE);
+	}
+
 	ft_check_dead(&envp, envp.philos);
+
+	ft_terminate_philos(&envp);
+
 	ft_destroy_semaphores_and_free(&envp);
 	return (EXIT_SUCCESS);
 }

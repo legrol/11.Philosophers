@@ -53,7 +53,7 @@ MGE_PHILOS_BONUS	= ./manage_philos
 # # ══ Flags Bonus ══════════════════════════════════════════════════════════ #
 # #    -------                                                                #
 
-CFLAGS 				= -Wall -Werror -Wextra
+CFLAGS 				= -Wall -Werror -Wextra -g
 IFLAGS_BONUS		= -I${INCLUDES_DIR_BONUS}
 # LFLAGS				= -lpthread
 
@@ -67,7 +67,8 @@ ERR_BONUS			= ${ERRORS_DIR_BONUS}/ft_manage_err_bonus.c
 INT_BONUS			= ${INIT_DIR_BONUS}/ft_init_struct_bonus.c \
 						${INIT_DIR_BONUS}/ft_init_bonus.c
 
-MPH_BONUS			= ${MGE_PHILOS_BONUS}/ft_philos_bonus.c
+MPH_BONUS			= ${MGE_PHILOS_BONUS}/ft_philos_bonus.c \
+						${MGE_PHILOS_BONUS}/ft_create_philos.c
 
 UTL_BONUS			= ${UTILS_DIR_BONUS}/ft_banner_bonus.c \
 						${UTILS_DIR_BONUS}/ft_utils_bonus.c \
@@ -122,9 +123,6 @@ clean:
 	@echo "$(YELLOW)Removing object files ...$(DEF_COLOR)"
 	@$(RM) ${OBJ_DIR_BONUS}/*.o
 	@echo "$(RED)Object files removed $(DEF_COLOR)"
-
-# @$(RM) ${OBJ_DIR_BONUS}/*.o
-# @$(RMR) $(OBJ_DIR) $(OBJ_DIR_BONUS)
 
 fclean: clean
 	@echo "$(YELLOW)Removing executables ...$(DEF_COLOR)"
