@@ -4,7 +4,7 @@
 NAME 				= philo
 NAME_BONUS			= philo_bonus
 EXEC_PATH			= ./philo/$(NAME)
-EXEC_PATH_BONUS		= ./philo_bonus/$(NAME)
+EXEC_PATH_BONUS		= ./philo_bonus/$(NAME_BONUS)
 
 # ══ Colors ═════════════════════════════════════════════════════════════════ #
 #    ------                                                                   #
@@ -35,6 +35,7 @@ DARK_YELLOW 		= \033[38;5;143m
 CC 					= clang
 AR 					= ar rcs
 RM 					= rm -f
+RMR					= rm -f -r
 MK 					= make -C -g
 MKD					= mkdir -p
 MCL 				= make clean -C
@@ -74,7 +75,6 @@ LFLAGS				= -lpthread
 # # ══ Flags Bonus ══════════════════════════════════════════════════════════ #
 # #    -------                                                                #
 
-CFLAGS_BONUS 		= -Wall -Werror -Wextra
 IFLAGS_BONUS		= -I${INCLUDES_DIR_BONUS}
 
 # ══ Sources ════════════════════════════════════════════════════════════════ #
@@ -182,81 +182,70 @@ ${OBJ_DIR}/%.o: ${UTILS_DIR}/%.c
 	@${MKD} $(dir $@)
 	@$(CC) ${CFLAGS} ${IFLAGS} -c $< -o $@
 
-clean:
-	@echo "$(YELLOW)Removing object files ...$(DEF_COLOR)"
-	@$(RM) ${OBJ_DIR}/*.o
-	@echo "$(RED)Object files removed $(DEF_COLOR)"
-
-# fclean:	clean
-# 	@echo "$(YELLOW)Removing binaries ...$(DEF_COLOR)"
-# 	@${RM} ${NAME}
-# 	@echo "$(GREEN)Binary removed!$(DEF_COLOR)"
-
-fclean: clean
-	@echo "$(YELLOW)Removing executables ...$(DEF_COLOR)"
-	@${RM} ${EXEC_PATH}
-	@echo "$(RED)Executable removed $(DEF_COLOR)"
-
-re:	fclean all
-
-.PHONY : all clean fclean bonus re
-
 # # ═══ Rules Bonus ═════════════════════════════════════════════════════════ #
 # #     -----------                                                           #
 
-# all: ${EXEC_DIR} ${EXEC_DIR}${NAME}
-
-# ${NAME}: 							${OBJ_SRC} ${OBJ_GNL} ${OBJ_ERR} \
-# 									${OBJ_INT} ${OBJ_MPH} ${OBJ_MTH} \
-# 									${OBJ_UTL}
-
-# all: ${NAME}
-
-all: ${EXEC_PATH_BONUS}
-
-# ${NAME}: ${OBJS}
-# 	@echo "$(YELLOW)Compiling root ...$(DEF_COLOR)"
-# 	@${CC} ${CFLAGS} ${IFLAGS} -o ${NAME} ${OBJS} ${LFLAGS}
-# 	@echo "$(GREEN) $(NAME) all created ✓$(DEF_COLOR)"
+bonus: ${EXEC_PATH_BONUS}
 
 ${EXEC_PATH_BONUS}: ${OBJS_BONUS}
 	@echo "$(YELLOW)Compiling bonus root ...$(DEF_COLOR)"
-	@${CC} ${CFLAGS_BONUS} ${IFLAGS_BONUS} -o ${EXEC_PATH_BONUS} ${OBJS_BONUS}
+	@${CC} ${CFLAGS} ${IFLAGS_BONUS} -o ${EXEC_PATH_BONUS} ${OBJS_BONUS} \
+			${LFLAGS}
 	@echo "$(GREEN)Executable created: ${EXEC_PATH_BONUS} ✓$(DEF_COLOR)"
 
 ${OBJ_DIR_BONUS}/%.o: ${SRC_DIR_BONUS}/%.c
 	@${MKD} $(dir $@)
-	@$(CC) ${CFLAGS_BONUS} ${IFLAGS_BONUS} -c $< -o $@
+	@$(CC) ${CFLAGS} ${IFLAGS_BONUS} -c $< -o $@
 
 ${OBJ_DIR_BONUS}/%.o: ${ERRORS_DIR_BONUS}/%.c
 	@${MKD} $(dir $@)
-	@$(CC) ${CFLAGS_BONUS} ${IFLAGS_BONUS} -c $< -o $@
+	@$(CC) ${CFLAGS} ${IFLAGS_BONUS} -c $< -o $@
 
 ${OBJ_DIR_BONUS}/%.o: ${INIT_DIR_BONUS}/%.c
 	@${MKD} $(dir $@)
-	@$(CC) ${CFLAGS_BONUS} ${IFLAGS_BONUS} -c $< -o $@
+	@$(CC) ${CFLAGS} ${IFLAGS_BONUS} -c $< -o $@
 
 ${OBJ_DIR_BONUS}/%.o: ${MGE_PHILOS_BONUS}/%.c
 	@${MKD} $(dir $@)
-	@$(CC) ${CFLAGS_BONUS} ${IFLAGS_BONUS} -c $< -o $@	
+	@$(CC) ${CFLAGS} ${IFLAGS_BONUS} -c $< -o $@	
 
 ${OBJ_DIR_BONUS}/%.o: ${UTILS_DIR_BONUS}/%.c
 	@${MKD} $(dir $@)
-	@$(CC) ${CFLAGS_BONUS} ${IFLAGS_BONUS} -c $< -o $@
+	@$(CC) ${CFLAGS} ${IFLAGS_BONUS} -c $< -o $@
+
+# #     -----------                                                           #
+# # ═══ Rules Bonus ═════════════════════════════════════════════════════════ #
 
 clean:
 	@echo "$(YELLOW)Removing object files ...$(DEF_COLOR)"
-	@$(RM) ${OBJ_DIR_BONUS}/*.o
+	@$(RM) ${OBJ_DIR}/*.o ${OBJ_DIR_BONUS}/*.o
+	@$(RMR) $(OBJ_DIR) $(OBJ_DIR_BONUS)
 	@echo "$(RED)Object files removed $(DEF_COLOR)"
+
+# clean:
+# 	@echo "$(YELLOW)Removing object files ...$(DEF_COLOR)"
+# 	@$(RM) $(OBJS) $(OBJS_BONUS)
+# 	@$(RMR) $(OBJ_DIR) $(OBJ_DIR_BONUS)
+# 	@echo "$(RED)Object files removed $(DEF_COLOR)"
+
+# clean:
+# 	@echo "$(YELLOW)Removing object files ...$(DEF_COLOR)"
+# 	@$(RM) ${OBJ_DIR_BONUS}/*.o
+# 	@echo "$(RED)Object files removed $(DEF_COLOR)"
 
 # fclean:	clean
 # 	@echo "$(YELLOW)Removing binaries ...$(DEF_COLOR)"
 # 	@${RM} ${NAME}
 # 	@echo "$(GREEN)Binary removed!$(DEF_COLOR)"
 
+# fclean: clean
+# 	@echo "$(YELLOW)Removing executables ...$(DEF_COLOR)"
+# 	@${RM} ${EXEC_PATH}
+# 	@echo "$(RED)Executable removed $(DEF_COLOR)"
+
 fclean: clean
 	@echo "$(YELLOW)Removing executables ...$(DEF_COLOR)"
-	@${RM} ${EXEC_PATH_BONUS}
+	@${RM} ${EXEC_PATH} ${EXEC_PATH_BONUS}
 	@echo "$(RED)Executable removed $(DEF_COLOR)"
 
 re:	fclean all

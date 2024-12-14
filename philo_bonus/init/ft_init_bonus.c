@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_init_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rdel-olm <rdel-olm@student.42malaga.com>   #+#  +:+       +#+        */
+/*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024-12-13 09:10:31 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024-12-13 09:10:31 by rdel-olm         ###   ########.fr       */
+/*   Created: 2024/12/13 09:10:31 by rdel-olm          #+#    #+#             */
+/*   Updated: 2024/12/14 15:26:42 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,30 +141,36 @@ int	ft_init_semaphores(t_envp *envp)
 {
 	int	i;
 
+	i = 0;
 	envp->forks = malloc(sizeof(sem_t) * envp->nbr_philos);
 	if (!envp->forks)
 		return (EXIT_FAILURE);
-	for (i = 0; i < envp->nbr_philos; i++)
+	while (i < envp->nbr_philos)
+	{
 		sem_init(&envp->forks[i], 0, 1);
-	sem_init(&envp->mealtime, 0, 1);
+		i++;
+	}
+	sem_init(envp->mealtime, 0, 1);
 	sem_init(&envp->writing, 0, 1);
 	return (EXIT_SUCCESS);
 }
 
+int	ft_init_philo_helper(t_envp *envp, int index)
+{
+	if (index >= envp->nbr_philos)
+		return (EXIT_SUCCESS);
+	envp->philos[index].pos = index + 1;
+	envp->philos[index].times_eaten = 0;
+	envp->philos[index].pos_char = ft_philo_itoa(index + 1);
+	if (!envp->philos[index].pos_char)
+		return (EXIT_FAILURE);
+	envp->philos[index].envp = envp;
+	return (ft_init_philo_helper(envp, index + 1));
+}
+
 int	ft_init_philo(t_envp *envp)
 {
-	int	i;
-
-	for (i = 0; i < envp->nbr_philos; i++)
-	{
-		envp->philos[i].pos = i + 1;
-		envp->philos[i].times_eaten = 0;
-		envp->philos[i].pos_char = ft_philo_itoa(i + 1);
-		if (!envp->philos[i].pos_char)
-			return (EXIT_FAILURE);
-		envp->philos[i].envp = envp;
-	}
-	return (EXIT_SUCCESS);
+	return (ft_init_philo_helper(envp, 0));
 }
 
 int	ft_init_sim(t_envp *envp)

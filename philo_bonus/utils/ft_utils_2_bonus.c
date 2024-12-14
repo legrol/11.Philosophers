@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_utils_2_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rdel-olm <rdel-olm@student.42malaga.com>   #+#  +:+       +#+        */
+/*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024-12-13 09:12:32 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024-12-13 09:12:32 by rdel-olm         ###   ########.fr       */
+/*   Created: 2024/12/13 09:12:32 by rdel-olm          #+#    #+#             */
+/*   Updated: 2024/12/14 15:06:37 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,5 +71,4 @@ void	ft_sleep(unsigned long total_time, t_envp *envp)
 			break ;
 		usleep(envp->nbr_philos * 2);
 	}
-	// return ;
 }

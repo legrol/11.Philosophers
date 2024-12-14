@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philosophers.h                                     :+:      :+:    :+:   */
+/*   philo_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 20:44:36 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/12/10 22:55:43 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/12/13 16:27:23 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,30 +65,31 @@ typedef struct s_envp
 }					t_envp;
 
 // ============================================================================
-// Initialization
+// Initialization bonus
 // ============================================================================
-int				ft_init_mutex(t_envp *envp);
+int				ft_init_semaphores(t_envp *envp);
 int				ft_init_sim(t_envp *envp);
 void			ft_init_struct(t_envp *envp, int argc, char *argv[]);
 int				ft_init_philo(t_envp *envp);
 
 // ============================================================================
-// Management errors
+// Management errors bonus
 // ============================================================================
 void			ft_manage_err(const char *err);
 void			ft_manage_err_simple(const char *err);
 
 // ============================================================================
-// Management threads
+// Management 
 // ============================================================================
-int				ft_create_threads_and_monitor(t_envp *envp);
+
 
 // ============================================================================
-// Management philos
+// Management philos bonus
 // ============================================================================
 void			ft_check_dead(t_envp *envp, t_philo *philo);
 void			ft_check_eat(t_philo *philo);
 void			ft_check_stamp(char *msg, t_philo *philo, int unlock);
+void			ft_destroy_semaphores_and_free(t_envp *envp);
 
 /// ============================================================================
 // Utils functions
