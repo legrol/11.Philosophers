@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 09:11:33 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/12/15 20:20:42 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/12/15 20:30:02 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,6 @@ static void	ft_check_dead_recursive(t_envp *envp, t_philo *philo, int index)
 		return ;
 	sem_wait(envp->mealtime);
 	time_since_last_meal = ft_get_time() - philo[index].last_meal;
-
 	if ((int)time_since_last_meal >= envp->time_to_die)
 	{
 		sem_wait(&envp->writing);
