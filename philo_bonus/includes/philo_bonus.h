@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 20:44:36 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/12/14 20:39:11 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/12/15 00:19:34 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <semaphore.h>			// for semaphore management functions...
 # include <signal.h>			// for SIGKILL, pid...
 # include <sys/wait.h>			// fot wait...
+# include <fcntl.h>				// for O_CREAT and others constants...
 
 // ============================================================================
 // Access to my libraries
@@ -63,6 +64,7 @@ typedef struct s_envp
 	sem_t			*forks;
 	sem_t			*mealtime;
 	sem_t			writing;
+	sem_t			*meals_done;
 }					t_envp;
 
 // ============================================================================

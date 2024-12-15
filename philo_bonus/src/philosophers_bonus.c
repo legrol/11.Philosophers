@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 13:19:17 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/12/14 20:16:11 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/12/14 23:41:19 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,27 @@
 // 	return (EXIT_SUCCESS);
 // }
 
+static void	ft_monitor_philos(t_envp *envp)
+{
+	int	status;
+	int	i;
+
+	i = 0;
+	while (i < envp->nbr_philos)
+	{
+		waitpid(-1, &status, 0); // Espera a cualquier hijo.
+		if (WIFEXITED(status) && WEXITSTATUS(status) == EXIT_FAILURE)
+		{
+			// Si algún filósofo muere, termina la simulación.
+			i = 0;
+			while (i < envp->nbr_philos)
+				kill(envp->philos[i++].pid, SIGKILL);
+			break ;
+		}
+		i++;
+	}
+}
+
 int	ft_check_params_recursive(t_envp *envp, char *argv[], int index, int argc)
 {
 	if (index >= argc)
@@ -97,6 +118,33 @@ int	ft_check_params_recursive(t_envp *envp, char *argv[], int index, int argc)
 	return (ft_check_params_recursive(envp, argv, index + 1, argc));
 }
 
+// int	main(int argc, char *argv[])
+// {
+// 	t_envp	envp;
+
+// 	ft_print_banner();
+// 	envp.eat_max = 0;
+// 	envp.stopping_rule = 0;
+// 	if (argc < 5 || argc > 6)
+// 	{
+// 		ft_manage_err_simple(NUM_ARGV_ERR);
+// 		return (ft_manage_err_simple(USAGE_ERR), EXIT_FAILURE);
+// 	}
+// 	if (ft_check_params_recursive(&envp, argv, 1, argc))
+// 		return (ft_manage_err_simple(BYE), EXIT_FAILURE);
+// 	if (ft_init_sim(&envp))
+// 		return (ft_manage_err_simple(INIT_ERR), EXIT_FAILURE);
+// 	if (ft_create_philos(&envp))
+// 	{
+// 		ft_destroy_semaphores_and_free(&envp);
+// 		return (ft_manage_err_simple(FORK_ERR), EXIT_FAILURE);
+// 	}
+// 	ft_check_dead(&envp, envp.philos);
+// 	ft_terminate_philos(&envp);
+// 	ft_destroy_semaphores_and_free(&envp);
+// 	return (EXIT_SUCCESS);
+// }
+
 int	main(int argc, char *argv[])
 {
 	t_envp	envp;
@@ -113,17 +161,12 @@ int	main(int argc, char *argv[])
 		return (ft_manage_err_simple(BYE), EXIT_FAILURE);
 	if (ft_init_sim(&envp))
 		return (ft_manage_err_simple(INIT_ERR), EXIT_FAILURE);
-
 	if (ft_create_philos(&envp))
 	{
 		ft_destroy_semaphores_and_free(&envp);
 		return (ft_manage_err_simple(FORK_ERR), EXIT_FAILURE);
 	}
-
-	ft_check_dead(&envp, envp.philos);
-
-	ft_terminate_philos(&envp);
-
+	ft_monitor_philos(&envp); // Monitorea desde el proceso principal.
 	ft_destroy_semaphores_and_free(&envp);
 	return (EXIT_SUCCESS);
 }

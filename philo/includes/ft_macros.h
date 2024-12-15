@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 12:08:07 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/12/09 21:32:01 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/12/15 18:00:32 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,14 @@ eat]"
 # define NO_INT_ARGV_ERR	"❗Argument is not integer value"
 # define INT_NEG_ARGV_ERR	"❗Argument with negativ integer value. Forbidden."
 # define PARAMS_ERR			"❗Incorrect parameteres."
-# define ARG				"Argument "
-# define INVALID			" is not valid."
-# define NEGATIVE			" negative value."
-# define VALUES_INVALID		"Values of some parameter are invalid."
-# define INIT_ERR			"Initialization error."
-# define THREADS_ERR		"Threads error."
-# define BYE				"Fix the argument, my friend."
+# define ARG				"❗Argument "
+# define INVALID			"❗is not valid."
+# define NEGATIVE			"❗negative value."
+# define VALUES_INVALID		"❗Values of some parameter are invalid."
+# define INIT_ERR			"❗Initialization error."
+# define THREADS_ERR		"❗Threads error."
+# define BYE				"❗Fix the argument, my friend."
+# define FORK_ERR			"❗Error: Fork failed. Could not create process."
 
 # define INT_MAX			2147483647
 # define INT_MIN			-2147483648
