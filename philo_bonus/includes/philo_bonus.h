@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 20:44:36 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/12/15 00:19:34 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/12/15 18:37:57 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include <signal.h>			// for SIGKILL, pid...
 # include <sys/wait.h>			// fot wait...
 # include <fcntl.h>				// for O_CREAT and others constants...
+# include <string.h>			// for memcpy...
 
 // ============================================================================
 // Access to my libraries

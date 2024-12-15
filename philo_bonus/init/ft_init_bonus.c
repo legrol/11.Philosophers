@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 09:10:31 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/12/15 00:42:17 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/12/15 19:40:57 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,147 +66,37 @@
  * 
  */
 
-
-// int	ft_init_philo(t_envp *envp)
-// {
-// 	int	failed_index;
-
-// 	failed_index = ft_init_data_philosophers(envp);
-// 	if (failed_index != -1)
-// 	{
-// 		while (--failed_index >= 0)
-// 			free(envp->philos[failed_index].pos_char);
-// 		return (EXIT_FAILURE);
-// 	}
-// 	return (EXIT_SUCCESS);
-// }
-
-// int	ft_init_sim(t_envp *envp)
-// {
-// 	envp->philos = malloc(sizeof(t_philo) * envp->nbr_philos);
-// 	if (!envp->philos)
-// 		return (EXIT_FAILURE);
-// 	envp->forks = malloc(sizeof(pthread_mutex_t) * envp->nbr_philos);
-// 	if (!envp->forks)
-// 	{
-// 		free(envp->philos);
-// 		return (EXIT_FAILURE);
-// 	}
-// 	if (ft_init_mutex(envp) || ft_init_philo(envp))
-// 	{
-// 		free(envp->philos);
-// 		free(envp->forks);
-// 		return (EXIT_FAILURE);
-// 	}
-// 	return (EXIT_SUCCESS);
-// }
-
-// int	ft_init_semaphores(t_envp *envp)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	envp->forks = malloc(sizeof(sem_t) * envp->nbr_philos);
-// 	if (!envp->forks)
-// 		return (EXIT_FAILURE);
-// 	while (i < envp->nbr_philos)
-// 	{
-// 		sem_init(&envp->forks[i], 0, 1);
-// 		i++;
-// 	}
-// 	sem_init(envp->mealtime, 0, 1);
-// 	sem_init(&envp->writing, 0, 1);
-// 	return (EXIT_SUCCESS);
-// }
-
-// int	ft_init_semaphores(t_envp *envp)
-// {
-// 	int	i;
-
-// 	envp->forks = malloc(sizeof(sem_t) * envp->nbr_philos);
-// 	if (!envp->forks)
-// 		return (EXIT_FAILURE);
-// 	i = 0;
-// 	while (i < envp->nbr_philos)
-// 	{
-// 		if (sem_init(&envp->forks[i], 0, 1) != 0)
-// 		{
-// 			free(envp->forks);
-// 			return (EXIT_FAILURE);
-// 		}
-// 		i++;
-// 	}
-// 	envp->mealtime = malloc(sizeof(sem_t));
-// 	if (!envp->mealtime)
-// 	{
-// 		free(envp->forks);
-// 		return (EXIT_FAILURE);
-// 	}
-// 	if (sem_init(envp->mealtime, 0, 1) != 0 || \
-// 	sem_init(&envp->writing, 0, 1) != 0)
-// 	{
-// 		free(envp->forks);
-// 		free(envp->mealtime);
-// 		return (EXIT_FAILURE);
-// 	}
-// 	return (EXIT_SUCCESS);
-// }
-
-// static int ft_init_forks_recursive(sem_t *forks, int index, int nbr_philos)
-// {
-// 	if (index >= nbr_philos)
-// 		return (EXIT_SUCCESS);
-
-// 	if (sem_init(&forks[index], 1, 1) != 0)
-// 	{
-// 		perror("sem_init fork");
-// 		return (EXIT_FAILURE);
-// 	}
-
-// 	return ft_init_forks_recursive(forks, index + 1, nbr_philos);
-// }
-
-int ft_init_semaphores(t_envp *envp)
+int	ft_init_semaphores(t_envp *envp)
 {
+	sem_t	*temp_forks;
+	sem_t	*temp_mealtime;
+	sem_t	*temp_meals_done;
+	sem_t	*temp_writing;
+
 	sem_unlink("/forks");
 	sem_unlink("/mealtime");
 	sem_unlink("/writing");
 	sem_unlink("/meals_done");
-
-	envp->forks = sem_open("/forks", O_CREAT, 0644, envp->nbr_philos);
-	envp->mealtime = sem_open("/mealtime", O_CREAT, 0644, 1);
-	envp->meals_done = sem_open("/meals_done", O_CREAT, 0644, 0);
-	envp->writing = sem_open("/writing", O_CREAT, 0644, 1);
-
-	if (envp->forks == SEM_FAILED || envp->mealtime == SEM_FAILED || \
-	envp->meals_done == SEM_FAILED || &envp->writing == SEM_FAILED)
+	temp_forks = sem_open("/forks", O_CREAT, 0644, envp->nbr_philos);
+	temp_mealtime = sem_open("/mealtime", O_CREAT, 0644, 1);
+	temp_meals_done = sem_open("/meals_done", O_CREAT, 0644, 0);
+	temp_writing = sem_open("/writing", O_CREAT, 0644, 1);
+	if (temp_forks == SEM_FAILED || temp_mealtime == SEM_FAILED || \
+		temp_meals_done == SEM_FAILED || temp_writing == SEM_FAILED)
 	{
 		perror("Error initializing semaphores");
 		return (EXIT_FAILURE);
 	}
-
+	memcpy(&envp->forks, temp_forks, sizeof(sem_t));
+	memcpy(&envp->mealtime, temp_mealtime, sizeof(sem_t));
+	memcpy(&envp->meals_done, temp_meals_done, sizeof(sem_t));
+	memcpy(&envp->writing, temp_writing, sizeof(sem_t));
+	sem_close(temp_forks);
+	sem_close(temp_mealtime);
+	sem_close(temp_meals_done);
+	sem_close(temp_writing);
 	return (EXIT_SUCCESS);
 }
-
-
-// static int	ft_init_philo_helper(t_envp *envp, int index)
-// {
-// 	if (index >= envp->nbr_philos)
-// 		return (EXIT_SUCCESS);
-// 	envp->philos[index].pos = index + 1;
-// 	envp->philos[index].times_eaten = 0;
-// 	envp->philos[index].last_meal = envp->init_time;
-// 	envp->philos[index].pos_char = ft_philo_itoa(index + 1);
-// 	if (!envp->philos[index].pos_char)
-// 		return (EXIT_FAILURE);
-// 	envp->philos[index].envp = envp;
-// 	return (ft_init_philo_helper(envp, index + 1));
-// }
-
-// int	ft_init_philo(t_envp *envp)
-// {
-// 	return (ft_init_philo_helper(envp, 0));
-// }
 
 int	ft_init_philo(t_envp *envp)
 {
@@ -217,7 +107,7 @@ int	ft_init_philo(t_envp *envp)
 	{
 		envp->philos[i].pos = i + 1;
 		envp->philos[i].times_eaten = 0;
-		envp->philos[i].last_meal = envp->init_time; // Inicialización
+		envp->philos[i].last_meal = envp->init_time;
 		envp->philos[i].pos_char = ft_philo_itoa(i + 1);
 		if (!envp->philos[i].pos_char)
 			return (EXIT_FAILURE);
