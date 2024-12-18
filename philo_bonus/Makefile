@@ -55,20 +55,21 @@ MGE_PHILOS_BONUS	= ./manage_philos
 
 CFLAGS 				= -Wall -Werror -Wextra -g
 IFLAGS_BONUS		= -I${INCLUDES_DIR_BONUS}
-# LFLAGS				= -lpthread
+LFLAGS				= -lpthread
 
 # # ══ Sources Bonus ════════════════════════════════════════════════════════ #
 # #    -------------                                                          #
 
 SRC_BONUS 			= ${SRC_DIR_BONUS}/philosophers_bonus.c
 
+
 ERR_BONUS			= ${ERRORS_DIR_BONUS}/ft_manage_err_bonus.c
 
-INT_BONUS			= ${INIT_DIR_BONUS}/ft_init_struct_bonus.c \
-						${INIT_DIR_BONUS}/ft_init_bonus.c
+INT_BONUS			= ${INIT_DIR_BONUS}/ft_init_bonus.c \
+						${INIT_DIR_BONUS}/ft_init_struct_bonus.c
 
 MPH_BONUS			= ${MGE_PHILOS_BONUS}/ft_philos_bonus.c \
-						${MGE_PHILOS_BONUS}/ft_create_philos.c
+						${MGE_PHILOS_BONUS}/ft_philos_tools_bonus.c
 
 UTL_BONUS			= ${UTILS_DIR_BONUS}/ft_banner_bonus.c \
 						${UTILS_DIR_BONUS}/ft_utils_bonus.c \
@@ -85,9 +86,8 @@ OBJ_MPH_BONUS		= $(patsubst ${MGE_PHILOS_BONUS}/%.c, \
 OBJ_UTL_BONUS		= $(patsubst ${UTILS_DIR_BONUS}/%.c, \
 						${OBJ_DIR_BONUS}/%.o, ${UTL_BONUS})
 
-OBJS_BONUS			= ${OBJ_SRC_BONUS} ${OBJ_ERR_BONUS} ${OBJ_INT_BONUS} \
-					  	${OBJ_MPH_BONUS} ${OBJ_UTL_BONUS}
-
+OBJS_BONUS			= ${OBJ_SRC_BONUS} ${OBJ_CLN_BONUS} ${OBJ_ERR_BONUS} \
+						${OBJ_INT_BONUS} ${OBJ_MPH_BONUS} ${OBJ_UTL_BONUS}
 
 # # ═══ Rules Bonus ═════════════════════════════════════════════════════════ #
 # #     -----------                                                           #

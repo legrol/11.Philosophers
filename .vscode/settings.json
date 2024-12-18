@@ -3,6 +3,9 @@
 		"philosophers.h": "c",
 		"time.h": "c",
 		"stdio.h": "c",
-		"stdlib.h": "c"
+		"stdlib.h": "c",
+		"philo_bonus.h": "c",
+		"string.h": "c",
+		"signal.h": "c"
 	}
 }

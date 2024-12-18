@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 00:05:25 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/12/08 21:46:59 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/12/17 23:14:03 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	ft_check_dead(t_envp *envp, t_philo *philo)
 			pthread_mutex_lock(&envp->mealtime);
 			if ((int)(ft_get_time() - philo[i].last_meal) >= envp->time_to_die)
 			{
-				ft_check_stamp(RED DIED RESET, &philo[i], LOCK);
+				ft_check_stamp(RED DIED RESET "\n", &philo[i], LOCK);
 				envp->stopping_rule = 1;
 			}
 			pthread_mutex_unlock(&envp->mealtime);

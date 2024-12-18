@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 20:44:36 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/12/15 18:37:57 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/12/18 18:35:53 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,11 @@
 # include <pthread.h>			// for thread management functions...
 # include <semaphore.h>			// for semaphore management functions...
 # include <signal.h>			// for SIGKILL, pid...
-# include <sys/wait.h>			// fot wait...
 # include <fcntl.h>				// for O_CREAT and others constants...
-# include <string.h>			// for memcpy...
+# include <string.h>			// for memcpy...              			
+# include <sys/stat.h>			// for S_IRUSR, S_IWUSR, S_IXUSR, etc...
+# include <limits.h>			// for INT_MAX, MIN_INT...
+# include <sys/wait.h>			// for wait...
 
 // ============================================================================
 // Access to my libraries
@@ -36,74 +38,76 @@
 // ============================================================================
 // Forward declarations
 // ============================================================================
-struct	s_envp;
+typedef struct s_philo	t_philo;
 
 // ============================================================================
 // Structures
 // ============================================================================
 typedef struct s_philo
 {
-	int				pos;
-	int				times_eaten;
-	unsigned long	last_meal;
-	char			*pos_char;
+	int				id;
+	int				death;
+	int				eat_count;
+	unsigned int	last_meal;
+	unsigned int	next_meal;
 	pid_t			pid;
-	struct s_envp	*envp;
+	struct s_data	*data;
 }					t_philo;
 
-typedef struct s_envp
+typedef struct s_data
 {
-	int				nbr_philos;
+	int				philo_count;
 	int				time_to_die;
 	int				time_to_eat;
 	int				time_to_sleep;
-	int				philo_eat_limit;
-	int				eat_max;
-	int				stopping_rule;
-	unsigned long	init_time;
-	t_philo			*philos;
+	int				eat_counter;
+	int				max_eat;
+	int				current_eat;
+	unsigned long	start;
 	sem_t			*forks;
-	sem_t			*mealtime;
-	sem_t			writing;
-	sem_t			*meals_done;
-}					t_envp;
+	sem_t			*print;
+	sem_t			*death;
+	sem_t			*stop;
+	t_philo			*philos;
+}					t_data;
 
 // ============================================================================
-// Initialization bonus
-// ============================================================================
-int				ft_init_semaphores(t_envp *envp);
-int				ft_init_sim(t_envp *envp);
-void			ft_init_struct(t_envp *envp, int argc, char *argv[]);
-int				ft_init_philo(t_envp *envp);
-
-// ============================================================================
-// Management errors bonus
+// Management errors
 // ============================================================================
 void			ft_manage_err(const char *err);
 void			ft_manage_err_simple(const char *err);
 
 // ============================================================================
-// Management 
+// Main functions
 // ============================================================================
+int				ft_check_params(t_data *env, int argc, char **argv);
 
 // ============================================================================
-// Management philos bonus
+// Initialization functions
 // ============================================================================
-void			ft_check_dead(t_envp *envp, t_philo *philo);
+void			ft_destroy_all(t_data *simulation, t_philo *philo);
+int				ft_init_struct(int argc, char **argv, t_data *env);
+t_philo			*ft_init_philo(t_data *data);
+void			ft_init_sim(t_data *data, t_philo *philo);
+
+// ============================================================================
+// Management philos
+// ============================================================================
+void			*ft_check_death(void *arg);
 void			ft_check_eat(t_philo *philo);
-void			ft_check_stamp(char *msg, t_philo *philo, int unlock);
-int				ft_create_philos(t_envp *envp);
-void			ft_destroy_semaphores_and_free(t_envp *envp);
-void			ft_terminate_philos(t_envp *envp);
+void			ft_check_sleep(t_philo *philo);
+void			ft_check_think(t_philo *philo);
+void			ft_manage_fork(t_philo *philo);
+void			ft_routine(t_philo *philo);
 
-/// ============================================================================
-// Utils functions
 // ============================================================================
-int				ft_isinteger(char *nbr);
-unsigned long	ft_get_time(void);
+// Utils 
+// ============================================================================
+unsigned int	ft_get_time(void);
+int				ft_isinteger(char *nptr);
+void			ft_log_status(char *id, t_philo *philo);
 int				ft_philo_atoi(const char *str);
-char			*ft_philo_itoa(int n);
 void			ft_print_banner(void);
-void			ft_sleep(unsigned long total_time, t_envp *envp);
+int				ft_strcmp(const char *s1, const char *s2);
 
 #endif

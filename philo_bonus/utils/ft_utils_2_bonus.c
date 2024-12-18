@@ -5,70 +5,114 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/13 09:12:32 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/12/14 15:06:37 by rdel-olm         ###   ########.fr       */
+/*   Created: 2024/12/13 09:12:19 by rdel-olm          #+#    #+#             */
+/*   Updated: 2024/12/18 19:08:47 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo_bonus.h"
 
 /**
- * The function "ft_sleep" implements a custom sleep mechanism, allowing the 
- * program to pause execution for a specified amount of time in milliseconds. 
- * It continuously checks whether the stopping condition in the environment 
- * (`stopping_rule`) has been triggered, ensuring that the sleep can be 
- * interrupted if necessary.
+ * The function "ft_log_status" logs the philosopher's current action (e.g., 
+ * eating, sleeping, thinking, or dying). It calculates the relative timestamp 
+ * since the simulation started and ensures thread-safe access to the logging 
+ * process using semaphores.
  * 
- * @param unsigned long total_time	The duration to sleep in milliseconds.
- * @param t_envp *envp				A pointer to the environment structure 
- * 									that contains the stopping rule and other 
- * 									simulation parameters.
+ * @param char *id					A string representing the action being 
+ * 									logged.
+ * @param t_philo *philo			A pointer to the philosopher's structure 
+ * 									representing their state.
  * 
- * The function "ft_get_time" retrieves the current time in milliseconds since 
- * the Unix epoch (January 1, 1970). It uses the `gettimeofday` function to 
- * obtain the time in seconds and microseconds and converts it to milliseconds.
+ * The function "ft_log_status_aux" logs a philosopher's action (e.g., taking 
+ * a fork, eating, sleeping, thinking, or dying) with a formatted timestamp 
+ * and color-coded messages for better readability.
  * 
- * @return unsigned long			Returns the current time in milliseconds.
+ * @param unsigned int timestamp	The timestamp of the action relative to 
+ * 									the simulation start.
+ * @param int philo_pos				The position (ID) of the philosopher.
+ * @param char *id					A string representing the action being 
+ * 									logged.
  * 
- * The function "ft_isinteger" checks whether a given string represents a valid 
- * integer within the range of `INT_MIN` and `INT_MAX`.
+ * @return void
  * 
- * @param char *nbr    The string to check.
+ * The function "ft_get_time" retrieves the current time in milliseconds 
+ * since the Unix epoch (January 1, 1970). It uses `gettimeofday` to fetch 
+ * the time in seconds and microseconds, then converts it to milliseconds.
  * 
- * @return             1 if the string represents a valid integer.
- *                     0 otherwise.
+ * @return unsigned int				Returns the current time in milliseconds.
+ * 
+ * The function "ft_isinteger" checks if a given string represents a valid 
+ * non-negative integer. If valid, it converts the string to its integer value.
+ * 
+ * @param char *arg					A string to be checked and converted.
+ * 
+ * @return int						Returns the integer value if the string is 
+ * 									valid. Returns -1 if the string contains 
+ * 									non-numeric characters.
  * 
  */
 
-int	ft_isinteger(char *nbr)
+int	ft_isinteger(char *arg)
 {
-	long	result;
+	int	index;
+	int	nbr;
 
-	result = 0;
-	result = ft_philo_atoi(nbr);
-	if (result <= INT_MAX || result >= INT_MIN)
-		return (1);
-	else
-		return (0);
-}
-
-unsigned long	ft_get_time(void)
-{
-	struct timeval	mytime;
-
-	gettimeofday(&mytime, NULL);
-	return ((mytime.tv_sec * (unsigned long)1000) + (mytime.tv_usec / 1000));
-}
-
-void	ft_sleep(unsigned long total_time, t_envp *envp)
-{
-	unsigned long	init;
-
-	init = ft_get_time();
-	while (!envp->stopping_rule)
+	index = 0;
+	nbr = 0;
+	while (arg[index])
 	{
-		if (ft_get_time() - init >= total_time)
-			break ;
-		usleep(envp->nbr_philos * 2);
+		if (arg[index] >= '0' && arg[index] <= '9')
+			nbr = nbr * 10 + (arg[index] - '0');
+		else
+			return (-1);
+		index++;
 	}
+	return (nbr);
+}
+
+unsigned int	ft_get_time(void)
+{
+	struct timeval	time;
+
+	gettimeofday(&time, NULL);
+	return ((time.tv_sec * (unsigned long)1000) + (time.tv_usec / 1000));
+}
+
+static void	ft_log_status_aux(unsigned int timestamp, int philo_pos, char *id)
+{
+	if (!ft_strcmp(id, TAKEN_FORK))
+		printf("%u\t" WHITE "%d " RESET BLUE "%s" RESET "\n", timestamp, \
+		philo_pos, TAKEN_FORK);
+	else if (!ft_strcmp(id, EAT))
+		printf("%u\t" WHITE "%d " RESET GREEN "%s" RESET "\n", timestamp, \
+		philo_pos, EAT);
+	else if (!ft_strcmp(id, SLEEP))
+		printf("%u\t" WHITE "%d " RESET ORANGE "%s" RESET "\n", timestamp, \
+		philo_pos, SLEEP);
+	else if (!ft_strcmp(id, THINK))
+		printf("%u\t" WHITE "%d " RESET YELLOW "%s" RESET "\n", timestamp, \
+		philo_pos, THINK);
+	else if (!ft_strcmp(id, DEAD))
+		printf("%u\t" WHITE "%d " RESET RED "%s" RESET "\n\n", timestamp, \
+		philo_pos, DEAD);
+}
+
+void	ft_log_status(char *id, t_philo *philo)
+{
+	unsigned int	timestamp;
+	int				philo_pos;
+
+	timestamp = ft_get_time() - philo->data->start;
+	philo_pos = philo->id + 1;
+	sem_wait(philo->data->print);
+	if (!ft_strcmp(id, DONE))
+	{
+		printf("\n%s\n", DONE);
+		printf(GREEN "%d" RESET PHILO_EATEN GREEN "%d " RESET TIMES "\n\n",
+			philo->data->philo_count, philo->data->max_eat);
+	}
+	else
+		ft_log_status_aux(timestamp, philo_pos, id);
+	if (ft_strcmp(id, DEAD) != 0)
+		sem_post(philo->data->print);
 }

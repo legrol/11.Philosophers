@@ -6,61 +6,36 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 09:12:19 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/12/15 18:42:52 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/12/18 19:09:51 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo_bonus.h"
 
 /**
- * The function "ft_philo_itoa" converts an integer to its string 
- * representation. It dynamically allocates memory to store the string, 
- * handles both positive and negative integers, and reverses the string after 
- * construction.
+ * The function "ft_strcmp" compares two strings lexicographically. It returns 
+ * the difference between the first unmatched characters in the two strings 
+ * or zero if the strings are identical.
  * 
- * @param int n 					The integer to be converted into a string.
+ * @param const char *s1			The first string to be compared.
+ * @param const char *s2			The second string to be compared.
  * 
- * @return char* 					A dynamically allocated string 
- * 									representing the integer. Returns NULL if 
- * 									the memory allocation fails.
+ * @return int						Returns an integer less than, equal to, or 
+ * 									greater than zero if `s1` is found, 
+ * 									respectively, to be less than, to match, 
+ * 									or to be greater than `s2`.
  * 
- * The function "philo_count_chr" calculates the number of characters required 
- * to represent an integer as a string, including the sign for negative 
- * numbers and the null-terminator.
+ * The function "ft_philo_atoi" converts a string representation of an integer 
+ * into its integer equivalent. It handles leading whitespaces, an optional 
+ * '+' or '-' sign, and numerical digits. If the string starts with a valid 
+ * number representation, the function returns its integer equivalent.
  * 
- * @param int n 					The integer whose character count is to 
- * 									be determined.
+ * @param const char *str			The input string to be converted into 
+ * 									an integer.
  * 
- * @return unsigned int				The number of characters needed to 
- * 									represent the integer as a string.
- * 
- * The function "ft_rev_str" reverses a string in place. It swaps the 
- * characters from the start and end of the string until the middle is reached.
- * 
- * @param char *str					A pointer to the string to be reversed.
- * 
- * @return void
- * 
- * The function "ft_strlen" calculates the length of a string by counting the 
- * number of characters until the null-terminator.
- * 
- * @param char *str					A pointer to the string whose length is to 
- * 									be calculated.
- * 
- * @return int						The length of the string, excluding the 
- * 									null-terminator.
- *  
- * The function "ft_philo_atoi" converts a string to its integer equivalent. 
- * It handles leading whitespaces, an optional '+' or '-' sign, and numerical 
- * digits. If no valid number is found at the beginning of the string, the 
- * function returns 0.
- * 
- * @param const char *str			The input string to be converted into an 
- * 									integer.
- * 
- * @return int						The converted integer value of the input 
- * 									string, taking into account the sign. 
- * 									Returns 0 if no valid number is found.
+ * @return int						Returns the converted integer value. If 
+ * 									the string does not start with a valid 
+ * 									number, the behavior is undefined.
  * 
  */
 
@@ -80,75 +55,16 @@ int	ft_philo_atoi(const char *str)
 	return (n * sign);
 }
 
-static int	ft_strlen(char *str)
+int	ft_strcmp(const char *s1, const char *s2)
 {
 	int	i;
 
 	i = 0;
-	while (str[i])
+	while (s1[i] && s2[i])
+	{
+		if (s1[i] != s2[i])
+			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 		i++;
-	return (i);
-}
-
-static void	ft_rev_str(char *str)
-{
-	int		start;
-	int		end;
-	char	temp;
-
-	start = 0;
-	end = ft_strlen(str) - 1;
-	while (start < end)
-	{
-		temp = str[start];
-		str[start] = str[end];
-		str[end] = temp;
-		start++;
-		end--;
 	}
-}
-
-static unsigned int	philo_count_chr(int n)
-{
-	unsigned int	count;
-
-	count = 0;
-	if (n == 0)
-		return (1);
-	if (n < 0)
-		count++;
-	while (n != 0)
-	{
-		n /= 10;
-		count++;
-	}
-	return (count);
-}
-
-char	*ft_philo_itoa(int n)
-{
-	char			*str;
-	int				i;
-	unsigned int	number;
-
-	i = 0;
-	str = malloc((philo_count_chr(n) + 1) * sizeof(*str));
-	if (!str)
-		return (NULL);
-	if (n < 0)
-		number = -1 * n;
-	else
-		number = n;
-	while (number != 0)
-	{
-		str[i++] = (number % 10) + '0';
-		number /= 10;
-	}
-	if (n == 0)
-		str[i++] = '0';
-	if (n < 0)
-		str[i++] = '-';
-	str[i] = '\0';
-	ft_rev_str(str);
-	return (str);
+	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }

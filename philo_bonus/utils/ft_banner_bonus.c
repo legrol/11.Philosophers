@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 09:12:43 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/12/14 17:58:03 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/12/17 20:33:39 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,5 @@ void	ft_print_banner(void)
 	printf(RED"                                /_/                            \
 	 \n"RESET);
 	printf(BLUE_ITALIC"                                                  BONUS\
-	 \n"RESET);
+	 \n\n"RESET);
 }
