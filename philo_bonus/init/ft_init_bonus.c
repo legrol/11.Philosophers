@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 09:10:31 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/12/18 16:40:18 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/12/19 21:13:49 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 /**
  * The function "ft_init_philo" allocates and initializes an array of 
  * philosopher structures. Each philosopher is assigned an ID, an initial PID 
- * value of -1, a reference to the shared simulation data, and the initial eat
+ * value of -1, a reference to the shared simulation envp, and the initial eat
  * counter.
  * 
- * @param t_data *data				A pointer to the simulation data structure 
+ * @param t_envp *envp				A pointer to the simulation envp structure 
  * 									that contains shared parameters and 
  * 									references.
  * 
@@ -30,8 +30,8 @@
  * time, initializing semaphores, and forking processes for each philosopher.
  * Each philosopher process executes the `ft_routine` function.
  * 
- * @param t_data *data				A pointer to the simulation data structure 
- * 									that contains shared data and semaphore 
+ * @param t_envp *envp				A pointer to the simulation envp structure 
+ * 									that contains shared daenvpta and semaphore 
  * 									references.
  * @param t_philo *philo			A pointer to the array of philosopher 
  * 									structures representing each philosopher.
@@ -43,7 +43,7 @@
  * ensure a clean start, and creates new ones with initial values based on 
  * their purpose (e.g., controlling access to forks).
  * 
- * @param t_data *data				A pointer to the simulation data structure 
+ * @param t_envp *envp				A pointer to the simulation envp structure 
  * 									that will store the semaphore references.
  * 
  * @return void
@@ -52,9 +52,9 @@
  * simulation. It kills all philosopher processes, closes all semaphores, and 
  * frees the memory allocated for the philosophers' array.
  * 
- * @param t_data *sim				A pointer to the simulation data structure 
+ * @param t_envp *sim				A pointer to the simulation envp structure 
  * 									that contains semaphore references and 
- * 									other shared simulation data.
+ * 									other shared simulation envp.
  * @param t_philo *philo			A pointer to the array of philosopher 
  * 									structures representing each philosopher.
  * 
@@ -62,45 +62,45 @@
  * 
  */
 
-void	ft_destroy_all(t_data *sim, t_philo *philo)
+void	ft_destroy_all(t_envp *sim, t_philo *philo)
 {
 	int	index;
 
 	index = 0;
-	while (index < sim->philo_count)
+	while (index < sim->nbr_philos)
 	{
 		kill(philo[index].pid, SIGKILL);
 		index++;
 	}
 	sem_close(sim->death);
-	sem_close(sim->print);
+	sem_close(sim->write);
 	sem_close(sim->stop);
 	sem_close(sim->forks);
 	free(philo);
 }
 
-static void	ft_initialize_semaphores(t_data *data)
+static void	ft_initialize_semaphores(t_envp *envp)
 {
 	sem_unlink("sem_death");
-	sem_unlink("sem_print");
+	sem_unlink("sem_write");
 	sem_unlink("sem_forks");
 	sem_unlink("sem_stop");
-	data->death = sem_open("sem_death", O_CREAT, 0600, 1);
-	data->print = sem_open("sem_print", O_CREAT, 0600, 1);
-	data->forks = sem_open("sem_forks", O_CREAT, 0600, data->philo_count);
-	data->stop = sem_open("sem_stop", O_CREAT, 0600, 1);
+	envp->death = sem_open("sem_death", O_CREAT, 0600, 1);
+	envp->write = sem_open("sem_write", O_CREAT, 0600, 1);
+	envp->forks = sem_open("sem_forks", O_CREAT, 0600, envp->nbr_philos);
+	envp->stop = sem_open("sem_stop", O_CREAT, 0600, 1);
 }
 
-void	ft_init_sim(t_data *data, t_philo *philo)
+void	ft_init_sim(t_envp *envp, t_philo *philo)
 {
 	int	index;
 
 	index = 0;
-	data->start = ft_get_time();
-	data->philos = philo;
-	ft_initialize_semaphores(data);
-	sem_wait(data->stop);
-	while (index < data->philo_count)
+	envp->init_time = ft_get_time();
+	envp->philos = philo;
+	ft_initialize_semaphores(envp);
+	sem_wait(envp->stop);
+	while (index < envp->nbr_philos)
 	{
 		philo[index].pid = fork();
 		if (philo[index].pid == 0)
@@ -113,22 +113,22 @@ void	ft_init_sim(t_data *data, t_philo *philo)
 	}
 }
 
-t_philo	*ft_init_philo(t_data *data)
+t_philo	*ft_init_philo(t_envp *envp)
 {
 	t_philo	*philo_array;
 	int		index;
 
 	index = 0;
-	philo_array = malloc(sizeof(t_philo) * data->philo_count);
+	philo_array = malloc(sizeof(t_philo) * envp->nbr_philos);
 	if (!philo_array)
 		return (NULL);
-	while (index < data->philo_count)
+	while (index < envp->nbr_philos)
 	{
-		philo_array[index].id = index;
+		philo_array[index].pos = index;
 		philo_array[index].pid = -1;
 		philo_array[index].death = 0;
-		philo_array[index].data = data;
-		philo_array[index].eat_count = data->eat_counter;
+		philo_array[index].envp = envp;
+		philo_array[index].eat_count = envp->eat_counter;
 		index++;
 	}
 	return (philo_array);

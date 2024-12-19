@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 20:44:36 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/12/19 19:44:50 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/12/19 21:12:46 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,31 +67,31 @@ typedef struct s_philo	t_philo;
 // ............................................................................
 typedef struct s_philo
 {
-	int				id;  			// pos CAMBIAR
-	int				death;			// ok
-	int				eat_count;		// ok
-	unsigned int	last_meal;		// ok
-	unsigned int	next_meal;		// ok
-	pid_t			pid;			// ok
-	struct s_data	*data;			// t_envp envp CAMBIAR
+	int				pos;
+	int				death;
+	int				eat_count;
+	unsigned int	last_meal;
+	unsigned int	next_meal;
+	pid_t			pid;
+	struct s_envp	*envp;
 }					t_philo;
 
-typedef struct s_data
+typedef struct s_envp
 {
-	int				philo_count;	// nbr_philos CAMBIAR
-	int				time_to_die;	// ok
-	int				time_to_eat;	// ok
-	int				time_to_sleep;	// ok
-	int				eat_counter;	// ok
-	int				max_eat;		// philo_eat_limit CAMBIAR 
-	int				current_eat;	// ok
-	unsigned long	start;			// init_time CAMBIAR
-	sem_t			*forks;			// ok
-	sem_t			*print;			// write CAMBIAR
-	sem_t			*death;			// ok
-	sem_t			*stop;			// ok
-	t_philo			*philos;		// ok
-}					t_data;			// t_envp CAMBIAR
+	int				nbr_philos;
+	int				time_to_die;
+	int				time_to_eat;
+	int				time_to_sleep;
+	int				eat_counter;
+	int				philo_eat_limit;
+	int				current_eat;
+	unsigned long	init_time;
+	sem_t			*forks;
+	sem_t			*write;
+	sem_t			*death;
+	sem_t			*stop;
+	t_philo			*philos;
+}					t_envp;
 
 // ============================================================================
 // Management errors
@@ -102,15 +102,15 @@ void			ft_manage_err_simple(const char *err);
 // ============================================================================
 // Main functions
 // ============================================================================
-int				ft_check_params(t_data *env, int argc, char **argv);
+int				ft_check_params(t_envp *env, int argc, char **argv);
 
 // ============================================================================
 // Initialization functions
 // ============================================================================
-void			ft_destroy_all(t_data *simulation, t_philo *philo);
-int				ft_init_struct(int argc, char **argv, t_data *env);
-t_philo			*ft_init_philo(t_data *data);
-void			ft_init_sim(t_data *data, t_philo *philo);
+void			ft_destroy_all(t_envp *simulation, t_philo *philo);
+int				ft_init_struct(int argc, char **argv, t_envp *envp);
+t_philo			*ft_init_philo(t_envp *envp);
+void			ft_init_sim(t_envp *envp, t_philo *philo);
 
 // ============================================================================
 // Management philos

@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 17:13:16 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/12/18 17:22:48 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/12/19 21:14:15 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,23 +68,23 @@
 void	ft_check_think(t_philo *philo)
 {
 	ft_log_status(THINK, philo);
-	usleep(philo->data->time_to_sleep * 1000);
+	usleep(philo->envp->time_to_sleep * 1000);
 }
 
 void	ft_check_sleep(t_philo *philo)
 {
 	ft_log_status(SLEEP, philo);
-	if (philo->id % 2 && philo->data->philo_count > 1)
-		usleep(philo->data->time_to_eat / 50);
-	usleep(philo->data->time_to_sleep * 1000);
+	if (philo->pos % 2 && philo->envp->nbr_philos > 1)
+		usleep(philo->envp->time_to_eat / 50);
+	usleep(philo->envp->time_to_sleep * 1000);
 }
 
 void	ft_manage_fork(t_philo *philo)
 {
-	sem_wait(philo->data->forks);
+	sem_wait(philo->envp->forks);
 	ft_log_status(TAKEN_FORK, philo);
 	usleep(100);
-	sem_wait(philo->data->forks);
+	sem_wait(philo->envp->forks);
 	ft_log_status(TAKEN_FORK, philo);
 }
 
@@ -94,15 +94,15 @@ void	ft_check_eat(t_philo *philo)
 	ft_log_status(EAT, philo);
 	philo->last_meal = ft_get_time();
 	philo->next_meal = philo->last_meal + \
-	(unsigned int)philo->data->time_to_die;
+	(unsigned int)philo->envp->time_to_die;
 	philo->eat_count++;
-	if (philo->data->eat_counter != -1 && philo->eat_count >= \
-	philo->data->eat_counter)
-		philo->data->current_eat++;
-	sem_post(philo->data->death);
-	usleep(philo->data->time_to_eat * 1000);
-	sem_post(philo->data->forks);
-	sem_post(philo->data->forks);
+	if (philo->envp->eat_counter != -1 && philo->eat_count >= \
+	philo->envp->eat_counter)
+		philo->envp->current_eat++;
+	sem_post(philo->envp->death);
+	usleep(philo->envp->time_to_eat * 1000);
+	sem_post(philo->envp->forks);
+	sem_post(philo->envp->forks);
 }
 
 void	*ft_check_death(void *arg)
@@ -112,23 +112,23 @@ void	*ft_check_death(void *arg)
 	philo = (t_philo *)arg;
 	while (1)
 	{
-		sem_wait(philo->data->death);
+		sem_wait(philo->envp->death);
 		if (philo->next_meal < ft_get_time())
 		{
 			ft_log_status(DEAD, philo);
-			sem_post(philo->data->stop);
+			sem_post(philo->envp->stop);
 			break ;
 		}
-		sem_post(philo->data->death);
-		sem_wait(philo->data->death);
-		if (philo->data->current_eat != -1 && \
-		philo->eat_count >= philo->data->max_eat + 1)
+		sem_post(philo->envp->death);
+		sem_wait(philo->envp->death);
+		if (philo->envp->current_eat != -1 && \
+		philo->eat_count >= philo->envp->philo_eat_limit + 1)
 		{
 			ft_log_status(DONE, philo);
-			sem_post(philo->data->stop);
+			sem_post(philo->envp->stop);
 			break ;
 		}
-		sem_post(philo->data->death);
+		sem_post(philo->envp->death);
 	}
 	return (NULL);
 }

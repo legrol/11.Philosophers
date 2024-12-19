@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 13:19:17 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/12/18 17:25:51 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/12/19 21:11:38 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@
  * The function "ft_check_params" validates the command-line arguments passed 
  * to the program. It ensures that all arguments are integers, non-negative, 
  * and within acceptable ranges. If validation passes, it initializes the 
- * simulation environment structure (`t_data`) with the given arguments.
+ * simulation environment structure (`t_envp`) with the given arguments.
  * 
- * @param t_data *env				A pointer to the simulation environment 
+ * @param t_envp *env				A pointer to the simulation environment 
  * 									structure to be initialized.
  * @param int argc					The number of command-line arguments passed 
  * 									to the program.
@@ -46,7 +46,7 @@
  * 
  */
 
-int	ft_check_params(t_data *env, int argc, char **argv)
+int	ft_check_params(t_envp *env, int argc, char **argv)
 {
 	int	i;
 
@@ -66,7 +66,7 @@ int	ft_check_params(t_data *env, int argc, char **argv)
 		i++;
 	}
 	ft_init_struct(argc, argv, env);
-	if (env->philo_count < 1 || env->time_to_die < 0 || env->time_to_eat < 0
+	if (env->nbr_philos < 1 || env->time_to_die < 0 || env->time_to_eat < 0
 		|| env->time_to_sleep < 0)
 	{
 		printf(RED VALUES_INVALID "\n" RESET);
@@ -77,7 +77,7 @@ int	ft_check_params(t_data *env, int argc, char **argv)
 
 int	main(int argc, char **argv)
 {
-	t_data	env;
+	t_envp	env;
 	t_philo	*philo;
 
 	ft_print_banner();

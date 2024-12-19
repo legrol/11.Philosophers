@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 09:12:19 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/12/18 19:08:47 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/12/19 21:14:31 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,17 +102,17 @@ void	ft_log_status(char *id, t_philo *philo)
 	unsigned int	timestamp;
 	int				philo_pos;
 
-	timestamp = ft_get_time() - philo->data->start;
-	philo_pos = philo->id + 1;
-	sem_wait(philo->data->print);
+	timestamp = ft_get_time() - philo->envp->init_time;
+	philo_pos = philo->pos + 1;
+	sem_wait(philo->envp->write);
 	if (!ft_strcmp(id, DONE))
 	{
 		printf("\n%s\n", DONE);
 		printf(GREEN "%d" RESET PHILO_EATEN GREEN "%d " RESET TIMES "\n\n",
-			philo->data->philo_count, philo->data->max_eat);
+			philo->envp->nbr_philos, philo->envp->philo_eat_limit);
 	}
 	else
 		ft_log_status_aux(timestamp, philo_pos, id);
 	if (ft_strcmp(id, DEAD) != 0)
-		sem_post(philo->data->print);
+		sem_post(philo->envp->write);
 }
