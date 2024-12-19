@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 17:38:24 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/12/08 21:48:34 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/12/19 13:58:39 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,12 +111,13 @@ static void	*ft_philosopher_routine(void *args)
 	philo = (t_philo *)args;
 	envp = philo->envp;
 	if (philo->pos % 2 && envp->nbr_philos > 1)
-		ft_sleep(envp->time_to_eat / 50, envp);
+		ft_check_sleep(envp->time_to_eat / 50, envp);
 	while (!envp->stopping_rule && !envp->eat_max)
 	{
 		ft_check_eat(philo);
+		ft_check_sleep(envp->time_to_sleep / 2, envp);
 		ft_check_stamp(ORANGE SLEEP RESET, philo, UNLOCK);
-		ft_sleep(envp->time_to_sleep, envp);
+		ft_check_think(envp->time_to_think / 2, envp);
 		ft_check_stamp(YELLOW THINK RESET, philo, UNLOCK);
 	}
 	return (NULL);

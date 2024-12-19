@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 20:44:36 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/12/18 18:35:53 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/12/19 19:44:50 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,33 +43,55 @@ typedef struct s_philo	t_philo;
 // ============================================================================
 // Structures
 // ============================================================================
+// 	pos							position of the philo at table.
+//	death						flag to indicate if the philosopher has died.
+//  eat_count					number of times the philo has eaten.
+//	last_meal					timestamp of the last meal in miliseconds.
+//  next_meal					deadline for the next meal to avoid starvation.
+//	pid							process id of the philosopher process.
+//	envp						pointer to the envp structure.
+//
+// 	nbr_philos					number of philosophers in the simulation.
+// 	time_to_die					max time without eating.
+// 	time_to_eat					time that a philo takes to eat.
+// 	time_to_sleep				time that a philo takes to sleep.
+//	eat_counter					counter for number of meals by all philos.
+// 	philo_eat_limit				maximum meal limit for each philo.
+// 	current_eat					current count of philos who reached max meals.
+// 	start						timestamp when the sim starts in miliseconds.
+// 	forks						semaphore array to represent the forks.
+// 	writing						semaphore for writing to the console.
+//  death						semaphore to manage philo death conditions.
+//	stop						semaphore to signal stopping the simulation.
+// 	philos						array of philos structures.
+// ............................................................................
 typedef struct s_philo
 {
-	int				id;
-	int				death;
-	int				eat_count;
-	unsigned int	last_meal;
-	unsigned int	next_meal;
-	pid_t			pid;
-	struct s_data	*data;
+	int				id;  			// pos CAMBIAR
+	int				death;			// ok
+	int				eat_count;		// ok
+	unsigned int	last_meal;		// ok
+	unsigned int	next_meal;		// ok
+	pid_t			pid;			// ok
+	struct s_data	*data;			// t_envp envp CAMBIAR
 }					t_philo;
 
 typedef struct s_data
 {
-	int				philo_count;
-	int				time_to_die;
-	int				time_to_eat;
-	int				time_to_sleep;
-	int				eat_counter;
-	int				max_eat;
-	int				current_eat;
-	unsigned long	start;
-	sem_t			*forks;
-	sem_t			*print;
-	sem_t			*death;
-	sem_t			*stop;
-	t_philo			*philos;
-}					t_data;
+	int				philo_count;	// nbr_philos CAMBIAR
+	int				time_to_die;	// ok
+	int				time_to_eat;	// ok
+	int				time_to_sleep;	// ok
+	int				eat_counter;	// ok
+	int				max_eat;		// philo_eat_limit CAMBIAR 
+	int				current_eat;	// ok
+	unsigned long	start;			// init_time CAMBIAR
+	sem_t			*forks;			// ok
+	sem_t			*print;			// write CAMBIAR
+	sem_t			*death;			// ok
+	sem_t			*stop;			// ok
+	t_philo			*philos;		// ok
+}					t_data;			// t_envp CAMBIAR
 
 // ============================================================================
 // Management errors

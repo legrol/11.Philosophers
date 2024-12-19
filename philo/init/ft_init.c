@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 18:58:55 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/12/08 20:48:29 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/12/19 12:25:20 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,24 +77,27 @@ static int	ft_init_data_philosophers(t_envp *envp)
 		envp->philos[i].times_eaten = 0;
 		envp->philos[i].pos_char = ft_philo_itoa(i + 1);
 		if (!envp->philos[i].pos_char)
-			return (i);
+			break ;
 		envp->philos[i].right_fork = i;
 		envp->philos[i].left_fork = (i + 1) % envp->nbr_philos;
 		envp->philos[i].envp = envp;
 		i++;
 	}
-	return (-1);
+	return (i);
 }
 
 int	ft_init_philo(t_envp *envp)
 {
-	int	failed_index;
+	int	i;
 
-	failed_index = ft_init_data_philosophers(envp);
-	if (failed_index != -1)
+	i = ft_init_data_philosophers(envp);
+	if (i != envp->nbr_philos)
 	{
-		while (--failed_index >= 0)
-			free(envp->philos[failed_index].pos_char);
+		while (i >= 0)
+		{
+			free(envp->philos[i].pos_char);
+			i--;
+		}
 		return (EXIT_FAILURE);
 	}
 	return (EXIT_SUCCESS);
@@ -119,10 +122,11 @@ int	ft_init_mutex(t_envp *envp)
 
 int	ft_init_sim(t_envp *envp)
 {
-	envp->philos = malloc(sizeof(t_philo) * envp->nbr_philos);
+	envp->philos = (t_philo *)malloc(sizeof(t_philo) * envp->nbr_philos);
 	if (!envp->philos)
 		return (EXIT_FAILURE);
-	envp->forks = malloc(sizeof(pthread_mutex_t) * envp->nbr_philos);
+	envp->forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * \
+	envp->nbr_philos);
 	if (!envp->forks)
 	{
 		free(envp->philos);

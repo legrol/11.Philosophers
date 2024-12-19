@@ -68,7 +68,8 @@ ERR					= ${ERRORS_DIR}/ft_manage_err.c
 INT					= ${INIT_DIR}/ft_init_struct.c \
 						${INIT_DIR}/ft_init.c
 
-MPH					= ${MGE_PHILOS}/ft_philos.c
+MPH					= ${MGE_PHILOS}/ft_philos.c \
+						${MGE_PHILOS}/ft_philos_tools.c
 
 MTH					= ${MGE_THREADS}/ft_threads.c
 

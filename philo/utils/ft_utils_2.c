@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 19:46:36 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/12/08 21:56:04 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/12/19 12:52:48 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,18 +58,4 @@ unsigned long	ft_get_time(void)
 
 	gettimeofday(&mytime, NULL);
 	return ((mytime.tv_sec * (unsigned long)1000) + (mytime.tv_usec / 1000));
-}
-
-void	ft_sleep(unsigned long total_time, t_envp *envp)
-{
-	unsigned long	init;
-
-	init = ft_get_time();
-	while (!envp->stopping_rule)
-	{
-		if (ft_get_time() - init >= total_time)
-			break ;
-		usleep(envp->nbr_philos * 2);
-	}
-	return ;
 }

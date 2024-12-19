@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_init_env.c                                      :+:      :+:    :+:   */
+/*   ft_init_struct.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 12:15:42 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/12/05 18:21:54 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/12/19 01:10:00 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,9 @@ void	ft_init_struct(t_envp *envp, int argc, char *argv[])
 	envp->time_to_die = ft_philo_atoi(argv[2]);
 	envp->time_to_eat = ft_philo_atoi(argv[3]);
 	envp->time_to_sleep = ft_philo_atoi(argv[4]);
+	envp->time_to_think = ft_philo_atoi(argv[4]);
 	if (argc == 6)
 		envp->philo_eat_limit = ft_philo_atoi(argv[5]);
+	else
+		envp->philo_eat_limit = 0;
 }

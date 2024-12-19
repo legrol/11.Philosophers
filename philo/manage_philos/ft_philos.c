@@ -6,26 +6,13 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 00:05:25 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/12/17 23:14:03 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/12/19 20:11:55 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-/**
- * The function "ft_check_stamp" prints a timestamped message for a 
- * philosopher's current action. It ensures thread-safe access to the output 
- * by locking the `writing` mutex. If `unlock` is set, the mutex is unlocked 
- * after printing.
- * 
- * @param char *msg					A string containing the message to print.
- * @param t_philo *philo			A pointer to the philosopher structure 
- * 									associated with the action.
- * @param int unlock				A flag indicating whether to unlock the 
- * 									`writing` mutex after printing (1 to 
- * 									unlock).
- * @return void
- * 
+/** 
  * The function "ft_check_eat" manages the eating process for a philosopher. 
  * It locks the forks, updates the philosopher's last meal time, and 
  * increments the `times_eaten` counter. After eating, it unlocks the forks 
@@ -52,17 +39,59 @@
  * 
  * @return void
  * 
+ * The function "ft_check_think" simulates the thinking process of a 
+ * philosopher by calling `ft_check_sleep` with the specified thinking 
+ * duration. It allows the thinking process to be interrupted if the 
+ * simulation's stopping condition (`stopping_rule`) is triggered.
+ * 
+ * @param unsigned long time		The duration of the thinking process in 
+ * 									milliseconds.
+ * @param t_envp *envp				A pointer to the simulation environment 
+ * 									structure that contains the stopping 
+ * 									condition.
+ * 
+ * @return void
+ * 
+ * The function "ft_check_sleep" pauses execution for a specified duration 
+ * in milliseconds (`total_time`). It continuously checks whether the 
+ * simulation's stopping condition (`stopping_rule`) has been triggered, 
+ * allowing the sleep process to be interrupted if necessary.
+ * 
+ * @param unsigned long total_time	The duration of the sleep in milliseconds.
+ * @param t_envp *envp				A pointer to the simulation environment 
+ * 									structure that contains the stopping 
+ * 									condition.
+ * 
+ * @return void
+ * 
  */
+
+void	ft_check_sleep(unsigned long total_time, t_envp *envp)
+{
+	unsigned long	init;
+
+	init = ft_get_time();
+	while (!envp->stopping_rule)
+	{
+		if (ft_get_time() - init >= total_time)
+			break ;
+		usleep(envp->nbr_philos * 3);
+	}
+	return ;
+}
+
+void	ft_check_think(unsigned long time, t_envp *envp)
+{
+	ft_check_sleep(time, envp);
+}
 
 void	ft_check_dead(t_envp *envp, t_philo *philo)
 {
 	int	i;
-	int	all_philos_full;
 
 	while (!envp->eat_max)
 	{
 		i = 0;
-		all_philos_full = 1;
 		while (i < envp->nbr_philos && !envp->stopping_rule)
 		{
 			pthread_mutex_lock(&envp->mealtime);
@@ -72,15 +101,17 @@ void	ft_check_dead(t_envp *envp, t_philo *philo)
 				envp->stopping_rule = 1;
 			}
 			pthread_mutex_unlock(&envp->mealtime);
-			if (envp->philo_eat_limit && philo[i].times_eaten \
-			< envp->philo_eat_limit)
-				all_philos_full = 0;
 			i++;
 		}
 		if (envp->stopping_rule)
 			break ;
-		envp->eat_max = all_philos_full;
+		i = 0;
+		while (envp->philo_eat_limit && i < envp->nbr_philos
+			&& philo[i].times_eaten >= envp->philo_eat_limit)
+			i++;
+		envp->eat_max = (i == envp->nbr_philos);
 	}
+	ft_finish_sim(envp);
 }
 
 void	ft_check_eat(t_philo *philo)
@@ -93,23 +124,8 @@ void	ft_check_eat(t_philo *philo)
 	ft_check_stamp(GREEN EAT RESET, philo, UNLOCK);
 	philo->last_meal = ft_get_time();
 	pthread_mutex_unlock(&philo->envp->mealtime);
-	ft_sleep(philo->envp->time_to_eat, philo->envp);
+	ft_check_sleep(philo->envp->time_to_eat, philo->envp);
 	philo->times_eaten++;
 	pthread_mutex_unlock(&philo->envp->forks[philo->right_fork]);
 	pthread_mutex_unlock(&philo->envp->forks[philo->left_fork]);
-}
-
-void	ft_check_stamp(char *msg, t_philo *philo, int unlock)
-{
-	char	*timestamp;
-
-	timestamp = ft_philo_itoa(ft_get_time() - philo->envp->init_time);
-	if (!timestamp)
-		return ;
-	pthread_mutex_lock(&philo->envp->writing);
-	if (!philo->envp->stopping_rule && !philo->envp->eat_max)
-		printf("%s %s %s\n", timestamp, philo->pos_char, msg);
-	if (unlock)
-		pthread_mutex_unlock(&philo->envp->writing);
-	free(timestamp);
 }

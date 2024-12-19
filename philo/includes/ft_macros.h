@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 12:08:07 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/12/15 18:00:32 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/12/19 20:01:13 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # define SLEEP				"is sleeping"
 # define EAT				"is eating"
 # define DIED				"died"
+# define DONE				"The simulation has ended..."
 
 # define USAGE_ERR			"❗Arguments: Usage: ./philo <Nbr philosophers> \
 <time to die> <time to eat> <time to sleep> [Nbr times each philosopher must \
@@ -35,6 +36,8 @@ eat]"
 # define THREADS_ERR		"❗Threads error."
 # define BYE				"❗Fix the argument, my friend."
 # define FORK_ERR			"❗Error: Fork failed. Could not create process."
+# define PHILO_EATEN		" philosophers have eaten at least "
+# define TIMES				"times."
 
 # define INT_MAX			2147483647
 # define INT_MIN			-2147483648
