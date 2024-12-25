@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 09:12:19 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/12/19 21:14:31 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/12/22 00:45:40 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,8 +108,9 @@ void	ft_log_status(char *id, t_philo *philo)
 	if (!ft_strcmp(id, DONE))
 	{
 		printf("\n%s\n", DONE);
-		printf(GREEN "%d" RESET PHILO_EATEN GREEN "%d " RESET TIMES "\n\n",
-			philo->envp->nbr_philos, philo->envp->philo_eat_limit);
+		printf(GREEN "%d/%d" RESET PHILO_EATEN GREEN "%d " RESET TIMES \
+		"\n\n", philo->envp->nbr_philos, philo->envp->nbr_philos, \
+		philo->envp->philo_eat_limit);
 	}
 	else
 		ft_log_status_aux(timestamp, philo_pos, id);
