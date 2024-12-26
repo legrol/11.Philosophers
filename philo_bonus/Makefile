@@ -53,7 +53,7 @@ MGE_PHILOS_BONUS	= ./manage_philos
 # # ══ Flags Bonus ══════════════════════════════════════════════════════════ #
 # #    -------                                                                #
 
-CFLAGS 				= -Wall -Werror -Wextra -g
+CFLAGS 				= -Wall -Werror -Wextra  -fsanitize=thread
 IFLAGS_BONUS		= -I${INCLUDES_DIR_BONUS}
 LFLAGS				= -lpthread
 
