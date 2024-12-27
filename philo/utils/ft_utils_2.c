@@ -6,23 +6,23 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 19:46:36 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/12/27 15:15:24 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/12/27 21:42:05 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
 /**
- * The function "ft_sleep" implements a custom sleep mechanism, allowing the 
- * program to pause execution for a specified amount of time in milliseconds. 
- * It continuously checks whether the stopping condition in the environment 
- * (`stopping_rule`) has been triggered, ensuring that the sleep can be 
- * interrupted if necessary.
+ * The function "ft_clean_resources" cleans up all dynamically allocated 
+ * resources and mutexes associated with the simulation environment. It ensures 
+ * that all memory and synchronization primitives are properly released to 
+ * avoid memory leaks or resource contention.
  * 
- * @param unsigned long total_time	The duration to sleep in milliseconds.
- * @param t_envp *envp				A pointer to the environment structure 
- * 									that contains the stopping rule and other 
- * 									simulation parameters.
+ * @param t_envp *envp				A pointer to the simulation environment 
+ * 									structure containing allocated resources 
+ * 									and mutexes.
+ * 
+ * @return void
  * 
  * The function "ft_get_time" retrieves the current time in milliseconds since 
  * the Unix epoch (January 1, 1970). It uses the `gettimeofday` function to 
@@ -56,5 +56,26 @@ unsigned long	ft_get_time(void)
 	struct timeval	mytime;
 
 	gettimeofday(&mytime, NULL);
-	return ((mytime.tv_sec * (unsigned long)1000) + (mytime.tv_usec / 1000));
+	return ((mytime.tv_sec * (unsigned long)MS_CONVERSION) + \
+	(mytime.tv_usec / MS_CONVERSION));
+}
+
+void	ft_clean_resources(t_envp *envp)
+{
+	int	i;
+
+	ft_destroy_all_mutexes(envp);
+	if (envp->philos)
+	{
+		i = 0;
+		while (i < envp->nbr_philos)
+		{
+			if (envp->philos[i].pos_char)
+				free(envp->philos[i].pos_char);
+			i++;
+		}
+		free(envp->philos);
+	}
+	if (envp->forks)
+		free(envp->forks);
 }

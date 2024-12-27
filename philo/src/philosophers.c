@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 20:43:02 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/12/27 20:26:59 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/12/27 21:28:43 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static int	ft_validate_argument(char *arg, int index)
 		printf(RED ARG "%i" NEGATIVE RESET "\n", index);
 		return (ft_manage_err_simple(INT_NEG_ARGV_ERR), EXIT_FAILURE);
 	}
-	if (index == 1 && (arg_value < 1 || arg_value > 200))
+	if (index == 1 && (arg_value < 1 || arg_value > MAX_PHILOS))
 	{
 		printf(RED ARG "%i" INVALID RESET "\n", index);
 		return (ft_manage_err_simple(NUM_PHILO_ERR), EXIT_FAILURE);

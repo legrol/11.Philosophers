@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 20:44:36 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/12/27 21:22:18 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/12/27 21:35:11 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,7 @@ void			ft_finish_sim(t_envp *envp);
 /// ============================================================================
 // Utils functions
 // ============================================================================
+void			ft_clean_resources(t_envp *envp);
 int				ft_isinteger(char *nbr);
 unsigned long	ft_get_time(void);
 int				ft_philo_atoi(const char *str);
