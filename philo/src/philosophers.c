@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 20:43:02 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/12/10 22:00:38 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/12/27 18:33:49 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,21 +51,21 @@ static int	ft_check_params(t_envp *envp, int argc, char *argv[])
 	{
 		if (!ft_isinteger(argv[i]))
 		{
-			printf(RED ARG "%i" INVALID "\n" RESET, i);
+			printf(RED ARG "%i" INVALID RESET "\n", i);
 			return (ft_manage_err_simple(NO_INT_ARGV_ERR), EXIT_FAILURE);
 		}
 		if (ft_philo_atoi(argv[i]) < 0)
 		{
-			printf(RED ARG "%i" NEGATIVE "\n" RESET, i);
+			printf(RED ARG "%i" NEGATIVE RESET "\n", i);
 			return (ft_manage_err_simple(INT_NEG_ARGV_ERR), EXIT_FAILURE);
 		}
 		i++;
 	}
 	ft_init_struct(envp, argc, argv);
-	if (envp->philo_eat_limit < 0 || envp->time_to_die < 0 || envp->\
-	time_to_eat < 0 || envp->time_to_sleep < 0 || envp->nbr_philos < 1)
+	if (envp->philo_eat_limit < 0 || envp->time_to_die <= 0 || envp-> \
+	time_to_eat <= 0 || envp->time_to_sleep <= 0 || envp->nbr_philos < 1)
 	{
-		printf(RED VALUES_INVALID "\n" RESET);
+		printf(RED VALUES_INVALID RESET "\n");
 		return (ft_manage_err_simple(PARAMS_ERR), EXIT_FAILURE);
 	}
 	return (EXIT_SUCCESS);
