@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 17:38:24 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/12/27 12:32:20 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/12/27 14:22:33 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,13 +112,20 @@ static void	*ft_philosopher_routine(void *args)
 	envp = philo->envp;
 	if (philo->pos % 2 && envp->nbr_philos > 1)
 		ft_check_sleep(envp->time_to_eat / 50, envp);
-	while (!envp->stopping_rule && !envp->eat_max)
+	while (1)
 	{
+		pthread_mutex_lock(&envp->mealtime);
+		if (envp->stopping_rule || envp->eat_max)
+		{
+			pthread_mutex_unlock(&envp->mealtime);
+			break ;
+		}
+		pthread_mutex_unlock(&envp->mealtime);
 		ft_check_eat(philo);
-		ft_check_sleep(envp->time_to_sleep / 2, envp);
 		ft_check_stamp(ORANGE SLEEP RESET, philo, UNLOCK);
-		ft_check_think(envp->time_to_think / 2, envp);
+		ft_check_sleep(envp->time_to_sleep, envp);
 		ft_check_stamp(YELLOW THINK RESET, philo, UNLOCK);
+		ft_check_think(envp->time_to_think, envp);
 	}
 	return (NULL);
 }
