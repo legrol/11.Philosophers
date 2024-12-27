@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 17:13:16 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/12/25 23:37:50 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/12/19 21:14:15 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@
 void	ft_check_think(t_philo *philo)
 {
 	ft_log_status(THINK, philo);
-	usleep(philo->envp->time_to_sleep * 0.01);
+	usleep(philo->envp->time_to_sleep * 1000);
 }
 
 void	ft_check_sleep(t_philo *philo)

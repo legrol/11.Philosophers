@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 20:09:48 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/12/27 14:23:22 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/12/19 21:20:33 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,11 @@ void	ft_check_stamp(char *msg, t_philo *philo, int unlock)
 	if (!timestamp)
 		return ;
 	pthread_mutex_lock(&philo->envp->writing);
-	pthread_mutex_lock(&philo->envp->mealtime);
 	if (!philo->envp->stopping_rule && !philo->envp->eat_max)
 	{
 		printf("%s\t" WHITE "%s " RESET "%s\n", timestamp, philo->pos_char, \
 		msg);
 	}
-	pthread_mutex_unlock(&philo->envp->mealtime);
 	if (unlock)
 		pthread_mutex_unlock(&philo->envp->writing);
 	free(timestamp);
