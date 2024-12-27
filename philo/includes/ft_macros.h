@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 12:08:07 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/12/19 20:01:13 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/12/27 20:19:48 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 eat]"
 # define NUM_ARGV_ERR		"❗1️⃣ Incorrect number of arguments, expected min 4\
  o max 5."
+# define NUM_PHILO_ERR		"❗Invalid number of philosophers (1-200 allowed)."
 # define NO_INT_ARGV_ERR	"❗Argument is not integer value"
 # define INT_NEG_ARGV_ERR	"❗Argument with negativ integer value. Forbidden."
 # define PARAMS_ERR			"❗Incorrect parameteres."
