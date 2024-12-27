@@ -6,79 +6,58 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 17:38:24 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/12/19 13:58:39 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/12/27 21:21:05 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
 /**
- * The function "ft_create_threads_and_monitor" initializes threads for each 
- * philosopher, starts the simulation, and monitors their states for stopping 
- * conditions, such as a philosopher dying or all eating a defined maximum.
+ * The function "ft_create_threads_and_monitor" initializes philosopher threads, 
+ * starts the simulation, and monitors its progress. It ensures proper cleanup 
+ * if thread creation fails and finalizes resources once the simulation ends.
  * 
- * @param t_envp *envp				A pointer to the environment structure 
- * 									that holds simulation parameters and 
- * 									philosopher data.
- * @return int						Returns EXIT_SUCCESS if threads are 
- * 									created and monitored successfully; 
- * 									otherwise, returns EXIT_FAILURE.
+ * @param t_envp *envp				A pointer to the simulation environment 
+ * 									structure containing all shared data 
+ * 									and thread management resources.
+ * 
+ * @return int						Returns EXIT_SUCCESS if the threads are 
+ * 									created and monitored successfully. Returns 
+ * 									EXIT_FAILURE if thread creation fails or 
+ * 									another error occurs.
  * 
  * The function "ft_philosopher_routine" defines the behavior of each 
- * philosopher in the simulation. Philosophers alternate between eating,
- * sleeping, and thinking, checking for stopping conditions and shared 
- * simulation states.
+ * philosopher during the simulation. Philosophers alternate between eating, 
+ * sleeping, and thinking until a stopping condition is met (e.g., a 
+ * philosopher dies or the eating limit is reached).
  * 
- * @param void *args				A pointer to the philosopher structure 
- * 									representing the philosopher's state.
- * @return void*					Returns NULL when the thread terminates.
+ * @param void *args				A pointer to the philosopher's structure 
+ * 									containing individual state and references 
+ * 									to shared simulation data.
  * 
- * The function "ft_exit_threads" handles the orderly termination of threads 
- * and cleanup of all simulation resources. It joins or detaches threads 
- * first, then destroys mutexes and frees dynamically allocated memory.
+ * @return void*					Returns NULL when the philosopher thread 
+ * 									terminates.
  * 
- * @param t_envp *envp				A pointer to the environment structure 
- * 									that holds simulation parameters and 
- * 									resources.
+ * The function "ft_exit_threads" performs cleanup of resources related to 
+ * philosopher threads. It joins or detaches threads, destroys all mutexes, 
+ * and frees allocated memory for philosophers and forks.
+ * 
+ * @param t_envp *envp				A pointer to the simulation environment 
+ * 									structure containing thread and resource 
+ * 									information.
+ * 
  * @return void
  * 
- * The function "ft_join_or_detach_threads" ensures that all philosopher 
- * threads are properly terminated. If there is only one philosopher, their 
- * thread is detached. Otherwise, it joins all philosopher threads to ensure 
- * proper cleanup after execution.
+ * The function "ft_join_or_detach_threads" handles the proper termination of 
+ * philosopher threads. It detaches a single thread if there is only one 
+ * philosopher; otherwise, it joins all threads to ensure clean termination.
  * 
- * @param t_envp *envp				A pointer to the environment structure 
- * 									that holds the threads of all philosophers.
- * @return void
+ * @param t_envp *envp				A pointer to the simulation environment 
+ * 									structure containing thread information.
  * 
- * The function "ft_destroy_mutexes_and_free" cleans up all resources
- * associated with the philosophers and the simulation. It destroys all 
- * mutexes, frees dynamically allocated memory for the philosopher structures,
- * and releases the memory for forks.
- * 
- * @param t_envp *envp				A pointer to the environment structure 
- * 									that holds simulation parameters, mutexes, 
- * 									and philosopher data.
  * @return void
  * 
  */
-
-static void	ft_destroy_mutexes_and_free(t_envp *envp)
-{
-	int	i;
-
-	i = 0;
-	while (i < envp->nbr_philos)
-	{
-		pthread_mutex_destroy(&envp->forks[i]);
-		free(envp->philos[i].pos_char);
-		i++;
-	}
-	pthread_mutex_destroy(&envp->mealtime);
-	pthread_mutex_destroy(&envp->writing);
-	free(envp->philos);
-	free(envp->forks);
-}
 
 static void	ft_join_or_detach_threads(t_envp *envp)
 {
@@ -100,7 +79,9 @@ static void	ft_join_or_detach_threads(t_envp *envp)
 static void	ft_exit_threads(t_envp *envp)
 {
 	ft_join_or_detach_threads(envp);
-	ft_destroy_mutexes_and_free(envp);
+	ft_destroy_all_mutexes(envp);
+	free(envp->philos);
+	free(envp->forks);
 }
 
 static void	*ft_philosopher_routine(void *args)
@@ -134,7 +115,11 @@ int	ft_create_threads_and_monitor(t_envp *envp)
 		envp->philos[i].last_meal = ft_get_time();
 		if (pthread_create(&envp->philos[i].thread_id, NULL, \
 		ft_philosopher_routine, &(envp->philos[i])))
+		{
+			envp->stopping_rule = 1;
+			ft_exit_threads(envp);
 			return (EXIT_FAILURE);
+		}
 		i++;
 	}
 	ft_check_dead(envp, envp->philos);

@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 18:58:55 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/12/19 12:25:20 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/12/27 21:17:57 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,29 +40,19 @@
  * 									successful. Otherwise, returns 
  * 									EXIT_FAILURE.
  * 
- * The function "ft_init_mutex" initializes mutexes for each fork, as well 
- * as additional mutexes for managing shared resources such as mealtime and 
- * writing. If any mutex initialization fails, it returns EXIT_FAILURE.
+ * The function "ft_init_sim" initializes the simulation environment by 
+ * allocating memory for philosophers and forks, initializing mutexes, 
+ * and setting up philosopher-specific data. It ensures proper cleanup 
+ * if any initialization step fails.
  * 
- * @param t_envp *envp				A pointer to the environment structure 
- * 									that contains the mutexes and other 
- * 									simulation parameters.
- * 
- * @return int						Returns EXIT_SUCCESS if all mutexes are 
- * 									successfully initialized. Otherwise, 
- * 									returns EXIT_FAILURE.
- * 
- * The function "ft_init_sim" initializes the simulation environment. It 
- * allocates memory for the philosophers and forks, initializes mutexes, 
- * and sets up philosopher-specific data. If any initialization step fails, 
- * it cleans up all allocated resources and returns EXIT_FAILURE.
- * 
- * @param t_envp *envp				A pointer to the environment structure 
- * 									that manages simulation data and resources.
+ * @param t_envp *envp				A pointer to the simulation environment 
+ * 									structure that manages simulation data 
+ * 									and resources.
  * 
  * @return int						Returns EXIT_SUCCESS if the simulation 
- * 									is successfully initialized. Otherwise, 
- * 									returns EXIT_FAILURE. 
+ * 									is successfully initialized. Returns 
+ * 									EXIT_FAILURE if any allocation or 
+ * 									initialization step fails.
  * 
  */
 
@@ -103,23 +93,6 @@ int	ft_init_philo(t_envp *envp)
 	return (EXIT_SUCCESS);
 }
 
-int	ft_init_mutex(t_envp *envp)
-{
-	int	i;
-
-	i = 0;
-	while (i < envp->nbr_philos)
-	{
-		if (pthread_mutex_init(&(envp->forks[i]), NULL))
-			return (EXIT_FAILURE);
-		i++;
-	}
-	if (pthread_mutex_init(&(envp->mealtime), NULL) || \
-	pthread_mutex_init(&(envp->writing), NULL))
-		return (EXIT_FAILURE);
-	return (EXIT_SUCCESS);
-}
-
 int	ft_init_sim(t_envp *envp)
 {
 	envp->philos = (t_philo *)malloc(sizeof(t_philo) * envp->nbr_philos);
@@ -132,8 +105,15 @@ int	ft_init_sim(t_envp *envp)
 		free(envp->philos);
 		return (EXIT_FAILURE);
 	}
-	if (ft_init_mutex(envp) || ft_init_philo(envp))
+	if (ft_init_mutex_safe(envp) == EXIT_FAILURE)
 	{
+		free(envp->philos);
+		free(envp->forks);
+		return (EXIT_FAILURE);
+	}
+	if (ft_init_philo(envp) == EXIT_FAILURE)
+	{
+		ft_destroy_all_mutexes(envp);
 		free(envp->philos);
 		free(envp->forks);
 		return (EXIT_FAILURE);

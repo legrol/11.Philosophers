@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 20:44:36 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/12/19 20:12:37 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/12/27 21:22:18 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,6 @@ typedef struct s_envp
 // ============================================================================
 // Initialization
 // ============================================================================
-int				ft_init_mutex(t_envp *envp);
 int				ft_init_sim(t_envp *envp);
 void			ft_init_struct(t_envp *envp, int argc, char *argv[]);
 int				ft_init_philo(t_envp *envp);
@@ -107,6 +106,10 @@ void			ft_manage_err_simple(const char *err);
 // Management threads
 // ============================================================================
 int				ft_create_threads_and_monitor(t_envp *envp);
+void			ft_destroy_all_mutexes(t_envp *envp);
+void			ft_destroy_partial_mutexes(t_envp *envp, \
+				int initialized_count);
+int				ft_init_mutex_safe(t_envp *envp);
 
 // ============================================================================
 // Management philos
