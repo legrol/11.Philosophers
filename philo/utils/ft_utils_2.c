@@ -6,21 +6,31 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 19:46:36 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/12/27 21:42:05 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/12/27 22:50:22 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
 /**
- * The function "ft_clean_resources" cleans up all dynamically allocated 
- * resources and mutexes associated with the simulation environment. It ensures 
- * that all memory and synchronization primitives are properly released to 
- * avoid memory leaks or resource contention.
+ * The function "ft_safe_free" safely frees a dynamically allocated pointer and 
+ * sets it to NULL to prevent dangling pointers. It ensures memory is properly 
+ * released without causing double-free errors.
+ * 
+ * @param void **ptr				A double pointer to the memory to be freed. 
+ * 									The pointer is set to NULL after the memory 
+ * 									is freed.
+ * 
+ * @return void
+ * 
+ * The function "ft_clean_resources" performs a complete cleanup of all 
+ * dynamically allocated resources and mutexes in the simulation environment. 
+ * It ensures proper deallocation of memory and destroys all synchronization 
+ * primitives to avoid memory leaks and resource contention.
  * 
  * @param t_envp *envp				A pointer to the simulation environment 
- * 									structure containing allocated resources 
- * 									and mutexes.
+ * 									structure containing all allocated 
+ * 									resources and mutexes.
  * 
  * @return void
  * 
@@ -70,12 +80,19 @@ void	ft_clean_resources(t_envp *envp)
 		i = 0;
 		while (i < envp->nbr_philos)
 		{
-			if (envp->philos[i].pos_char)
-				free(envp->philos[i].pos_char);
+			ft_safe_free((void **)&envp->philos[i].pos_char);
 			i++;
 		}
-		free(envp->philos);
+		ft_safe_free((void **)&envp->philos);
 	}
-	if (envp->forks)
-		free(envp->forks);
+	ft_safe_free((void **)&envp->forks);
+}
+
+void	ft_safe_free(void **ptr)
+{
+	if (ptr && *ptr)
+	{
+		free(*ptr);
+		*ptr = NULL;
+	}
 }

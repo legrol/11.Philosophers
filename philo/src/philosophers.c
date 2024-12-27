@@ -6,16 +6,17 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 20:43:02 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/12/27 21:28:43 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/12/27 22:44:26 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
 /**
- * The function "main" serves as the entry point of the philosopher simulation. 
- * It validates command-line arguments, initializes the simulation environment, 
- * starts the simulation, and monitors its execution. 
+ * The function "main" serves as the entry point of the philosopher simulation 
+ * program. It performs argument validation, initializes the simulation 
+ * environment, starts the philosopher threads, and manages cleanup after the 
+ * simulation ends.
  * 
  * @param int argc					The number of command-line arguments passed 
  * 									to the program.
@@ -23,9 +24,9 @@
  * 									command-line arguments.
  * 
  * @return int						Returns EXIT_SUCCESS if the simulation 
- * 									executes successfully. Returns EXIT_FAILURE 
- * 									if any error occurs during initialization 
- * 									or execution.
+ * 									completes successfully. Returns 
+ * 									EXIT_FAILURE if any initialization or 
+ * 									execution step fails.
  * 
  * The function "ft_check_params" validates all command-line arguments and 
  * initializes the simulation environment structure (`t_envp`). It ensures 
@@ -112,11 +113,17 @@ int	main(int argc, char *argv[])
 		ft_manage_err_simple(NUM_ARGV_ERR);
 		return (ft_manage_err_simple(USAGE_ERR), EXIT_FAILURE);
 	}
-	if (ft_check_params(&envp, argc, argv))
+	if (ft_check_params(&envp, argc, argv) == EXIT_FAILURE)
 		return (ft_manage_err_simple(BYE), EXIT_FAILURE);
-	if (ft_init_sim(&envp))
+	if (ft_init_sim(&envp) == EXIT_FAILURE)
+	{
+		ft_clean_resources(&envp);
 		return (ft_manage_err_simple(INIT_ERR), EXIT_FAILURE);
-	if (ft_create_threads_and_monitor(&envp))
+	}
+	if (ft_create_threads_and_monitor(&envp) == EXIT_FAILURE)
+	{
+		ft_clean_resources(&envp);
 		return (ft_manage_err_simple(THREADS_ERR), EXIT_FAILURE);
+	}
 	return (EXIT_SUCCESS);
 }

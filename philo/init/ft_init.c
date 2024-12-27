@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 18:58:55 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/12/27 21:41:03 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/12/27 22:15:07 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,12 @@ int	ft_init_philo(t_envp *envp)
 	{
 		envp->philos[i].pos = i + 1;
 		envp->philos[i].times_eaten = 0;
+		envp->philos[i].last_meal = ft_get_time();
 		envp->philos[i].pos_char = ft_philo_itoa(i + 1);
 		if (!envp->philos[i].pos_char)
 		{
 			while (--i >= 0)
-				free(envp->philos[i].pos_char);
+				ft_safe_free((void **)&envp->philos[i].pos_char);
 			return (EXIT_FAILURE);
 		}
 		envp->philos[i].right_fork = i;
@@ -74,7 +75,7 @@ int	ft_init_sim(t_envp *envp)
 	envp->nbr_philos);
 	if (!envp->forks)
 	{
-		free(envp->philos);
+		ft_safe_free((void **)&envp->philos);
 		return (EXIT_FAILURE);
 	}
 	if (ft_init_mutex_safe(envp) == EXIT_FAILURE)

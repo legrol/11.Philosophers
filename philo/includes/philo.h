@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 20:44:36 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/12/27 21:35:11 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/12/27 22:10:17 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,5 +130,6 @@ unsigned long	ft_get_time(void);
 int				ft_philo_atoi(const char *str);
 char			*ft_philo_itoa(int n);
 void			ft_print_banner(void);
+void			ft_safe_free(void **ptr);
 
 #endif

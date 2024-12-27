@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 17:38:24 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/12/27 21:21:05 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/12/27 22:18:24 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,9 +79,7 @@ static void	ft_join_or_detach_threads(t_envp *envp)
 static void	ft_exit_threads(t_envp *envp)
 {
 	ft_join_or_detach_threads(envp);
-	ft_destroy_all_mutexes(envp);
-	free(envp->philos);
-	free(envp->forks);
+	ft_clean_resources(envp);
 }
 
 static void	*ft_philosopher_routine(void *args)

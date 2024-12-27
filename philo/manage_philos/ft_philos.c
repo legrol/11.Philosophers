@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 00:05:25 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/12/19 20:11:55 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/12/27 22:16:29 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,19 +97,23 @@ void	ft_check_dead(t_envp *envp, t_philo *philo)
 			pthread_mutex_lock(&envp->mealtime);
 			if ((int)(ft_get_time() - philo[i].last_meal) >= envp->time_to_die)
 			{
-				ft_check_stamp(RED DIED RESET "\n", &philo[i], LOCK);
+				ft_check_stamp(RED DIED RESET "\n", &philo[i], UNLOCK);
+				pthread_mutex_lock(&envp->writing);
 				envp->stopping_rule = 1;
+				pthread_mutex_unlock(&envp->writing);
 			}
 			pthread_mutex_unlock(&envp->mealtime);
 			i++;
 		}
 		if (envp->stopping_rule)
 			break ;
+		pthread_mutex_lock(&envp->writing);
 		i = 0;
 		while (envp->philo_eat_limit && i < envp->nbr_philos
 			&& philo[i].times_eaten >= envp->philo_eat_limit)
 			i++;
 		envp->eat_max = (i == envp->nbr_philos);
+		pthread_mutex_unlock(&envp->writing);
 	}
 	ft_finish_sim(envp);
 }
