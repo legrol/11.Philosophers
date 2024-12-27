@@ -54,7 +54,8 @@ MGE_THREADS			= ./manage_threads
 # ══ Flags ══════════════════════════════════════════════════════════════════ #
 #    -----                                                                    #
 
-CFLAGS 				= -Wall -Werror -Wextra -fsanitize=thread
+# CFLAGS 				= -Wall -Werror -Wextra -fsanitize=thread
+CFLAGS 				= -Wall -Werror -Wextra
 IFLAGS				= -I${INCLUDES_DIR}
 LFLAGS				= -lpthread				
 
