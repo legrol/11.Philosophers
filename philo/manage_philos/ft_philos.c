@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 00:05:25 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/12/28 01:47:17 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/12/28 01:47:56 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,7 @@ void	ft_check_eat(t_philo *philo)
 	ft_check_stamp(BLUE TAKEN_FORK RESET, philo, UNLOCK);
 	pthread_mutex_lock(&philo->envp->forks[philo->left_fork]);
 	ft_check_stamp(BLUE TAKEN_FORK RESET, philo, UNLOCK);
-	pthread_mutex_lock(&philo->envp->mealtime);	
+	pthread_mutex_lock(&philo->envp->mealtime);
 	philo->last_meal = ft_get_time();
 	philo->times_eaten++;
 	ft_check_stamp(GREEN EAT RESET, philo, UNLOCK);
