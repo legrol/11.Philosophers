@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 00:05:25 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/12/28 23:35:27 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/12/29 00:15:42 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,8 +126,13 @@ void	ft_check_dead(t_envp *envp, t_philo *philo)
 			pthread_mutex_unlock(&envp->mealtime);
 			i++;
 		}
+		pthread_mutex_lock(&envp->writing);
 		if (envp->stopping_rule)
+		{
+			pthread_mutex_unlock(&envp->writing);
 			break ;
+		}
+		pthread_mutex_unlock(&envp->writing);
 		ft_check_dead_aux(envp, philo, i);
 	}
 	ft_finish_sim(envp);
@@ -135,6 +140,24 @@ void	ft_check_dead(t_envp *envp, t_philo *philo)
 
 void	ft_check_eat(t_philo *philo)
 {
+	// int	first_fork;
+	// int	second_fork;
+
+	// if (philo->right_fork < philo->left_fork)
+	// {
+	// 	first_fork = philo->right_fork;
+	// 	second_fork = philo->left_fork;
+	// }
+	// else
+	// {
+	// 	first_fork = philo->left_fork;
+	// 	second_fork = philo->right_fork;
+	// }
+	// pthread_mutex_lock(&philo->envp->forks[first_fork]);
+	// ft_check_stamp(BLUE TAKEN_FORK RESET, philo, UNLOCK);
+	// pthread_mutex_lock(&philo->envp->forks[second_fork]);
+	// ft_check_stamp(BLUE TAKEN_FORK RESET, philo, UNLOCK);
+
 	pthread_mutex_lock(&philo->envp->forks[philo->right_fork]);
 	ft_check_stamp(BLUE TAKEN_FORK RESET, philo, UNLOCK);
 	pthread_mutex_lock(&philo->envp->forks[philo->left_fork]);
@@ -147,4 +170,7 @@ void	ft_check_eat(t_philo *philo)
 	ft_check_sleep(philo->envp->time_to_eat, philo->envp);
 	pthread_mutex_unlock(&philo->envp->forks[philo->right_fork]);
 	pthread_mutex_unlock(&philo->envp->forks[philo->left_fork]);
+
+	// pthread_mutex_unlock(&philo->envp->forks[first_fork]);
+	// pthread_mutex_unlock(&philo->envp->forks[second_fork]);
 }
