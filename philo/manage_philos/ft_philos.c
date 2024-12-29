@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 00:05:25 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/12/29 00:15:42 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/12/29 22:20:35 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,29 +23,19 @@
  * 									eating.
  * @return void
  * 
- * The function "ft_check_dead" monitors the simulation for philosopher deaths 
- * or completion of eating goals. It continuously checks whether a philosopher 
- * has exceeded their time to die or if all philosophers have reached their 
- * eating limit. The function terminates the simulation if either condition 
- * is met.
+ * The function "ft_check_dead" monitors the philosophers' status to determine 
+ * if any philosopher has exceeded their `time_to_die` without eating or if 
+ * all philosophers have reached the specified eating limit 
+ * (`philo_eat_limit`). 
+ * If a philosopher dies, it sets the `stopping_rule` and prints a death 
+ * message. 
+ * If all philosophers are full, it updates the `eat_max` flag.
  * 
- * @param t_envp *envp				A pointer to the simulation environment 
- * 									structure containing shared data and flags.
- * @param t_philo *philo			An array of philosopher structures to 
- * 									monitor.
- * 
- * @return void
- * 
- * The function "ft_check_dead_aux" checks if all philosophers have reached 
- * their eating limit and updates the `eat_max` flag in the simulation 
- * environment. It ensures thread-safe access to the `eat_max` flag by using 
- * the `writing` mutex.
- * 
- * @param t_envp *envp				A pointer to the simulation environment 
- * 									structure containing the shared data.
- * @param t_philo *philo			An array of philosopher structures to check 
- * 									for eating limits.
- * @param int i						A temporary counter used for iteration.
+ * @param t_envp *envp				A pointer to the environment structure 
+ * 									that stores the simulation parameters and 
+ * 									state variables.
+ * @param t_philo *philo			A pointer to the array of philosophers' 
+ * 									structures that hold individual states.
  * 
  * @return void
  * 
@@ -78,12 +68,12 @@
 
 void	ft_check_sleep(unsigned long total_time, t_envp *envp)
 {
-	unsigned long	start_time;
+	unsigned long	init;
 
-	start_time = ft_get_time();
+	init = ft_get_time();
 	while (!envp->stopping_rule)
 	{
-		if (ft_get_time() - start_time >= total_time)
+		if (ft_get_time() - init >= total_time)
 			break ;
 		usleep(envp->nbr_philos * 3);
 	}
@@ -93,17 +83,6 @@ void	ft_check_sleep(unsigned long total_time, t_envp *envp)
 void	ft_check_think(unsigned long time, t_envp *envp)
 {
 	ft_check_sleep(time, envp);
-}
-
-static void	ft_check_dead_aux(t_envp *envp, t_philo *philo, int i)
-{
-	pthread_mutex_lock(&envp->writing);
-	i = 0;
-	while (envp->philo_eat_limit && i < envp->nbr_philos \
-	&& philo[i].times_eaten >= envp->philo_eat_limit)
-		i++;
-	envp->eat_max = (i == envp->nbr_philos);
-	pthread_mutex_unlock(&envp->writing);
 }
 
 void	ft_check_dead(t_envp *envp, t_philo *philo)
@@ -118,59 +97,50 @@ void	ft_check_dead(t_envp *envp, t_philo *philo)
 			pthread_mutex_lock(&envp->mealtime);
 			if ((int)(ft_get_time() - philo[i].last_meal) >= envp->time_to_die)
 			{
-				ft_check_stamp(RED DIED RESET "\n", &philo[i], UNLOCK);
-				pthread_mutex_lock(&envp->writing);
+				ft_check_stamp(RED DIED RESET "\n", &philo[i], LOCK);
 				envp->stopping_rule = 1;
-				pthread_mutex_unlock(&envp->writing);
 			}
 			pthread_mutex_unlock(&envp->mealtime);
 			i++;
 		}
-		pthread_mutex_lock(&envp->writing);
 		if (envp->stopping_rule)
-		{
-			pthread_mutex_unlock(&envp->writing);
 			break ;
-		}
+		i = 0;
+		pthread_mutex_lock(&envp->writing);
+		while (envp->philo_eat_limit && i < envp->nbr_philos
+			&& philo[i].times_eaten >= envp->philo_eat_limit)
+			i++;
+		envp->eat_max = (i == envp->nbr_philos);
 		pthread_mutex_unlock(&envp->writing);
-		ft_check_dead_aux(envp, philo, i);
 	}
 	ft_finish_sim(envp);
 }
 
 void	ft_check_eat(t_philo *philo)
 {
-	// int	first_fork;
-	// int	second_fork;
+	int	first_fork;
+	int	second_fork;
 
-	// if (philo->right_fork < philo->left_fork)
-	// {
-	// 	first_fork = philo->right_fork;
-	// 	second_fork = philo->left_fork;
-	// }
-	// else
-	// {
-	// 	first_fork = philo->left_fork;
-	// 	second_fork = philo->right_fork;
-	// }
-	// pthread_mutex_lock(&philo->envp->forks[first_fork]);
-	// ft_check_stamp(BLUE TAKEN_FORK RESET, philo, UNLOCK);
-	// pthread_mutex_lock(&philo->envp->forks[second_fork]);
-	// ft_check_stamp(BLUE TAKEN_FORK RESET, philo, UNLOCK);
-
-	pthread_mutex_lock(&philo->envp->forks[philo->right_fork]);
+	if (philo->left_fork < philo->right_fork)
+	{
+		first_fork = philo->left_fork;
+		second_fork = philo->right_fork;
+	}
+	else
+	{
+		first_fork = philo->right_fork;
+		second_fork = philo->left_fork;
+	}
+	pthread_mutex_lock(&philo->envp->forks[first_fork]);
 	ft_check_stamp(BLUE TAKEN_FORK RESET, philo, UNLOCK);
-	pthread_mutex_lock(&philo->envp->forks[philo->left_fork]);
+	pthread_mutex_lock(&philo->envp->forks[second_fork]);
 	ft_check_stamp(BLUE TAKEN_FORK RESET, philo, UNLOCK);
 	pthread_mutex_lock(&philo->envp->mealtime);
+	ft_check_stamp(GREEN EAT RESET, philo, UNLOCK);
 	philo->last_meal = ft_get_time();
 	philo->times_eaten++;
-	ft_check_stamp(GREEN EAT RESET, philo, UNLOCK);
 	pthread_mutex_unlock(&philo->envp->mealtime);
 	ft_check_sleep(philo->envp->time_to_eat, philo->envp);
-	pthread_mutex_unlock(&philo->envp->forks[philo->right_fork]);
-	pthread_mutex_unlock(&philo->envp->forks[philo->left_fork]);
-
-	// pthread_mutex_unlock(&philo->envp->forks[first_fork]);
-	// pthread_mutex_unlock(&philo->envp->forks[second_fork]);
+	pthread_mutex_unlock(&philo->envp->forks[first_fork]);
+	pthread_mutex_unlock(&philo->envp->forks[second_fork]);
 }

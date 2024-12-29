@@ -55,7 +55,7 @@ MGE_THREADS			= ./manage_threads
 #    -----                                                                    #
 
 # CFLAGS 				= -Wall -Werror -Wextra
-CFLAGS 				= -Wall -Werror -Wextra -fsanitize=thread -g
+CFLAGS 				= -Wall -Werror -Wextra -fsanitize=thread
 IFLAGS				= -I${INCLUDES_DIR}
 LFLAGS				= -lpthread				
 
@@ -72,8 +72,7 @@ INT					= ${INIT_DIR}/ft_init_struct.c \
 MPH					= ${MGE_PHILOS}/ft_philos.c \
 						${MGE_PHILOS}/ft_philos_tools.c
 
-MTH					= ${MGE_THREADS}/ft_manage_mutex.c \
-						${MGE_THREADS}/ft_threads.c 
+MTH					= ${MGE_THREADS}/ft_threads.c
 
 UTL					= ${UTILS_DIR}/ft_banner.c \
 						${UTILS_DIR}/ft_utils.c \

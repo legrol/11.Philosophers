@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 12:08:07 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/12/27 21:29:07 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/12/29 13:24:48 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ eat]"
 # define INT_MIN			-2147483648
 # define UNLOCK				1
 # define LOCK				0
-# define MAX_PHILOS         200
-# define MS_CONVERSION      1000
+# define MAX_PHILOS			200
+# define MS_CONVERSION		1000
 
 #endif

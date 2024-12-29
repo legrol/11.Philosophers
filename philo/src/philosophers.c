@@ -6,78 +6,41 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 20:43:02 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/12/27 22:44:26 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/12/10 22:00:38 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
 /**
- * The function "main" serves as the entry point of the philosopher simulation 
- * program. It performs argument validation, initializes the simulation 
- * environment, starts the philosopher threads, and manages cleanup after the 
- * simulation ends.
+ * The function "main" serves as the entry point of the program. It validates 
+ * the command-line arguments, initializes the environment structure, and 
+ * starts the simulation if all parameters are valid.
  * 
- * @param int argc					The number of command-line arguments passed 
- * 									to the program.
+ * @param int argc					The number of command-line arguments 
+ * 									passed to the program.
  * @param char *argv[]				An array of strings containing the 
  * 									command-line arguments.
+ * @return int						Returns EXIT_SUCCESS if the program 
+ * 									executes successfully; otherwise, 
+ * 									returns EXIT_FAILURE.
  * 
- * @return int						Returns EXIT_SUCCESS if the simulation 
- * 									completes successfully. Returns 
- * 									EXIT_FAILURE if any initialization or 
- * 									execution step fails.
+ * The function "ft_check_params" validates the command-line arguments to 
+ * ensure they meet the requirements for the simulation. It checks if the 
+ * arguments are integers, non-negative, and within valid ranges. If valid, 
+ * it initializes the environment structure with these parameters.
  * 
- * The function "ft_check_params" validates all command-line arguments and 
- * initializes the simulation environment structure (`t_envp`). It ensures 
- * that all arguments are valid and checks additional constraints on the 
- * simulation parameters.
+ * @param t_envp *envp				A pointer to the environment structure 
+ * 									that stores simulation parameters and 
+ * 									state variables.
+ * @param int argc					The number of command-line arguments 
+ * 									provided to the program.
+ * @param char *argv[]				An array of strings containing the 
+ * 									command-line arguments.
+ * @return int						Returns EXIT_SUCCESS if all parameters 
+ * 									are valid; otherwise, returns EXIT_FAILURE.
  * 
- * @param t_envp *envp				A pointer to the simulation environment 
- * 									structure to be initialized.
- * @param int argc					The number of command-line arguments.
- * @param char *argv[]				An array of command-line arguments.
- * 
- * @return int						Returns EXIT_SUCCESS if all arguments are 
- * 									valid and initialization is successful. 
- * 									Returns EXIT_FAILURE otherwise.
- * 
- * The function "ft_validate_argument" validates an individual command-line 
- * argument. It ensures that the argument is an integer, non-negative, and 
- * within specific constraints (e.g., the number of philosophers must be 
- * between 1 and 200). 
- * 
- * @param char *arg					The command-line argument to validate.
- * @param int index					The position of the argument in the input 
- * 									array (used for error messages).
- * 
- * @return int						Returns EXIT_SUCCESS if the argument is 
- * 									valid. Returns EXIT_FAILURE otherwise.
- *  
  */
-
-static int	ft_validate_argument(char *arg, int index)
-{
-	int	arg_value;
-
-	if (!ft_isinteger(arg))
-	{
-		printf(RED ARG "%i" INVALID RESET "\n", index);
-		return (ft_manage_err_simple(NO_INT_ARGV_ERR), EXIT_FAILURE);
-	}
-	arg_value = ft_philo_atoi(arg);
-	if (arg_value < 0)
-	{
-		printf(RED ARG "%i" NEGATIVE RESET "\n", index);
-		return (ft_manage_err_simple(INT_NEG_ARGV_ERR), EXIT_FAILURE);
-	}
-	if (index == 1 && (arg_value < 1 || arg_value > MAX_PHILOS))
-	{
-		printf(RED ARG "%i" INVALID RESET "\n", index);
-		return (ft_manage_err_simple(NUM_PHILO_ERR), EXIT_FAILURE);
-	}
-	return (EXIT_SUCCESS);
-}
 
 static int	ft_check_params(t_envp *envp, int argc, char *argv[])
 {
@@ -86,16 +49,23 @@ static int	ft_check_params(t_envp *envp, int argc, char *argv[])
 	i = 1;
 	while (i < argc)
 	{
-		if (ft_validate_argument(argv[i], i) == EXIT_FAILURE)
-			return (EXIT_FAILURE);
+		if (!ft_isinteger(argv[i]))
+		{
+			printf(RED ARG "%i" INVALID "\n" RESET, i);
+			return (ft_manage_err_simple(NO_INT_ARGV_ERR), EXIT_FAILURE);
+		}
+		if (ft_philo_atoi(argv[i]) < 0)
+		{
+			printf(RED ARG "%i" NEGATIVE "\n" RESET, i);
+			return (ft_manage_err_simple(INT_NEG_ARGV_ERR), EXIT_FAILURE);
+		}
 		i++;
 	}
 	ft_init_struct(envp, argc, argv);
-	if (envp->philo_eat_limit < 0 || envp->time_to_die <= 0 \
-	|| envp->time_to_eat <= 0 || envp->time_to_sleep <= 0 \
-	|| envp->nbr_philos < 1)
+	if (envp->philo_eat_limit < 0 || envp->time_to_die < 0 || envp->\
+	time_to_eat < 0 || envp->time_to_sleep < 0 || envp->nbr_philos < 1)
 	{
-		printf(RED VALUES_INVALID RESET "\n");
+		printf(RED VALUES_INVALID "\n" RESET);
 		return (ft_manage_err_simple(PARAMS_ERR), EXIT_FAILURE);
 	}
 	return (EXIT_SUCCESS);
@@ -113,17 +83,11 @@ int	main(int argc, char *argv[])
 		ft_manage_err_simple(NUM_ARGV_ERR);
 		return (ft_manage_err_simple(USAGE_ERR), EXIT_FAILURE);
 	}
-	if (ft_check_params(&envp, argc, argv) == EXIT_FAILURE)
+	if (ft_check_params(&envp, argc, argv))
 		return (ft_manage_err_simple(BYE), EXIT_FAILURE);
-	if (ft_init_sim(&envp) == EXIT_FAILURE)
-	{
-		ft_clean_resources(&envp);
+	if (ft_init_sim(&envp))
 		return (ft_manage_err_simple(INIT_ERR), EXIT_FAILURE);
-	}
-	if (ft_create_threads_and_monitor(&envp) == EXIT_FAILURE)
-	{
-		ft_clean_resources(&envp);
+	if (ft_create_threads_and_monitor(&envp))
 		return (ft_manage_err_simple(THREADS_ERR), EXIT_FAILURE);
-	}
 	return (EXIT_SUCCESS);
 }
