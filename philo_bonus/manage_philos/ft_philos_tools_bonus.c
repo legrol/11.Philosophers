@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 17:13:16 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/12/30 23:39:03 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/12/30 23:51:01 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	ft_check_sleep(t_philo *philo)
 	ft_log_status(SLEEP, philo);
 	if (philo->pos % 2 && philo->envp->nbr_philos > 1)
 		usleep(philo->envp->time_to_eat / 50);
-	usleep(philo->envp->time_to_sleep * 1000);
+	usleep(philo->envp->time_to_sleep * 500);
 }
 
 void	ft_manage_fork(t_philo *philo)
@@ -101,7 +101,7 @@ void	ft_check_eat(t_philo *philo)
 		philo->envp->eat_counter)
 		philo->envp->current_eat++;
 	sem_post(philo->envp->death);
-	usleep(philo->envp->time_to_eat * 1000);
+	usleep(philo->envp->time_to_eat * 500);
 	sem_post(philo->envp->forks);
 	sem_post(philo->envp->forks);
 }
