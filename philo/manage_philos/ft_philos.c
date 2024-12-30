@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 00:05:25 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/12/30 22:02:49 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/12/31 00:05:52 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void	ft_check_sleep(unsigned long total_time, t_envp *envp)
 		if (ft_get_time() - init >= total_time)
 			break ;
 		// usleep(envp->nbr_philos * 3);
-		usleep(50);
+		usleep(35);
 	}
 	return ;
 }
