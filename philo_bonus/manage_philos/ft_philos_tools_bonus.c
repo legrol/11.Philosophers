@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 17:13:16 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/12/19 21:14:15 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/12/30 23:24:10 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,16 +90,33 @@ void	ft_manage_fork(t_philo *philo)
 
 void	ft_check_eat(t_philo *philo)
 {
+	// ft_manage_fork(philo);
+	// ft_log_status(EAT, philo);
+	// philo->last_meal = ft_get_time();
+	// philo->next_meal = philo->last_meal + \
+	// (unsigned int)philo->envp->time_to_die;
+	// philo->eat_count++;
+	// if (philo->envp->eat_counter != -1 && philo->eat_count >= \
+	// philo->envp->eat_counter)
+	// 	philo->envp->current_eat++;
+	// sem_post(philo->envp->death);
+	// usleep(philo->envp->time_to_eat * 1000);
+	// sem_post(philo->envp->forks);
+	// sem_post(philo->envp->forks);
+
 	ft_manage_fork(philo);
 	ft_log_status(EAT, philo);
+
+	sem_wait(philo->envp->death);
 	philo->last_meal = ft_get_time();
 	philo->next_meal = philo->last_meal + \
-	(unsigned int)philo->envp->time_to_die;
+		(unsigned int)philo->envp->time_to_die;
 	philo->eat_count++;
 	if (philo->envp->eat_counter != -1 && philo->eat_count >= \
-	philo->envp->eat_counter)
+		philo->envp->eat_counter)
 		philo->envp->current_eat++;
 	sem_post(philo->envp->death);
+
 	usleep(philo->envp->time_to_eat * 1000);
 	sem_post(philo->envp->forks);
 	sem_post(philo->envp->forks);
@@ -107,28 +124,52 @@ void	ft_check_eat(t_philo *philo)
 
 void	*ft_check_death(void *arg)
 {
+	// t_philo	*philo;
+
+	// philo = (t_philo *)arg;
+	// while (1)
+	// {
+	// 	sem_wait(philo->envp->death);
+	// 	if (philo->next_meal < ft_get_time())
+	// 	{
+	// 		ft_log_status(DEAD, philo);
+	// 		sem_post(philo->envp->stop);
+	// 		break ;
+	// 	}
+	// 	sem_post(philo->envp->death);
+	// 	sem_wait(philo->envp->death);
+	// 	if (philo->envp->current_eat != -1 && \
+	// 	philo->eat_count >= philo->envp->philo_eat_limit + 1)
+	// 	{
+	// 		ft_log_status(DONE, philo);
+	// 		sem_post(philo->envp->stop);
+	// 		break ;
+	// 	}
+	// 	sem_post(philo->envp->death);
+	// }
+	// return (NULL);
+	
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
 	while (1)
 	{
-		sem_wait(philo->envp->death);
+		sem_wait(philo->envp->death); // Bloqueamos acceso a las variables compartidas
 		if (philo->next_meal < ft_get_time())
 		{
 			ft_log_status(DEAD, philo);
-			sem_post(philo->envp->stop);
-			break ;
+			sem_post(philo->envp->stop); // Avisamos que se debe detener la simulación
+			break;
 		}
-		sem_post(philo->envp->death);
-		sem_wait(philo->envp->death);
 		if (philo->envp->current_eat != -1 && \
-		philo->eat_count >= philo->envp->philo_eat_limit + 1)
+			philo->eat_count >= philo->envp->philo_eat_limit + 1)
 		{
 			ft_log_status(DONE, philo);
-			sem_post(philo->envp->stop);
-			break ;
+			sem_post(philo->envp->stop); // Avisamos que se completó la simulación
+			break;
 		}
-		sem_post(philo->envp->death);
+		sem_post(philo->envp->death); // Liberamos el semáforo
+		usleep(100); // Reducimos la carga del CPU
 	}
 	return (NULL);
 }

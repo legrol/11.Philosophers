@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 17:38:24 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/12/30 19:36:46 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/12/30 22:50:52 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,11 +122,9 @@ static void	*ft_philosopher_routine(void *args)
 		}
 		pthread_mutex_unlock(&envp->writing);
 		ft_check_eat(philo);
-		// ft_check_sleep(envp->time_to_sleep / 2, envp);
-		ft_check_sleep(envp->time_to_sleep, envp);
+		ft_check_sleep(envp->time_to_sleep / 2, envp);
 		ft_check_stamp(ORANGE SLEEP RESET, philo, UNLOCK);
-		// ft_check_think(envp->time_to_think / 2, envp);
-		ft_check_think(envp->time_to_think, envp);
+		ft_check_think(envp->time_to_think / 2, envp);
 		ft_check_stamp(YELLOW THINK RESET, philo, UNLOCK);
 	}
 	return (NULL);
