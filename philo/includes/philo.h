@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 20:44:36 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/12/19 20:12:37 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/12/30 17:25:08 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ struct	s_envp;
 //	pos_char					position char of the philo at table.
 //	thread_id					id of the thread.
 //	envp						pointer to the envp structure.
+//  philo_mutex					XXXXXXXXXXXXXXXXXXXXXXXXXXX
 //
 // 	nbr_philos					number of philosophers in the simulation.
 // 	time_to_die					max time without eating.
@@ -70,6 +71,7 @@ typedef struct s_philo
 	char			*pos_char;
 	pthread_t		thread_id;
 	struct s_envp	*envp;
+	pthread_mutex_t	philo_mutex;
 }					t_philo;
 
 typedef struct s_envp

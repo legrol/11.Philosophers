@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 00:05:25 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/12/30 00:24:18 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/12/30 19:29:13 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,14 +68,32 @@
 
 void	ft_check_sleep(unsigned long total_time, t_envp *envp)
 {
+	// unsigned long	init;
+
+	// init = ft_get_time();
+	// while (!envp->stopping_rule)
+	// {
+	// 	if (ft_get_time() - init >= total_time)
+	// 		break ;
+	// 	usleep(envp->nbr_philos * 3);
+	// }
+	// return ;
+
 	unsigned long	init;
 
 	init = ft_get_time();
-	while (!envp->stopping_rule)
+	while (1)
 	{
+		pthread_mutex_lock(&envp->writing);
+		if (envp->stopping_rule)
+		{
+			pthread_mutex_unlock(&envp->writing);
+			break ;
+		}
+		pthread_mutex_unlock(&envp->writing);
 		if (ft_get_time() - init >= total_time)
 			break ;
-		usleep(envp->nbr_philos * 3);
+		usleep(envp->nbr_philos * 30);
 	}
 	return ;
 }
@@ -88,30 +106,48 @@ void	ft_check_think(unsigned long time, t_envp *envp)
 void	ft_check_dead(t_envp *envp, t_philo *philo)
 {
 	int	i;
+	int	eaten_count;
 
-	while (!envp->eat_max)
+	while (1)
 	{
 		i = 0;
-		while (i < envp->nbr_philos && !envp->stopping_rule)
+		while (i < envp->nbr_philos)
 		{
-			pthread_mutex_lock(&envp->mealtime);
+			pthread_mutex_lock(&philo[i].philo_mutex);
 			if ((int)(ft_get_time() - philo[i].last_meal) >= envp->time_to_die)
 			{
-				ft_check_stamp(RED DIED RESET "\n", &philo[i], LOCK);
+				ft_check_stamp(RED DIED RESET "\n", &philo[i], UNLOCK);
+				pthread_mutex_lock(&envp->writing);
 				envp->stopping_rule = 1;
+				pthread_mutex_unlock(&envp->writing);
+				pthread_mutex_unlock(&philo[i].philo_mutex);
+				return ;
 			}
-			pthread_mutex_unlock(&envp->mealtime);
+			pthread_mutex_unlock(&philo[i].philo_mutex);
 			i++;
 		}
-		if (envp->stopping_rule)
-			break ;
-		i = 0;
 		pthread_mutex_lock(&envp->writing);
-		while (envp->philo_eat_limit && i < envp->nbr_philos
-			&& philo[i].times_eaten >= envp->philo_eat_limit)
-			i++;
-		envp->eat_max = (i == envp->nbr_philos);
+		if (envp->stopping_rule || envp->eat_max)
+		{
+			pthread_mutex_unlock(&envp->writing);
+			break ;
+		}
 		pthread_mutex_unlock(&envp->writing);
+		eaten_count = 0;
+		i = 0;
+		while (envp->philo_eat_limit && i < envp->nbr_philos)
+		{
+			pthread_mutex_lock(&philo[i].philo_mutex);
+			if (philo[i].times_eaten >= envp->philo_eat_limit)
+				eaten_count++;
+			pthread_mutex_unlock(&philo[i].philo_mutex);
+			i++;
+		}
+		pthread_mutex_lock(&envp->writing);
+		envp->eat_max = (eaten_count == envp->nbr_philos);
+		pthread_mutex_unlock(&envp->writing);
+		if (envp->eat_max)
+			break ;
 	}
 	ft_finish_sim(envp);
 }
@@ -135,11 +171,11 @@ void	ft_check_eat(t_philo *philo)
 	ft_check_stamp(BLUE TAKEN_FORK RESET, philo, UNLOCK);
 	pthread_mutex_lock(&philo->envp->forks[second_fork]);
 	ft_check_stamp(BLUE TAKEN_FORK RESET, philo, UNLOCK);
-	pthread_mutex_lock(&philo->envp->mealtime);
+	pthread_mutex_lock(&philo->philo_mutex);
 	ft_check_stamp(GREEN EAT RESET, philo, UNLOCK);
 	philo->last_meal = ft_get_time();
 	philo->times_eaten++;
-	pthread_mutex_unlock(&philo->envp->mealtime);
+	pthread_mutex_unlock(&philo->philo_mutex);
 	ft_check_sleep(philo->envp->time_to_eat, philo->envp);
 	pthread_mutex_unlock(&philo->envp->forks[first_fork]);
 	pthread_mutex_unlock(&philo->envp->forks[second_fork]);

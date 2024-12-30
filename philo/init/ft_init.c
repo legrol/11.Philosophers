@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 18:58:55 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/12/29 20:18:40 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/12/30 17:11:34 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ static int	ft_init_data_philosophers(t_envp *envp)
 		envp->philos[i].right_fork = i;
 		envp->philos[i].left_fork = (i + 1) % envp->nbr_philos;
 		envp->philos[i].envp = envp;
+		pthread_mutex_init(&envp->philos[i].philo_mutex, NULL);
 		i++;
 	}
 	return (i);

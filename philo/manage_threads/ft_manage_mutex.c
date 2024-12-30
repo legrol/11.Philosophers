@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 20:47:43 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/12/27 22:49:04 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/12/30 17:19:56 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,12 @@ void	ft_destroy_partial_mutexes(t_envp *envp, int initialized_count)
 	i = 0;
 	while (i < initialized_count)
 	{
+		pthread_mutex_destroy(&(envp->philos[i].philo_mutex));
+		i++;
+	}
+	i = 0;
+	while (i < initialized_count)
+	{
 		pthread_mutex_destroy(&(envp->forks[i]));
 		i++;
 	}
@@ -77,6 +83,12 @@ void	ft_destroy_all_mutexes(t_envp *envp)
 			i++;
 		}
 	}
+	i = 0;
+	while (i < envp->nbr_philos)
+	{
+		pthread_mutex_destroy(&(envp->philos[i].philo_mutex));
+		i++;
+	}
 	pthread_mutex_destroy(&(envp->mealtime));
 	pthread_mutex_destroy(&(envp->writing));
 }
@@ -89,6 +101,16 @@ int	ft_init_mutex_safe(t_envp *envp)
 	while (i < envp->nbr_philos)
 	{
 		if (pthread_mutex_init(&(envp->forks[i]), NULL))
+		{
+			ft_destroy_partial_mutexes(envp, i);
+			return (EXIT_FAILURE);
+		}
+		i++;
+	}
+	i = 0;
+	while (i < envp->nbr_philos)
+	{
+		if (pthread_mutex_init(&(envp->philos[i].philo_mutex), NULL))
 		{
 			ft_destroy_partial_mutexes(envp, i);
 			return (EXIT_FAILURE);
