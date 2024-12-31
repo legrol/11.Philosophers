@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 00:05:25 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/12/31 00:05:52 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/12/31 17:53:42 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,17 +68,6 @@
 
 void	ft_check_sleep(unsigned long total_time, t_envp *envp)
 {
-	// unsigned long	init;
-
-	// init = ft_get_time();
-	// while (!envp->stopping_rule)
-	// {
-	// 	if (ft_get_time() - init >= total_time)
-	// 		break ;
-	// 	usleep(envp->nbr_philos * 3);
-	// }
-	// return ;
-
 	unsigned long	init;
 
 	init = ft_get_time();
@@ -93,7 +82,6 @@ void	ft_check_sleep(unsigned long total_time, t_envp *envp)
 		pthread_mutex_unlock(&envp->writing);
 		if (ft_get_time() - init >= total_time)
 			break ;
-		// usleep(envp->nbr_philos * 3);
 		usleep(35);
 	}
 	return ;
@@ -178,6 +166,6 @@ void	ft_check_eat(t_philo *philo)
 	philo->times_eaten++;
 	pthread_mutex_unlock(&philo->philo_mutex);
 	ft_check_sleep(philo->envp->time_to_eat, philo->envp);
-	pthread_mutex_unlock(&philo->envp->forks[first_fork]);
 	pthread_mutex_unlock(&philo->envp->forks[second_fork]);
+	pthread_mutex_unlock(&philo->envp->forks[first_fork]);
 }
