@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 17:38:24 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/12/31 00:32:43 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/12/31 20:00:46 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ static void	ft_destroy_mutexes_and_free(t_envp *envp)
 	}
 	pthread_mutex_destroy(&envp->mealtime);
 	pthread_mutex_destroy(&envp->writing);
-	// free(envp->philos);
+	free(envp->philos);
 	free(envp->forks);
 }
 

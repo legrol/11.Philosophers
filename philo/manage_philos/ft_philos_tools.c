@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 20:09:48 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/12/30 18:25:31 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/12/31 19:55:46 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ void	ft_check_stamp(char *msg, t_philo *philo, int unlock)
 	}
 	if (unlock)
 		pthread_mutex_unlock(&philo->envp->writing);
-	// pthread_mutex_unlock(&philo->envp->writing);
 	free(timestamp);
 }
 
