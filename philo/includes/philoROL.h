@@ -89,24 +89,21 @@ typedef struct s_envp
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	mealtime;
 	pthread_mutex_t	writing;
-	int				last_time_status;
-	pthread_mutex_t	stopping_mutex;
-	pthread_mutex_t	mutex_max_ate;
 }					t_envp;
 
 // ============================================================================
 // Initialization
 // ============================================================================
-// int				ft_init_mutex(t_envp *envp);
-// int				ft_init_sim(t_envp *envp);
-// void			ft_init_struct(t_envp *envp, int argc, char *argv[]);
-// int				ft_init_philo(t_envp *envp);
+int				ft_init_mutex(t_envp *envp);
+int				ft_init_sim(t_envp *envp);
+void			ft_init_struct(t_envp *envp, int argc, char *argv[]);
+int				ft_init_philo(t_envp *envp);
 
 // ============================================================================
 // Management errors
 // ============================================================================
-// void			ft_manage_err(const char *err);
-// void			ft_manage_err_simple(const char *err);
+void			ft_manage_err(const char *err);
+void			ft_manage_err_simple(const char *err);
 
 // ============================================================================
 // Management threads
@@ -116,63 +113,20 @@ int				ft_create_threads_and_monitor(t_envp *envp);
 // ============================================================================
 // Management philos
 // ============================================================================
-// void			ft_check_dead(t_envp *envp, t_philo *philo);
-// void			ft_check_eat(t_philo *philo);
-// void			ft_check_sleep(unsigned long total_time, t_envp *envp);
-// void			ft_check_stamp(char *msg, t_philo *philo, int unlock);
-// void			ft_check_think(unsigned long time, t_envp *envp);
-// void			ft_finish_sim(t_envp *envp);
+void			ft_check_dead(t_envp *envp, t_philo *philo);
+void			ft_check_eat(t_philo *philo);
+void			ft_check_sleep(unsigned long total_time, t_envp *envp);
+void			ft_check_stamp(char *msg, t_philo *philo, int unlock);
+void			ft_check_think(unsigned long time, t_envp *envp);
+void			ft_finish_sim(t_envp *envp);
 
 /// ============================================================================
 // Utils functions
 // ============================================================================
-// int				ft_isinteger(char *nbr);
-// unsigned long	ft_get_time(void);
-// int				ft_philo_atoi(const char *str);
-// char			*ft_philo_itoa(int n);
-// void			ft_print_banner(void);
-
-// INITIALIZATION STRUCTURES
-void			ft_init_struct(t_envp *envp, int argc, char *argv[]);
-int				ft_init_philos(t_envp *env);
-
-// INITIALIZATION MUTEX
-
-int				ft_init_philo_sim(t_envp *env);
-
-// FREE
-void			ft_free_philo(t_envp *data);
-
-// UTILS
-int				ft_atoi(const char *str);
-unsigned int	ft_count_digits(int n);
-char			*ft_itoa(int n);
-void			ft_destroy_mutex(t_envp *data);
-
-// CHECKER
-int				ft_is_int(char *str);
-int				ft_check_args(t_envp *env, int argc, char **argv);
-
-// UTILS PHILOS
-void			ft_sleep(unsigned long time, t_envp *data);
+int				ft_isinteger(char *nbr);
 unsigned long	ft_get_time(void);
-void			ft_dead(t_envp *data, t_philo *philo);
-void			ft_check_status(char *mesg, t_philo *philo, \
-int lock, t_envp *data);
-void			ft_eat(t_philo *philo);
-void			ft_think(unsigned long time, t_envp *data);
-
-// UTILS THREADS
-int				ft_lock_stop_flag(t_envp *data);
-void			ft_check_dead_flag(t_philo *philo, t_envp *data);
-void			ft_lock_mutex_ate(t_envp *data, int i);
-void			ft_check_max_eat(t_envp *data, t_philo *philo);
-void			ft_dead_util(t_philo *philo, t_envp *data, int i);
-int				ft_ate_flag(t_envp *data);
-void			ft_print_dead(t_philo *philo, char *mesg, t_envp *data);
-
-// THREATS
-int				ft_thread(t_envp *data);
-int				ft_strcmp(const char *s1, const char *s2);
+int				ft_philo_atoi(const char *str);
+char			*ft_philo_itoa(int n);
+void			ft_print_banner(void);
 
 #endif

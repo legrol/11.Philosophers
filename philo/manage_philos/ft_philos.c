@@ -158,29 +158,14 @@ void	ft_check_eat(t_philo *philo)
 	}
 	pthread_mutex_lock(&philo->envp->forks[first_fork]);
 	ft_check_stamp(BLUE TAKEN_FORK RESET, philo, UNLOCK);
-	// pthread_mutex_lock(&philo->envp->forks[second_fork]);
-	// ft_check_stamp(BLUE TAKEN_FORK RESET, philo, UNLOCK);
-	// pthread_mutex_lock(&philo->philo_mutex);
-	// ft_check_stamp(GREEN EAT RESET, philo, UNLOCK);
-	// philo->last_meal = ft_get_time();
-	// philo->times_eaten++;
-	// pthread_mutex_unlock(&philo->philo_mutex);
-	// ft_check_sleep(philo->envp->time_to_eat, philo->envp);
-	// pthread_mutex_unlock(&philo->envp->forks[second_fork]);
-	// pthread_mutex_unlock(&philo->envp->forks[first_fork]);
-
-	// Intentar bloquear el segundo tenedor si hay más de un filósofo
-	if (philo->envp->nbr_philos > 1)
-	{
-		pthread_mutex_lock(&philo->envp->forks[second_fork]);
-		ft_check_stamp(BLUE TAKEN_FORK RESET, philo, UNLOCK);
-		pthread_mutex_lock(&philo->philo_mutex);
-		ft_check_stamp(GREEN EAT RESET, philo, UNLOCK);
-		philo->last_meal = ft_get_time();
-		philo->times_eaten++;
-		pthread_mutex_unlock(&philo->philo_mutex);
-		ft_check_sleep(philo->envp->time_to_eat, philo->envp);
-		pthread_mutex_unlock(&philo->envp->forks[second_fork]);
-	}
+	pthread_mutex_lock(&philo->envp->forks[second_fork]);
+	ft_check_stamp(BLUE TAKEN_FORK RESET, philo, UNLOCK);
+	pthread_mutex_lock(&philo->philo_mutex);
+	ft_check_stamp(GREEN EAT RESET, philo, UNLOCK);
+	philo->last_meal = ft_get_time();
+	philo->times_eaten++;
+	pthread_mutex_unlock(&philo->philo_mutex);
+	ft_check_sleep(philo->envp->time_to_eat, philo->envp);
+	pthread_mutex_unlock(&philo->envp->forks[second_fork]);
 	pthread_mutex_unlock(&philo->envp->forks[first_fork]);
 }

@@ -26,6 +26,8 @@
 
 void	ft_init_struct(t_envp *envp, int argc, char *argv[])
 {
+	envp->last_time_status = 0;
+
 	envp->nbr_philos = 0;
 	envp->time_to_die = 0;
 	envp->time_to_eat = 0;

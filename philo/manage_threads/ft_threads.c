@@ -111,7 +111,7 @@ static void	*ft_philosopher_routine(void *args)
 	philo = (t_philo *)args;
 	envp = philo->envp;
 	if (philo->pos % 2 && envp->nbr_philos > 1)
-		ft_check_sleep(envp->time_to_eat / 50, envp);
+		ft_check_sleep(envp->time_to_eat * 2, envp);
 	while (1)
 	{
 		pthread_mutex_lock(&envp->writing);
@@ -122,9 +122,10 @@ static void	*ft_philosopher_routine(void *args)
 		}
 		pthread_mutex_unlock(&envp->writing);
 		ft_check_eat(philo);
-		ft_check_sleep(envp->time_to_sleep / 2, envp);
-		ft_check_stamp(ORANGE SLEEP RESET, philo, UNLOCK);
-		ft_check_think(envp->time_to_think / 2, envp);
+		// ft_check_sleep(envp->time_to_sleep / 2, envp);
+		ft_check_stamp(ORANGE SLEEP RESET, philo, UNLOCK);		
+		// ft_check_think(envp->time_to_think / 2, envp);
+		ft_check_sleep(25, envp);
 		ft_check_stamp(YELLOW THINK RESET, philo, UNLOCK);
 	}
 	return (NULL);
