@@ -68,7 +68,7 @@
 void	ft_check_think(t_philo *philo)
 {
 	ft_log_status(THINK, philo);
-	usleep(philo->envp->time_to_sleep * 1000);
+	usleep(philo->envp->time_to_sleep * 500);
 }
 
 void	ft_check_sleep(t_philo *philo)
@@ -101,7 +101,7 @@ void	ft_check_eat(t_philo *philo)
 		philo->envp->eat_counter)
 		philo->envp->current_eat++;
 	sem_post(philo->envp->death);
-	usleep(philo->envp->time_to_eat * 500);
+	usleep(philo->envp->time_to_eat * 1000);
 	sem_post(philo->envp->forks);
 	sem_post(philo->envp->forks);
 }
