@@ -6,107 +6,64 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 17:38:24 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/12/31 20:00:46 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2025/01/05 19:16:05 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
 /**
- * The function "ft_create_threads_and_monitor" initializes threads for each 
- * philosopher, starts the simulation, and monitors their states for stopping 
- * conditions, such as a philosopher dying or all eating a defined maximum.
+ * The function "ft_create_threads_and_monitor" creates threads for all 
+ * philosophers and starts their routines. It also monitors the simulation 
+ * for stopping conditions and cleans up resources when the simulation ends.
  * 
  * @param t_envp *envp				A pointer to the environment structure 
- * 									that holds simulation parameters and 
- * 									philosopher data.
- * @return int						Returns EXIT_SUCCESS if threads are 
- * 									created and monitored successfully; 
- * 									otherwise, returns EXIT_FAILURE.
+ * 									containing philosopher and simulation data.
  * 
- * The function "ft_philosopher_routine" defines the behavior of each 
- * philosopher in the simulation. Philosophers alternate between eating,
- * sleeping, and thinking, checking for stopping conditions and shared 
- * simulation states.
+ * @return int						Returns EXIT_SUCCESS if all threads are 
+ * 									created and monitored successfully. Returns 
+ * 									EXIT_FAILURE if thread creation fails.
  * 
- * @param void *args				A pointer to the philosopher structure 
- * 									representing the philosopher's state.
- * @return void*					Returns NULL when the thread terminates.
+ * The function "ft_philosopher_routine" represents the behavior of a single 
+ * philosopher during the simulation. It alternates between eating, sleeping, 
+ * and thinking, while continuously checking for stopping conditions.
  * 
- * The function "ft_exit_threads" handles the orderly termination of threads 
- * and cleanup of all simulation resources. It joins or detaches threads 
- * first, then destroys mutexes and frees dynamically allocated memory.
+ * @param void *args				A pointer to the philosopher structure, 
+ * 									which contains the philosopher's state 
+ * 									and environment.
  * 
- * @param t_envp *envp				A pointer to the environment structure 
- * 									that holds simulation parameters and 
- * 									resources.
- * @return void
+ * @return void*					Returns NULL after the philosopher exits 
+ * 									the routine.
  * 
- * The function "ft_join_or_detach_threads" ensures that all philosopher 
- * threads are properly terminated. If there is only one philosopher, their 
- * thread is detached. Otherwise, it joins all philosopher threads to ensure 
- * proper cleanup after execution.
+ * The function "ft_lock_shutdown_flag" retrieves the value of the simulation's 
+ * stopping rule in a thread-safe manner. It ensures that the `stopping_rule` 
+ * flag is accessed safely using a mutex.
  * 
  * @param t_envp *envp				A pointer to the environment structure 
- * 									that holds the threads of all philosophers.
- * @return void
+ * 									containing the stopping rule flag and its 
+ * 									mutex.
  * 
- * The function "ft_destroy_mutexes_and_free" cleans up all resources
- * associated with the philosophers and the simulation. It destroys all 
- * mutexes, frees dynamically allocated memory for the philosopher structures,
- * and releases the memory for forks.
- * 
- * @param t_envp *envp				A pointer to the environment structure 
- * 									that holds simulation parameters, mutexes, 
- * 									and philosopher data.
- * @return void
+ * @return int						Returns the current value of the 
+ * 									`stopping_rule` flag.
  * 
  */
 
-static void	ft_destroy_mutexes_and_free(t_envp *envp)
+int	ft_lock_shutdown_flag(t_envp *envp)
 {
-	int	i;
+	int	shutdown_flag;
 
-	i = 0;
-	while (i < envp->nbr_philos)
-	{
-		pthread_mutex_destroy(&envp->forks[i]);
-		free(envp->philos[i].pos_char);
-		i++;
-	}
-	pthread_mutex_destroy(&envp->mealtime);
-	pthread_mutex_destroy(&envp->writing);
-	free(envp->philos);
-	free(envp->forks);
-}
-
-static void	ft_join_or_detach_threads(t_envp *envp)
-{
-	int	i;
-
-	if (envp->nbr_philos == 1)
-	{
-		pthread_detach(envp->philos[0].thread_id);
-		return ;
-	}
-	i = 0;
-	while (i < envp->nbr_philos)
-	{
-		pthread_join(envp->philos[i].thread_id, NULL);
-		i++;
-	}
-}
-
-static void	ft_exit_threads(t_envp *envp)
-{
-	ft_join_or_detach_threads(envp);
-	ft_destroy_mutexes_and_free(envp);
+	pthread_mutex_lock(&envp->stopping_mutex);
+	shutdown_flag = envp->stopping_rule;
+	pthread_mutex_unlock(&envp->stopping_mutex);
+	return (shutdown_flag);
 }
 
 static void	*ft_philosopher_routine(void *args)
 {
 	t_philo	*philo;
 	t_envp	*envp;
+	int		shutdown_flag;
+	int		eat_max_flag;
 
 	philo = (t_philo *)args;
 	envp = philo->envp;
@@ -114,18 +71,15 @@ static void	*ft_philosopher_routine(void *args)
 		ft_check_sleep(envp->time_to_eat * 2, envp);
 	while (1)
 	{
-		pthread_mutex_lock(&envp->writing);
-		if (envp->stopping_rule || envp->eat_max)
-		{
-			pthread_mutex_unlock(&envp->writing);
+		shutdown_flag = ft_lock_shutdown_flag(envp);
+		pthread_mutex_lock(&envp->mutex_eat_max);
+		eat_max_flag = envp->eat_max;
+		pthread_mutex_unlock(&envp->mutex_eat_max);
+		if (shutdown_flag || eat_max_flag)
 			break ;
-		}
-		pthread_mutex_unlock(&envp->writing);
 		ft_check_eat(philo);
-		// ft_check_sleep(envp->time_to_sleep / 2, envp);
-		ft_check_stamp(ORANGE SLEEP RESET, philo, UNLOCK);		
-		// ft_check_think(envp->time_to_think / 2, envp);
-		ft_check_sleep(25, envp);
+		ft_check_stamp(ORANGE SLEEP RESET, philo, UNLOCK);
+		ft_check_sleep(envp->time_to_sleep, envp);
 		ft_check_stamp(YELLOW THINK RESET, philo, UNLOCK);
 	}
 	return (NULL);

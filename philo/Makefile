@@ -69,10 +69,13 @@ ERR					= ${ERRORS_DIR}/ft_manage_err.c
 INT					= ${INIT_DIR}/ft_init_struct.c \
 						${INIT_DIR}/ft_init.c
 
-MPH					= ${MGE_PHILOS}/ft_philos.c \
-						${MGE_PHILOS}/ft_philos_tools.c
+MPH					= ${MGE_PHILOS}/ft_philo_one.c \
+						${MGE_PHILOS}/ft_philos_screen.c \
+						${MGE_PHILOS}/ft_philos_tools.c \
+						${MGE_PHILOS}/ft_philos.c
 
-MTH					= ${MGE_THREADS}/ft_threads.c
+MTH					= ${MGE_THREADS}/ft_manage_mutex.c \
+						${MGE_THREADS}/ft_threads.c
 
 UTL					= ${UTILS_DIR}/ft_banner.c \
 						${UTILS_DIR}/ft_utils.c \

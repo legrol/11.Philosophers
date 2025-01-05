@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 12:08:07 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/12/29 13:24:48 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2025/01/05 18:20:45 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,12 @@ eat]"
 # define NUM_PHILO_ERR		"❗Invalid number of philosophers (1-200 allowed)."
 # define NO_INT_ARGV_ERR	"❗Argument is not integer value"
 # define INT_NEG_ARGV_ERR	"❗Argument with negativ integer value. Forbidden."
-# define PARAMS_ERR			"❗Incorrect parameteres."
+# define PARAMS_ERR_0		"❗Incorrect parameter number philo. Must be \
+greater than 0."
+# define PARAMS_ERR_1		"❗Incorrect parameter number philo. Must be less \
+than 200."
+# define PARAMS_ERR_2		"❗Incorrect parameteres. Must be greater than 60."
+# define PARAMS_ERR_3		"❗Incorrect parameteres. Must be greater than 0."
 # define ARG				"❗Argument "
 # define INVALID			"❗is not valid."
 # define NEGATIVE			"❗negative value."
@@ -39,6 +44,12 @@ eat]"
 # define FORK_ERR			"❗Error: Fork failed. Could not create process."
 # define PHILO_EATEN		" philosophers have eaten at least "
 # define TIMES				"times."
+# define POINTER_ERR		"❗Invalid pointer in philo_routine_one_philo."
+# define LOCK_MUTEX_ERR		"❗Error: locking mutex."
+# define UNLOCK_MUTEX_ERR	"❗Error: unlocking mutex."
+# define INIT_MUTEX_ERR		"❗Error: initializing mutex."
+# define ALLOC_POSCH_ERR	"❗Error: allocating pos_char."
+# define CREAT_THREAD_ERR	"❗Error: creating thread."
 
 # define INT_MAX			2147483647
 # define INT_MIN			-2147483648
