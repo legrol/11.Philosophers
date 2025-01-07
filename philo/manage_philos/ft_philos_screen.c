@@ -82,10 +82,7 @@ void	ft_print_message(char *msg, t_philo *philo, char *timestamp)
 	int	eat_max_flag;
 
 	if (ft_strcmp(msg, DIED) == 0)
-	{
-		free(timestamp);
 		return (ft_print_dead(philo, msg, philo->envp));
-	}
 	pthread_mutex_lock(&philo->envp->writing);
 	philo->envp->last_time_status = ft_philo_atoi(timestamp);
 	pthread_mutex_unlock(&philo->envp->writing);
