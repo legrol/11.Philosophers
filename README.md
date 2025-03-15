@@ -1,4 +1,4 @@
-<span style="color: blue; font-weight: bold;">**Descripción**</span>
+![Descripción](https://img.shields.io/badge/Descripción-blue?style=for-the-badge)
 
 - Es una implementación del clásico problema de los filósofos comensales en programación.
 
@@ -27,7 +27,7 @@ La simulación se detendrá cuando un filósofo muere por inanición.
 
 -  ¡No debería hacer falta decir que todos deben evitar morir!
 
-**Instrucciones Generales**
+![Instrucciones Generales](https://img.shields.io/badge/Instrucciones%20Generales-green?style=for-the-badge&logo=readthedocs)
 
 -	¡Las variables globales están prohibidas!
 
@@ -51,7 +51,7 @@ con la muerte de un filósofo.
 Cualquier otro filósofo número N se sentarán entre el filósofo número N - 1 y el filósofo
 número N + 1.
 
-Los logs del programa:
+**Los logs del programa:**
 
 - Cualquier cambio de estado de un filósofo debe tener el siguiente formato:
 	- timestamp_in_ms X has taken a fork
@@ -72,7 +72,7 @@ imprimes su muerte.
   
 - El programa no debe tener **ningún data races.**
 
-**Instrucciones Mandatory**
+![Instrucciones Mandatory](https://img.shields.io/badge/Instrucciones%20Mandatory-green?style=for-the-badge&logo=bookstack)
 
 - Cada filósofo debe ser un hilo.
   
@@ -83,7 +83,7 @@ solo habrá un tenedor en la mesa.
 - Para prevenir que los filósofos dupliquen los tenedores, deberás proteger los estados
 de los tenedores con un mutex por cada uno de ellos.
 
-**Instrucciones Bonus**
+![⭐ Instrucciones Bonus](https://img.shields.io/badge/⭐%20Instrucciones%20Bonus-green?style=for-the-badge)
 
 En la parte bonus, el programa tendrá los mismos argumentos que la parte obligato-
 ria. Y tendrá el mismo comportamiento como se indica en el capitulo de Instrucciones
@@ -96,18 +96,19 @@ está representados por un semaforo.
 
 - Cada filósofo debe ser un proceso, y el proceso principal no debe ser un filósofo.
 
-**Estructura del Proyecto**
+![Estructura del Proyecto](https://img.shields.io/badge/Estructura%20del%20Proyecto-blue?style=for-the-badge)
 
 &nbsp;&nbsp;&nbsp;&nbsp;philo/:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Contiene el código fuente principal del proyecto.
     
 &nbsp;&nbsp;&nbsp;&nbsp;philo_bonus/:&nbsp;&nbsp;&nbsp;&nbsp;Contiene funcionalidades adicionales o mejoras del proyecto base.
 
 
-**Compilar el proyecto:**
+![Compilar el proyecto](https://img.shields.io/badge/Compilar%20el%20proyecto-blue?style=for-the-badge)
+
 
 &nbsp;&nbsp;&nbsp;&nbsp;make
 
-**Uso**
+![Uso](https://img.shields.io/badge/Uso-blue?style=for-the-badge)
 
 - Para ejecutar el programa principal:
 
@@ -117,7 +118,7 @@ está representados por un semaforo.
   
   - ./philo_bonus
 
-**Autor**
+![Autor](https://img.shields.io/badge/Autor-red?style=for-the-badge)
 
 - Roberto del Olmo Lima
 - [![GitHub](https://img.shields.io/badge/GitHub-Profile-informational?style=for-the-badge&logo=github&logoColor=white&color=181717)](https://github.com/legrol)
