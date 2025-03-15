@@ -1,4 +1,4 @@
-**Descripción**
+<span style="color: blue; font-weight: bold;">**Descripción**</span>
 
 - Es una implementación del clásico problema de los filósofos comensales en programación.
 
